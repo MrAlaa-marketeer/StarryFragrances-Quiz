@@ -8,7 +8,7 @@ const dna = (values) => Object.fromEntries(TRAITS.map((t) => [t, values[t] ?? 0]
 
 export const products = [
   {
-    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result.png",
+    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp",
     positioning: "Woody. Warm. Sophisticated.",
     description: "You gravitate toward refined woods, warm spices and a polished presence — a scent that feels confident, sophisticated and effortlessly put together.",
     dna: dna({ woody:5, spicy:4, powdery:4, elegant:5, warm:4, sensual:4, luxurious:5, creamy:3, sweet:3, dark:2 }),
@@ -17,7 +17,7 @@ export const products = [
     notes: { "Top Notes":["Fig","Black Tea","Cardamom"], "Heart Notes":["Iris","Vetiver"], "Base Notes":["Sandalwood","Tonka Bean"] }
   },
   {
-    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result.png",
+    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp",
     positioning: "Deep. Warm. Mysterious.",
     description: "Your choices lean toward resinous warmth, rich woods and an intriguing presence — luxurious, mysterious and made for the night.",
     dna: dna({ amber:5, woody:4, sweet:4, dark:4, warm:5, mysterious:5, luxurious:5, sensual:4, vanilla:3, spicy:2 }),
@@ -26,7 +26,7 @@ export const products = [
     notes: { "Top Notes":["Cedar","Amber","Ylang-Ylang"], "Heart Notes":["Gurjun Balsam","Iris","Myrrh"], "Base Notes":["Vanilla","Sandalwood","Benzoin"] }
   },
   {
-    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result.png",
+    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp",
     positioning: "Fresh. Vibrant. Unforgettable.",
     description: "Bright, juicy and energetic. You want a fragrance that feels alive, playful and impossible to overlook.",
     dna: dna({ fruity:5, fresh:4, sweet:4, energetic:5, playful:5, vanilla:3, floral:3, creamy:2, sensual:2 }),
@@ -35,7 +35,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Bergamot"], "Heart Notes":["Orange Blossom","Jasmine"], "Base Notes":["Sandalwood","Vanilla","Musks","Amber Woods"] }
   },
   {
-    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result.png",
+    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp",
     positioning: "Soft. Elegant. Radiant.",
     description: "You are drawn to luminous florals, creamy sweetness and elegant sensuality — soft enough to feel beautiful, strong enough to be remembered.",
     dna: dna({ floral:5, sweet:4, amber:4, creamy:4, sensual:5, elegant:5, vanilla:3, warm:3, fruity:3, spicy:2, luxurious:5 }),
@@ -44,7 +44,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Frankincense","Hazelnut"], "Heart Notes":["Saffron","Rose","Jasmine Sambac","Osmanthus"], "Base Notes":["Sandalwood","Vanilla","Akigalawood","Amber"] }
   },
   {
-    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result.png",
+    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp",
     positioning: "Juicy. Bright. Effortless.",
     description: "Your profile is bright, playful and juicy. You want something refreshing, addictive and easy to wear whenever the mood hits.",
     dna: dna({ fresh:5, fruity:5, sweet:4, playful:5, energetic:5, clean:5, floral:3, sensual:2 }),
@@ -53,7 +53,7 @@ export const products = [
     notes: { "Top Notes":["Red Apple","Lychee","Black Currant","Pink Grapefruit"], "Heart Notes":["Wild Berries","Jasmine","Rose"], "Base Notes":["Sugar","Musk","Vanilla","Amber"] }
   },
   {
-    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result.png",
+    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp",
     positioning: "Dark. Spicy. Addictive.",
     description: "Your choices point toward dark vanilla, warm spice and a magnetic presence — intimate, bold and made to leave a trace.",
     dna: dna({ vanilla:5, spicy:5, sweet:5, dark:5, sensual:5, warm:5, bold:5, amber:4, creamy:4, mysterious:5 }),
@@ -62,7 +62,7 @@ export const products = [
     notes: { "Top Notes":["Pink Pepper","Black Pepper","Elemi"], "Heart Notes":["Olibanum","Saffron"], "Base Notes":["Vanilla","Cedarwood","Suede"] }
   },
   {
-    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result.png",
+    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp",
     positioning: "Fresh. Green. Effortless.",
     description: "Fresh air, green energy and effortless confidence. Your scent should move with you, not weigh you down.",
     dna: dna({ fresh:5, energetic:5, clean:5, fruity:3, playful:4, woody:2, sweet:1 }),
@@ -71,7 +71,7 @@ export const products = [
     notes: { "Top Notes":["Mint","Bergamot","Grapefruit","Lavender"], "Heart Notes":["Green Apple","Cranberry","Rose"], "Base Notes":["Cotton Flower","Cactus","Amber"] }
   },
   {
-    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result.png",
+    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp",
     positioning: "Creamy. Magnetic. Sensual.",
     description: "You lean toward creamy florals, sweet warmth and magnetic sensuality — a fragrance that feels soft, confident and unforgettable.",
     dna: dna({ floral:5, sweet:5, vanilla:4, creamy:5, sensual:5, elegant:4, amber:4, bold:5, warm:4 }),

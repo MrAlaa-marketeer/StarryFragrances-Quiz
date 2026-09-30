@@ -9,6 +9,23 @@ const ASSET_BASE = "/images/";
 const WHATSAPP_NUMBER = "201207207794";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 
+function ResponsiveImage({ name, alt, priority = false, sizes = "(max-width: 700px) 100vw, 382px" }) {
+  const base = name.replace(/-960\.webp$/, "").replace(/\.png$/, "");
+  const widths = base.includes("spicy-vanilla") ? [480, 960] : [480, 960, 1600];
+  const srcSet = widths.map((width) => `${asset(`${base}-${width}.webp`)} ${width}w`).join(", ");
+  const src = asset(`${base}-${priority ? "1600" : "960"}.webp`);
+
+  return <img
+    src={src}
+    srcSet={srcSet}
+    sizes={sizes}
+    alt={alt}
+    loading={priority ? "eager" : "lazy"}
+    fetchPriority={priority ? "high" : "auto"}
+    decoding="async"
+  />;
+}
+
 function buildUserDNA(answers) {
   const totals = Object.fromEntries(TRAITS.map((t) => [t, 0]));
   answers.forEach((answer, index) => {
@@ -75,7 +92,7 @@ function Landing({ onStart, onGallery }) {
   return <main className="screen landing">
     <Header onGallery={onGallery} />
     <div className="landing-art" aria-hidden="true">
-      <img src={asset(products[0].resultImage)} alt="" />
+      <ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw" />
       <span className="landing-star landing-star-one">✦</span>
       <span className="landing-star landing-star-two">✧</span>
     </div>
@@ -126,7 +143,7 @@ function MatchCard({ product, onOpen, onGallery }) {
   return <main className="screen result">
     <Header onGallery={onGallery} />
     <div className="result-top"><span>YOUR STARRY MATCH</span><h1>{product.name}</h1><p>{product.positioning}</p></div>
-    <div className="product-stage result-art"><img src={asset(product.resultImage)} alt={product.name}/><div className="match-badge">{product.match}%<small>MATCH</small></div></div>
+    <div className="product-stage result-art"><ResponsiveImage name={product.resultImage} alt={product.name}/><div className="match-badge">{product.match}%<small>MATCH</small></div></div>
     <div className="result-copy"><h3>WHY IT FEELS LIKE YOU</h3><p>{product.description}</p><DNA product={product}/></div>
     <a className="whatsapp-btn" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`I want to order ${product.name} from STARRY`)}`}><MessageCircle size={17}/> ORDER ON WHATSAPP <ArrowRight size={15}/></a>
     <button className="explore-btn" onClick={onOpen}>EXPLORE THE FRAGRANCE <ArrowRight size={14}/></button>
@@ -134,7 +151,7 @@ function MatchCard({ product, onOpen, onGallery }) {
 }
 
 function Details({ product, onBack, onGallery }) {
-  return <main className="screen details"><Header back onBack={onBack} onGallery={onGallery}/><div className="details-bottle detail-art"><img src={asset(product.resultImage)} alt={product.name}/></div><h1>{product.name}</h1>
+  return <main className="screen details"><Header back onBack={onBack} onGallery={onGallery}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1>{product.name}</h1>
     <section className="accords"><h3>MAIN ACCORDS</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span>{a.name}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
     <section><h3 className="section-title">FRAGRANCE NOTES</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{type}</small><strong>{list.join(" · ")}</strong></div>)}</div></section>
     <a className="whatsapp-btn" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`I want to order ${product.name} from STARRY`)}`}><MessageCircle size={17}/> ORDER ON WHATSAPP <ArrowRight size={15}/></a>
@@ -142,7 +159,7 @@ function Details({ product, onBack, onGallery }) {
 }
 
 function Gallery({ onAgain, onBack, onGallery }) {
-  return <main className="screen gallery"><Header back onBack={onBack} onGallery={onGallery}/><h1>EXPLORE ALL FRAGRANCES</h1><p>Different stories. The same universe.</p><div className="product-grid">{products.map(p => <article key={p.id} className="mini-product"><div className="mini-bottle"><img src={asset(p.resultImage)} alt={p.name}/></div><span>{p.name}</span></article>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> TAKE THE QUIZ AGAIN <ArrowRight size={15}/></button><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+  return <main className="screen gallery"><Header back onBack={onBack} onGallery={onGallery}/><h1>EXPLORE ALL FRAGRANCES</h1><p>Different stories. The same universe.</p><div className="product-grid">{products.map(p => <article key={p.id} className="mini-product"><div className="mini-bottle"><ResponsiveImage name={p.resultImage} alt={p.name} sizes="96px"/></div><span>{p.name}</span></article>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> TAKE THE QUIZ AGAIN <ArrowRight size={15}/></button><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
 }
 
 function App() {
