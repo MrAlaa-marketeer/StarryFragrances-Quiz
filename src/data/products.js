@@ -81,49 +81,89 @@ export const products = [
   }
 ];
 
-const w = (weights) => weights;
-
 export const questions = [
-  { id:"q1", title:"When the night begins, where do you belong?", weight:1.0, options:[
-    {id:"a",label:"A rooftop, city lights & cold air",weights:w({fresh:5,energetic:4,clean:3,playful:1})},
-    {id:"b",label:"A candlelit dinner in an elegant place",weights:w({elegant:5,warm:4,luxurious:4,sensual:3,woody:2})},
-    {id:"c",label:"A dimly lit bar with low music",weights:w({dark:5,mysterious:5,spicy:4,sensual:4,warm:3,bold:2})},
-    {id:"d",label:"Somewhere loud, colorful & spontaneous",weights:w({fruity:5,playful:5,energetic:4,sweet:3,fresh:2})}
+  { id:"q1", weight:1.1, title:{en:"When do you see yourself reaching for this fragrance?",ar:"إمتى تتخيل نفسك بتستخدم العطر ده؟"}, options:[
+    {id:"a",label:{en:"Every day, wherever the day takes me",ar:"كل يوم، في أي مشوار"}},
+    {id:"b",label:{en:"Work, meetings & polished moments",ar:"الشغل والاجتماعات والمواقف الرسمية"}},
+    {id:"c",label:{en:"Dates & nights out",ar:"المواعيد والخروجات بالليل"}},
+    {id:"d",label:{en:"Parties & social occasions",ar:"الحفلات والمناسبات الاجتماعية"}}
   ]},
-  { id:"q2", title:"What do you want your fragrance to say about you?", weight:1.25, options:[
-    {id:"a",label:"Fresh, effortless & full of energy",weights:w({fresh:5,clean:4,energetic:5,playful:1})},
-    {id:"b",label:"Elegant, refined & sophisticated",weights:w({elegant:5,luxurious:5,woody:4,powdery:3,warm:2})},
-    {id:"c",label:"Mysterious, intense & unforgettable",weights:w({mysterious:5,dark:5,bold:5,sensual:4,amber:3,spicy:3})},
-    {id:"d",label:"Playful, attractive & full of personality",weights:w({playful:5,fruity:4,sweet:4,energetic:3,sensual:2,bold:2})}
+  { id:"q2", weight:1.1, title:{en:"What first impression should it leave?",ar:"إيه أول انطباع تحب العطر يسيبه؟"}, options:[
+    {id:"a",label:{en:"Fresh and easy to be around",ar:"منعش وقريب من الناس"}},
+    {id:"b",label:{en:"Elegant and quietly expensive",ar:"أنيق وفخم من غير مبالغة"}},
+    {id:"c",label:{en:"Mysterious and hard to forget",ar:"غامض وصعب يتنسي"}},
+    {id:"d",label:{en:"Fun, magnetic and addictive",ar:"مرح وجذاب ومغري بتكراره"}}
   ]},
-  { id:"q3", title:"Pick the atmosphere that feels most like you.", weight:1.0, options:[
-    {id:"a",label:"Fresh morning air after rain",weights:w({fresh:5,clean:5,energetic:2})},
-    {id:"b",label:"A luxurious hotel with warm lighting",weights:w({luxurious:5,elegant:5,warm:5,woody:3,sensual:2})},
-    {id:"c",label:"A dark room filled with candlelight",weights:w({dark:5,warm:5,mysterious:5,amber:4,sensual:3})},
-    {id:"d",label:"A sunny afternoon surrounded by color",weights:w({fruity:5,fresh:4,playful:5,energetic:4,sweet:2})}
+  { id:"q3", weight:0.9, title:{en:"How noticeable should it be in the air?",ar:"تحب العطر يكون واضح قد إيه في المكان؟"}, options:[
+    {id:"a",label:{en:"Soft and close to my skin",ar:"هادي وقريب من بشرتي"}},
+    {id:"b",label:{en:"Noticeable when someone comes close",ar:"يتلاحظ لما حد يقرب مني"}},
+    {id:"c",label:{en:"Leaves a beautiful trail as I pass",ar:"يسيب أثر جميل وأنا ماشي"}},
+    {id:"d",label:{en:"Makes a bold entrance and fills the room",ar:"حضوره قوي ويملى المكان"}}
   ]},
-  { id:"q4", title:"How do you want people to remember you after you leave?", weight:1.25, options:[
-    {id:"a",label:"“They smelled incredibly fresh.”",weights:w({fresh:5,clean:5,energetic:3})},
-    {id:"b",label:"“There was something classy about them.”",weights:w({elegant:5,luxurious:4,woody:3,powdery:3,warm:2})},
-    {id:"c",label:"“I couldn't stop thinking about that scent.”",weights:w({sensual:5,mysterious:5,dark:4,bold:4,warm:3})},
-    {id:"d",label:"“They had such a fun, addictive presence.”",weights:w({playful:5,sweet:4,fruity:4,sensual:3,energetic:3})}
+  { id:"q4", weight:1.0, title:{en:"Which opening would make you want to smell it again?",ar:"أنهي افتتاحية تخليك تحب تشم العطر تاني؟"}, options:[
+    {id:"a",label:{en:"Crisp fruit and fresh citrus",ar:"فاكهة مقرمشة وحمضيات منعشة"}},
+    {id:"b",label:{en:"Spices, woods and a warm edge",ar:"توابل وأخشاب ولمسة دافئة"}},
+    {id:"c",label:{en:"Creamy vanilla and glowing amber",ar:"فانيليا كريمية وعنبر دافئ"}},
+    {id:"d",label:{en:"Flowers, sweetness and soft sensuality",ar:"زهور وحلاوة وأنوثة ناعمة"}}
   ]},
-  { id:"q5", title:"Which fragrance personality attracts you the most?", weight:1.5, options:[
-    {id:"a",label:"Clean & refreshing",weights:w({fresh:5,clean:5,energetic:3})},
-    {id:"b",label:"Warm & sophisticated",weights:w({warm:5,elegant:5,woody:4,luxurious:4,powdery:2})},
-    {id:"c",label:"Dark & sensual",weights:w({dark:5,sensual:5,spicy:4,mysterious:4,amber:3,bold:3})},
-    {id:"d",label:"Sweet & playful",weights:w({sweet:5,playful:5,fruity:4,energetic:3,sensual:2})}
+  { id:"q5", weight:1.1, title:{en:"What kind of sweetness do you actually enjoy?",ar:"إيه نوع الحلاوة اللي بتحبها فعلًا؟"}, options:[
+    {id:"a",label:{en:"Almost none — keep it crisp and fresh",ar:"قليلة جدًا — خليه منعش وخفيف"}},
+    {id:"b",label:{en:"Juicy and fruity",ar:"فاكهية وعصيرية"}},
+    {id:"c",label:{en:"Creamy and smooth",ar:"كريمية وناعمة"}},
+    {id:"d",label:{en:"Deep vanilla, warm and addictive",ar:"فانيليا غنية ودافئة ومغرية"}}
   ]},
-  { id:"q6", title:"Choose your ideal outfit for a night out.", weight:0.75, options:[
-    {id:"a",label:"Relaxed outfit, sneakers & effortless style",weights:w({clean:4,fresh:4,energetic:3,playful:2})},
-    {id:"b",label:"Tailored outfit, watch & polished details",weights:w({elegant:5,luxurious:5,woody:3,warm:2,bold:2})},
-    {id:"c",label:"Dark outfit, leather & statement pieces",weights:w({dark:5,bold:5,mysterious:4,spicy:3,sensual:3})},
-    {id:"d",label:"Something stylish, colorful & attention-grabbing",weights:w({playful:5,bold:4,fruity:4,energetic:4,sweet:2})}
+  { id:"q6", weight:0.85, title:{en:"Pick a place that feels like your scent.",ar:"اختار مكان تحس إنه شبه ريحتك."}, options:[
+    {id:"a",label:{en:"Rooftop at midnight, city lights below",ar:"سطح مبنى بعد نص الليل وأضواء المدينة تحتك"}},
+    {id:"b",label:{en:"A luxury hotel lounge with warm lighting",ar:"لاونج فندق فخم بإضاءة دافئة"}},
+    {id:"c",label:{en:"A private room lit by candles",ar:"مكان هادي على ضوء الشموع"}},
+    {id:"d",label:{en:"A sunny beach or a colorful city afternoon",ar:"شاطئ مشمس أو جولة وسط مدينة مليانة ألوان"}}
   ]},
-  { id:"q7", title:"What's the feeling you want when you spray your fragrance?", weight:1.5, options:[
-    {id:"a",label:"Energy — I feel alive and ready to go.",weights:w({energetic:5,fresh:5,clean:4,playful:1})},
-    {id:"b",label:"Confidence — I feel polished and put together.",weights:w({elegant:5,bold:4,luxurious:4,woody:3,warm:2})},
-    {id:"c",label:"Seduction — I want to leave an unforgettable impression.",weights:w({sensual:5,dark:4,warm:4,spicy:4,bold:4,mysterious:3})},
-    {id:"d",label:"Joy — I want something addictive and fun.",weights:w({playful:5,fruity:5,sweet:4,energetic:4,fresh:2})}
+  { id:"q7", weight:0.75, title:{en:"Which style feels most like the way you dress?",ar:"أنهي ستايل أقرب لطريقة لبسك؟"}, options:[
+    {id:"a",label:{en:"Casual, relaxed and effortless",ar:"كاجوال ومريح ومن غير تكلف"}},
+    {id:"b",label:{en:"Clean, tailored and polished",ar:"مرتب وأنيق وتفاصيله محسوبة"}},
+    {id:"c",label:{en:"Dark, confident and statement-making",ar:"غامق وجريء وملفت"}},
+    {id:"d",label:{en:"Expressive, colorful and individual",ar:"مميز وملون وبيعبر عن شخصيتي"}}
+  ]},
+  { id:"q8", weight:0.9, title:{en:"What do you want to feel after spraying it?",ar:"تحب تحس بإيه بعد ما ترش العطر؟"}, options:[
+    {id:"a",label:{en:"Energy — awake, fresh and ready to go",ar:"طاقة — صاحي ومنتعش ومستعد أبدأ"}},
+    {id:"b",label:{en:"Confidence — composed and put together",ar:"ثقة — هادي ومرتب وواثق من نفسي"}},
+    {id:"c",label:{en:"Seduction — magnetic and unforgettable",ar:"جاذبية — حضوري مغناطيسي وصعب يتنسي"}},
+    {id:"d",label:{en:"Joy — playful, bright and a little addictive",ar:"بهجة — مرح ومشرق ويخليني مبسوط"}}
+  ]},
+  { id:"q9", weight:1.0, title:{en:"Which weather feels right for your signature scent?",ar:"أنهي جو تحس إنه الأنسب لعطرك المميز؟"}, options:[
+    {id:"a",label:{en:"Cold and rainy",ar:"جو بارد وممطر"}},
+    {id:"b",label:{en:"A cool evening",ar:"مساء لطيف ومائل للبرودة"}},
+    {id:"c",label:{en:"A warm night",ar:"ليلة دافئة"}},
+    {id:"d",label:{en:"A sunny, hot day",ar:"نهار مشمس وحار"}}
+  ]},
+  { id:"q10", weight:1.3, title:{en:"Be honest: what would make you stop wearing a fragrance?",ar:"بصراحة، إيه أكتر حاجة ممكن تخليك تبطل تستخدم عطر؟"}, options:[
+    {id:"a",label:{en:"It turns too sweet",ar:"لو حلاوته زيادة عن اللزوم"}},
+    {id:"b",label:{en:"It feels too heavy or suffocating",ar:"لو تقيل أو خانق"}},
+    {id:"c",label:{en:"It smells too generic or forgettable",ar:"لو ريحته عادية أو سهلة النسيان"}},
+    {id:"d",label:{en:"It is too sharp or relentlessly fresh",ar:"لو حاد أو منعش بشكل مزعج"}}
   ]}
 ];
+
+// Each row scores fit for the four answers to q1…q10 (0–5). q10 scores
+// suitability when the user wants to avoid that drawback.
+export const quizFit = {
+  elite: [[4,5,3,3],[2,5,3,2],[2,3,3,2],[1,3,4,3],[1,2,3,3],[2,5,3,1],[2,5,3,2],[3,5,3,2],[1,4,2,1],[4,2,4,4]],
+  "starry-amber": [[2,2,5,4],[2,4,5,3],[2,3,4,4],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[2,4,5,2],[5,4,4,1],[2,1,4,5]],
+  "tropical-bomb": [[4,1,3,5],[5,2,2,4],[1,3,5,5],[5,1,1,2],[1,5,2,2],[3,1,1,5],[3,2,2,5],[5,3,2,5],[1,2,4,5],[2,3,4,1]],
+  perla: [[3,3,4,4],[3,5,3,4],[2,3,3,2],[2,2,3,5],[1,2,4,3],[2,5,4,2],[2,5,3,3],[2,4,5,3],[2,4,3,2],[2,4,4,4]],
+  "fizzy-apple": [[5,3,2,4],[5,2,2,4],[1,2,4,2],[5,1,1,2],[1,5,1,1],[2,1,1,5],[5,3,1,4],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
+  "spicy-vanilla": [[2,2,5,4],[2,4,5,4],[1,3,5,5],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[1,4,5,3],[4,5,4,1],[2,1,4,5]],
+  "star-boy": [[5,3,1,3],[5,3,2,2],[1,2,3,2],[5,3,1,1],[1,2,1,1],[3,2,1,4],[5,5,2,2],[5,4,1,2],[1,2,2,5],[2,5,2,1]],
+  luna: [[2,2,4,4],[2,4,4,4],[2,3,4,3],[2,3,5,5],[1,1,4,5],[2,4,5,2],[1,3,5,4],[2,4,5,4],[4,3,5,2],[2,1,4,4]]
+};
+
+export const productCopy = {
+  elite: { positioning:"خشبي. دافئ. راقٍ.", description:"ذوقك يميل للأخشاب المصقولة والتوابل الدافئة والحضور الأنيق — عطر يعكس الثقة والرقي من غير مجهود." },
+  "starry-amber": { positioning:"عميق. دافئ. غامض.", description:"اختياراتك تميل لدفء العنبر والأخشاب الغنية والحضور الغامض — فخامة آسرة صُممت لأجواء الليل." },
+  "tropical-bomb": { positioning:"منعش. نابض. لا يُنسى.", description:"شخصيتك تحب الفاكهة المشرقة والطاقة المرحة. تريد عطرًا حيويًا وجذابًا يلفت الانتباه." },
+  perla: { positioning:"ناعم. أنيق. مشرق.", description:"تنجذب للزهور المضيئة والحلاوة الكريمية والجاذبية الراقية — نعومة جميلة وحضور يظل في الذاكرة." },
+  "fizzy-apple": { positioning:"فاكهي. مشرق. سهل.", description:"ذوقك منعش ومرح وفاكهي. تحب عطرًا مبهجًا وسهل الاستخدام كلما ناسبك المزاج." },
+  "spicy-vanilla": { positioning:"داكن. متبّل. آسر.", description:"اختياراتك تميل للفانيليا الداكنة والتوابل الدافئة والحضور المغناطيسي — عطر جريء وحميم يترك أثرًا." },
+  "star-boy": { positioning:"منعش. أخضر. عفوي.", description:"هواء منعش وطاقة خضراء وثقة عفوية. عطرك يتحرك معك بخفة ومن غير ما يطغى عليك." },
+  luna: { positioning:"كريمي. جذاب. حسي.", description:"تميل إلى الزهور الكريمية والدفء الحلو والجاذبية الحسية — رائحة ناعمة وواثقة ويصعب نسيانها." }
+};
