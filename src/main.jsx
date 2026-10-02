@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2 } from "lucide-react";
 import "./styles.css";
 import "./landing.css";
 import { products, questions, TRAITS, quizFit, productCopy } from "./data/products";
@@ -55,12 +55,24 @@ function PrimaryButton({ children, onClick, lang = "en" }) {
   return <button className="primary-btn" onClick={onClick}>{children}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={16}/></button>;
 }
 
+function SocialLinks() {
+  const links = [
+    { name:"Instagram", url:"https://www.instagram.com/starryfragrances/", Icon:Instagram },
+    { name:"Facebook", url:"https://www.facebook.com/starryfragrances", Icon:Facebook },
+    { name:"TikTok", url:"https://www.tiktok.com/@starryfragrances", Icon:Music2 }
+  ];
+  return <nav className="social-links" aria-label="Follow STARRY">
+    {links.map(({name,url,Icon}) => <a key={name} href={url} target="_blank" rel="noopener noreferrer" aria-label={`STARRY on ${name}`}><Icon size={15} aria-hidden="true"/><span>{name}</span></a>)}
+  </nav>;
+}
+
 function Landing({ onStart, onGallery }) {
   return <main className="screen landing">
     <Header onGallery={onGallery}/>
     <div className="landing-art" aria-hidden="true"><ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw"/><span className="landing-star landing-star-one">✦</span><span className="landing-star landing-star-two">✧</span></div>
     <div className="landing-copy"><div className="landing-kicker"><span/> THE STARRY SCENT EDIT</div><h1><span>FIND YOUR</span><span>SIGNATURE</span><span>SCENT</span></h1><p>A few questions.<br/>One fragrance that feels like you.</p><PrimaryButton onClick={onStart}>START THE JOURNEY</PrimaryButton></div>
     <div className="landing-note"><span>01 — 10</span><i/> A PERSONAL SCENT DISCOVERY</div>
+    <SocialLinks/>
   </main>;
 }
 
@@ -133,7 +145,7 @@ function Details({ product, onBack, onGallery, lang }) {
 }
 
 function Gallery({ onAgain, onBack, onGallery, lang }) {
-  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <article key={product.id} className="mini-product"><div className="mini-bottle"><ResponsiveImage name={product.resultImage} alt={product.name} sizes="96px"/></div><span dir="ltr">{product.name}</span></article>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <article key={product.id} className="mini-product"><div className="mini-bottle"><ResponsiveImage name={product.resultImage} alt={product.name} sizes="96px"/></div><span dir="ltr">{product.name}</span></article>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
 }
 
 function App() {
