@@ -282,7 +282,8 @@ function matchedAnswers(product, answers, lang) {
 function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, lang }) {
   const copy = labels[lang];
   const localized = lang === "ar" ? productCopy[product.id] : product;
-  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} من STARRY.` : `I want to order ${product.name} from STARRY`;
+  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   return <main className="screen result" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
     <Header onGallery={onGallery} lang={lang}/>
     <div className="result-top"><span>{copy.match}</span><h1 dir="ltr">{product.name}</h1><p>{localized.positioning}</p></div>
@@ -290,7 +291,7 @@ function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, l
     <div className="result-copy"><h3>{copy.why}</h3><p>{localized.description}</p><p className="match-reasons">{matchedAnswers(product, answers, lang).join(" · ")}</p><h3 className="profile-title">{copy.profile}</h3><DNA product={product} lang={lang}/></div>
     <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{product.bestFor[lang].map((item) => <span key={item}>{item}</span>)}</div></section>
     {secondary && <div className="secondary-match"><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}%</b></div>}
-    <a className="whatsapp-btn" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}><MessageCircle size={17}/> {copy.order} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
+    <section className="purchase-panel result-purchase"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div></section>
     <button className="explore-btn" onClick={onOpen}>{copy.explore} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></button>
     <ShareButton product={product} lang={lang}/><button className="retake-btn" onClick={onRetake}><RotateCcw size={14}/>{copy.retake}</button>
   </main>;
