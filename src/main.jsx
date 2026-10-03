@@ -338,7 +338,15 @@ function App() {
     removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
     setScreen("quiz");
   }
-  if (screen === "landing") return <Landing onStart={() => setScreen("quiz")} onGallery={openGallery}/>;
+  function startQuiz() {
+    const completed = questions.every((_, index) => Boolean(answers[index]?.id));
+    if (completed) {
+      setAnswers([]); setStep(0); setSelected(null);
+      removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
+    }
+    setScreen("quiz");
+  }
+  if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
   if (screen === "result") { const product = results[0] || products[0]; return <MatchCard product={product} secondary={results[1]} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
