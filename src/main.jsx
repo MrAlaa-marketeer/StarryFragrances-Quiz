@@ -14,6 +14,35 @@ const labels = {
   ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", scoreNote:"درجة محسوبة من أوزان إجاباتك", order:"اطلب عبر واتساب", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
 };
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
+const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
+
+function shuffleOptions(options) {
+  const shuffled = [...options];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+function makeOptionOrders() {
+  let previous = {};
+  try { previous = JSON.parse(sessionStorage.getItem(OPTION_ORDER_STORAGE) || "{}"); } catch { /* Start with a fresh order when storage is unavailable. */ }
+  const current = {};
+  const orders = questions.map((question) => {
+    let shuffled = shuffleOptions(question.options);
+    let attempts = 0;
+    while (previous[question.id]?.join(",") === shuffled.map((option) => option.id).join(",") && attempts < 8) {
+      shuffled = shuffleOptions(question.options);
+      attempts += 1;
+    }
+    if (previous[question.id]?.join(",") === shuffled.map((option) => option.id).join(",")) shuffled = [...shuffled.slice(1), shuffled[0]];
+    current[question.id] = shuffled.map((option) => option.id);
+    return shuffled;
+  });
+  try { sessionStorage.setItem(OPTION_ORDER_STORAGE, JSON.stringify(current)); } catch { /* The current attempt still keeps its shuffled order in memory. */ }
+  return orders;
+}
 
 function ResponsiveImage({ name, alt, priority = false, sizes = "(max-width: 700px) 100vw, 382px" }) {
   const base = name.replace(/-960\.webp$/, "").replace(/\.png$/, "");
@@ -88,6 +117,7 @@ function LanguageToggle({ lang, onChange }) {
 
 function Quiz({ onFinish, onExit, onGallery, lang, setLang, step, setStep, answers, setAnswers }) {
   const q = questions[step];
+  const [optionOrders] = useState(makeOptionOrders);
   const advancing = React.useRef(false);
   function choose(option) {
     if (advancing.current) return;
@@ -106,7 +136,7 @@ function Quiz({ onFinish, onExit, onGallery, lang, setLang, step, setStep, answe
       <LanguageToggle lang={lang} onChange={setLang}/>
       <div className="progress-row"><span className="progress-title">{labels[lang].discover}</span><div className="star-progress" role="progressbar" aria-label={labels[lang].discover} aria-valuemin={1} aria-valuemax={questions.length} aria-valuenow={step + 1} aria-valuetext={`${step + 1} ${labels[lang].of} ${questions.length}`}>{questions.map((question, index) => <span key={question.id} className={index <= step ? "lit" : ""} aria-hidden="true">{index <= step ? "✦" : "·"}</span>)}</div><span className="progress-count">{String(step + 1).padStart(2,"0")}<i>/</i>{String(questions.length).padStart(2,"0")}</span></div>
       <div className="question-stage" key={q.id}><h2>{q.title[lang]}</h2>
-      <div className="options">{q.options.map((option) => {
+      <div className="options">{optionOrders[step].map((option) => {
         const selected = answers[step]?.id === option.id;
         return <button key={option.id} className={`option ${selected ? "selected" : ""}`} aria-pressed={selected} onClick={() => choose(option)}><span>{option.label[lang]}</span></button>;
       })}</div></div>
@@ -131,35 +161,45 @@ function ShareButton({ product, lang }) {
   async function share() {
     const canvas = document.createElement("canvas"); canvas.width = 1080; canvas.height = 1350;
     const ctx = canvas.getContext("2d");
+    const localized = lang === "ar" ? productCopy[product.id] : product;
+    const background = ctx.createLinearGradient(0, 0, 1080, 1350);
+    background.addColorStop(0, "#111d2a"); background.addColorStop(.56, "#07111b"); background.addColorStop(1, "#03070c");
+    ctx.fillStyle = background; ctx.fillRect(0, 0, 1080, 1350);
+    ctx.strokeStyle = "rgba(222,177,105,.56)"; ctx.lineWidth = 2; ctx.strokeRect(34, 34, 1012, 1282);
+    ctx.strokeStyle = "rgba(222,177,105,.2)"; ctx.lineWidth = 1; ctx.strokeRect(47, 47, 986, 1256);
+    ctx.textAlign = "center"; ctx.direction = lang === "ar" ? "rtl" : "ltr";
+    ctx.fillStyle = "#dfb56f"; ctx.font = "38px Georgia,serif"; ctx.fillText("✦  STARRY  ✦", 540, 112);
+    ctx.fillStyle = "#bdad91"; ctx.font = "19px Arial,sans-serif"; ctx.fillText(lang === "ar" ? "توقيعك العطري" : "YOUR STARRY SIGNATURE", 540, 166);
+    let nameSize = 67; ctx.font = `bold ${nameSize}px Georgia,serif`;
+    while (ctx.measureText(product.name).width > 900 && nameSize > 42) { nameSize -= 2; ctx.font = `bold ${nameSize}px Georgia,serif`; }
+    ctx.fillStyle = "#f7edda"; ctx.fillText(product.name, 540, 245);
+    ctx.save(); ctx.beginPath(); ctx.roundRect(104, 286, 872, 622, 24); ctx.clip();
     const artwork = new Image(); artwork.crossOrigin = "anonymous"; artwork.src = asset(product.resultImage);
     try {
       await artwork.decode();
-      const scale = Math.max(canvas.width / artwork.naturalWidth, canvas.height / artwork.naturalHeight);
+      const scale = Math.max(872 / artwork.naturalWidth, 622 / artwork.naturalHeight);
       const drawWidth = artwork.naturalWidth * scale; const drawHeight = artwork.naturalHeight * scale;
-      ctx.drawImage(artwork, (canvas.width - drawWidth) / 2, (canvas.height - drawHeight) / 2, drawWidth, drawHeight);
-    } catch { ctx.fillStyle = "#07111d"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
-    const overlay = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    overlay.addColorStop(0, "rgba(2,7,13,.86)"); overlay.addColorStop(.38, "rgba(3,9,17,.25)"); overlay.addColorStop(.7, "rgba(2,7,13,.48)"); overlay.addColorStop(1, "rgba(2,7,13,.94)");
-    ctx.fillStyle = overlay; ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = "rgba(224,173,92,.72)"; ctx.lineWidth = 2; ctx.strokeRect(38, 38, 1004, 1274);
-    ctx.textAlign = "center"; ctx.direction = lang === "ar" ? "rtl" : "ltr";
-    ctx.fillStyle = "#e0ad5c"; ctx.font = "40px Georgia,serif"; ctx.fillText("✦  STARRY  ✦", 540, 126);
-    ctx.fillStyle = "#e5c78e"; ctx.font = "23px Arial,sans-serif"; ctx.fillText(lang === "ar" ? "توقيعك العطري" : "YOUR SIGNATURE SCENT", 540, 236);
-    let nameSize = 74; ctx.font = `bold ${nameSize}px Georgia,serif`;
-    while (ctx.measureText(product.name).width > 900 && nameSize > 48) { nameSize -= 2; ctx.font = `bold ${nameSize}px Georgia,serif`; }
-    ctx.fillStyle = "#fff8ea"; ctx.fillText(product.name, 540, 342);
-    const localized = lang === "ar" ? productCopy[product.id] : product;
-    ctx.fillStyle = "#e8ddc8"; ctx.font = "28px Arial,sans-serif"; ctx.fillText(localized.positioning, 540, 402, 920);
-    ctx.fillStyle = "rgba(5,11,18,.66)"; ctx.strokeStyle = "rgba(224,173,92,.78)"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.roundRect(385, 475, 310, 178, 28); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#e0ad5c"; ctx.font = "bold 90px Georgia,serif"; ctx.fillText(`${product.match}%`, 540, 573);
-    ctx.fillStyle = "#efe3ce"; ctx.font = "18px Arial,sans-serif"; ctx.fillText(copy.matchLabel.toUpperCase(), 540, 620);
+      ctx.drawImage(artwork, 104 + (872 - drawWidth) / 2, 286 + (622 - drawHeight) / 2, drawWidth, drawHeight);
+    } catch { ctx.fillStyle = "#101b28"; ctx.fillRect(104, 286, 872, 622); }
+    const imageShade = ctx.createLinearGradient(0, 650, 0, 908);
+    imageShade.addColorStop(0, "rgba(4,8,13,0)"); imageShade.addColorStop(1, "rgba(4,8,13,.62)");
+    ctx.fillStyle = imageShade; ctx.fillRect(104, 286, 872, 622); ctx.restore();
+    ctx.strokeStyle = "rgba(222,177,105,.72)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(104, 286, 872, 622, 24); ctx.stroke();
+    ctx.fillStyle = "#efe2cb"; ctx.font = "26px Arial,sans-serif"; ctx.fillText(localized.positioning, 540, 973, 900);
+    ctx.fillStyle = "#07111b"; ctx.strokeStyle = "#d9ae69"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(382, 1014, 316, 142, 20); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#e6bd78"; ctx.font = "bold 72px Georgia,serif"; ctx.fillText(`${product.match}%`, 540, 1090);
+    ctx.fillStyle = "#ddd0b8"; ctx.font = "16px Arial,sans-serif"; ctx.fillText(copy.matchLabel.toUpperCase(), 540, 1129);
     const traits = product.core.slice(0, 3).map((trait) => lang === "ar" ? traitArabic[trait] : trait.toUpperCase());
-    let tagX = 540 - ((traits.length - 1) * 160);
-    traits.forEach((trait) => { ctx.fillStyle = "#f0d6a0"; ctx.font = "20px Arial,sans-serif"; ctx.fillText(trait, tagX, 1037, 150); tagX += 160; });
-    ctx.strokeStyle = "rgba(224,173,92,.55)"; ctx.beginPath(); ctx.moveTo(150, 1143); ctx.lineTo(930, 1143); ctx.stroke();
-    ctx.fillStyle = "#fff8ea"; ctx.font = "25px Georgia,serif"; ctx.fillText(lang === "ar" ? "عطر يشبهك" : "A fragrance that feels like you", 540, 1204);
-    ctx.fillStyle = "#c9b17e"; ctx.font = "17px Arial,sans-serif"; ctx.fillText("STARRY-FRAGRANCES-QUIZ.VERCEL.APP", 540, 1254);
+    const totalWidth = traits.reduce((total, trait) => total + Math.max(126, ctx.measureText(trait).width + 38), 0) + (traits.length - 1) * 14;
+    let tagX = (1080 - totalWidth) / 2;
+    traits.forEach((trait) => {
+      ctx.font = "17px Arial,sans-serif"; const chipWidth = Math.max(126, ctx.measureText(trait).width + 38);
+      ctx.fillStyle = "rgba(222,177,105,.08)"; ctx.strokeStyle = "rgba(222,177,105,.42)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.roundRect(tagX, 1190, chipWidth, 42, 21); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = "#e3d2b3"; ctx.fillText(trait, tagX + chipWidth / 2, 1217, chipWidth - 12); tagX += chipWidth + 14;
+    });
+    ctx.fillStyle = "#aa9a7e"; ctx.font = "17px Georgia,serif"; ctx.fillText(lang === "ar" ? "عطر يشبهك" : "A fragrance that feels like you", 540, 1281);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
     if (!blob) return;
     const file = new File([blob], "my-starry-signature.png", { type: "image/png" });
@@ -188,7 +228,6 @@ function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, l
     <Header onGallery={onGallery} lang={lang}/>
     <div className="result-top"><span>{copy.match}</span><h1 dir="ltr">{product.name}</h1><p>{localized.positioning}</p></div>
     <div className="product-stage result-art"><ResponsiveImage name={product.resultImage} alt={product.name}/><div className="match-badge">{product.match}%<small>{copy.matchLabel}</small></div></div>
-    <div className="score-note">{copy.scoreNote}</div>
     <div className="result-copy"><h3>{copy.why}</h3><p>{localized.description}</p><p className="match-reasons">{matchedAnswers(product, answers, lang).join(" · ")}</p><h3 className="profile-title">{copy.profile}</h3><DNA product={product} lang={lang}/></div>
     <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{product.bestFor[lang].map((item) => <span key={item}>{item}</span>)}</div></section>
     {secondary && <div className="secondary-match"><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}%</b></div>}
