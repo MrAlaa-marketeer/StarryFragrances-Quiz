@@ -8,10 +8,11 @@ import { products, questions, TRAITS, quizFit, productCopy } from "./data/produc
 
 const ASSET_BASE = "/images/";
 const WHATSAPP_NUMBER = "201207207794";
+const INSTAGRAM_PROFILE = "https://www.instagram.com/starryfragrances/";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const labels = {
-  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language" },
-  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
+  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", before:"Was", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language" },
+  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", before:"بدلًا من", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
 };
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
@@ -87,6 +88,14 @@ function Header({ back, onBack, onGallery, lang = "en" }) {
 
 function PrimaryButton({ children, onClick, lang = "en" }) {
   return <button className="primary-btn" onClick={onClick}>{children}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={16}/></button>;
+}
+
+function Price({ product, lang, compact = false }) {
+  const copy = labels[lang];
+  return <div className={`price-block${compact ? " compact" : ""}`} aria-label={`${product.size}, ${product.offerPrice} ${copy.priceUnit}`}>
+    <div className="price-meta"><span>{product.size}</span><span className="offer-badge">{copy.offer}</span></div>
+    <div className="price-values"><span className="old-price"><small>{copy.before}</small> {product.listPrice} <small>{copy.priceUnit}</small></span><strong>{product.offerPrice} <small>{copy.priceUnit}</small></strong></div>
+  </div>;
 }
 
 function SocialLinks() {
@@ -242,16 +251,17 @@ function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, l
 
 function Details({ product, onBack, onGallery, lang }) {
   const copy = labels[lang];
-  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} من STARRY.` : `I want to order ${product.name} from STARRY`;
+  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   return <main className="screen details" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1 dir="ltr">{product.name}</h1>
+    <section className="purchase-panel"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div></section>
     <section className="accords"><h3>{lang === "ar" ? "الروائح الأساسية" : "MAIN ACCORDS"}</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span>{a.name}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
     <section><h3 className="section-title">{lang === "ar" ? "مكونات العطر" : "FRAGRANCE NOTES"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{list.join(" · ")}</strong></div>)}</div></section>
-    <a className="whatsapp-btn" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}><MessageCircle size={17}/> {copy.order} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
   </main>;
 }
 
-function Gallery({ onAgain, onBack, onGallery, lang }) {
-  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <article key={product.id} className="mini-product"><div className="mini-bottle"><ResponsiveImage name={product.resultImage} alt={product.name} sizes="96px"/></div><span dir="ltr">{product.name}</span></article>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
+  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <button type="button" key={product.id} className="mini-product" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${labels[lang].priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="96px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/></button>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
 }
 
 function App() {
@@ -259,6 +269,7 @@ function App() {
   const [answers, setAnswers] = useState(() => { try { return JSON.parse(sessionStorage.getItem("starry-quiz-answers") || "[]"); } catch { return []; } });
   const [step, setStep] = useState(() => Number(sessionStorage.getItem("starry-quiz-step") || 0));
   const [selected, setSelected] = useState(null);
+  const [detailsReturnScreen, setDetailsReturnScreen] = useState("result");
   const [lang, setLang] = useState("en");
   const results = useMemo(() => scoreProducts(answers), [answers]);
   const openGallery = () => setScreen("gallery");
@@ -270,11 +281,10 @@ function App() {
   if (screen === "landing") return <Landing onStart={() => setScreen("quiz")} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang}/>;
-  if (screen === "result") { const product = results[0] || products[0]; return <MatchCard product={product} secondary={results[1]} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setScreen("details")}} onGallery={openGallery}/>; }
-  if (screen === "details") return <Details product={selected} lang={lang} onBack={() => setScreen("result")} onGallery={openGallery}/>;
-  if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => setScreen("landing")} onGallery={openGallery}/>;
+  if (screen === "result") { const product = results[0] || products[0]; return <MatchCard product={product} secondary={results[1]} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
+  if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => setScreen(detailsReturnScreen)} onGallery={openGallery}/>;
+  if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => setScreen("landing")} onGallery={openGallery} onOpen={(product) => {setSelected(product);setDetailsReturnScreen("gallery");setScreen("details")}}/>;
   return null;
 }
 
 createRoot(document.getElementById("root")).render(<App/>);
-

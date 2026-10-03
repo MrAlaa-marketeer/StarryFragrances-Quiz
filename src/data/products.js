@@ -8,7 +8,7 @@ const dna = (values) => Object.fromEntries(TRAITS.map((t) => [t, values[t] ?? 0]
 
 export const products = [
   {
-    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp",
+    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
     positioning: "Woody. Warm. Sophisticated.",
     bestForKeys: ["everyday","work"], bestFor: { en:["Work & meetings","Everyday wear","Formal occasions"], ar:["الشغل والاجتماعات","الاستخدام اليومي","المناسبات الرسمية"] },
     description: "You gravitate toward refined woods, warm spices and a polished presence — a scent that feels confident, sophisticated and effortlessly put together.",
@@ -18,7 +18,7 @@ export const products = [
     notes: { "Top Notes":["Fig","Black Tea","Cardamom"], "Heart Notes":["Iris","Vetiver"], "Base Notes":["Sandalwood","Tonka Bean"] }
   },
   {
-    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp",
+    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
     positioning: "Deep. Warm. Mysterious.",
     bestForKeys: ["date","social"], bestFor: { en:["Date nights","Evening wear","Cool weather"], ar:["المواعيد الليلية","السهرات","الأجواء الباردة"] },
     description: "Your choices lean toward resinous warmth, rich woods and an intriguing presence — luxurious, mysterious and made for the night.",
@@ -28,7 +28,7 @@ export const products = [
     notes: { "Top Notes":["Cedar","Amber","Ylang-Ylang"], "Heart Notes":["Gurjun Balsam","Iris","Myrrh"], "Base Notes":["Vanilla","Sandalwood","Benzoin"] }
   },
   {
-    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp",
+    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp", size: "50ml", listPrice: 575, offerPrice: 520,
     positioning: "Fresh. Vibrant. Unforgettable.",
     bestForKeys: ["everyday","date","social"], bestFor: { en:["Social occasions","Daytime outings","Summer days"], ar:["المناسبات والخروجات","مشاوير النهار","أيام الصيف"] },
     description: "Bright, juicy and energetic. You want a fragrance that feels alive, playful and impossible to overlook.",
@@ -38,7 +38,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Bergamot"], "Heart Notes":["Orange Blossom","Jasmine"], "Base Notes":["Sandalwood","Vanilla","Musks","Amber Woods"] }
   },
   {
-    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp",
+    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
     positioning: "Soft. Elegant. Radiant.",
     bestForKeys: ["everyday","work","date","social"], bestFor: { en:["Work & daytime","Dates","Special occasions"], ar:["الشغل والنهار","المواعيد","المناسبات الخاصة"] },
     description: "You are drawn to luminous florals, creamy sweetness and elegant sensuality — soft enough to feel beautiful, strong enough to be remembered.",
@@ -48,7 +48,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Frankincense","Hazelnut"], "Heart Notes":["Saffron","Rose","Jasmine Sambac","Osmanthus"], "Base Notes":["Sandalwood","Vanilla","Akigalawood","Amber"] }
   },
   {
-    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp",
+    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
     positioning: "Juicy. Bright. Effortless.",
     bestForKeys: ["everyday","work","social"], bestFor: { en:["Everyday wear","Daytime","Casual outings"], ar:["الاستخدام اليومي","النهار","الخروجات البسيطة"] },
     description: "Your profile is bright, playful and juicy. You want something refreshing, addictive and easy to wear whenever the mood hits.",
@@ -58,7 +58,7 @@ export const products = [
     notes: { "Top Notes":["Red Apple","Lychee","Black Currant","Pink Grapefruit"], "Heart Notes":["Wild Berries","Jasmine","Rose"], "Base Notes":["Sugar","Musk","Vanilla","Amber"] }
   },
   {
-    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp",
+    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp", size: "50ml", listPrice: 620, offerPrice: 560,
     positioning: "Dark. Spicy. Addictive.",
     bestForKeys: ["date","social"], bestFor: { en:["Date nights","Nights out","Cool evenings"], ar:["المواعيد الليلية","السهرات","الأمسيات الباردة"] },
     description: "Your choices point toward dark vanilla, warm spice and a magnetic presence — intimate, bold and made to leave a trace.",
@@ -68,7 +68,7 @@ export const products = [
     notes: { "Top Notes":["Pink Pepper","Black Pepper","Elemi"], "Heart Notes":["Olibanum","Saffron"], "Base Notes":["Vanilla","Cedarwood","Suede"] }
   },
   {
-    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp",
+    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
     positioning: "Fresh. Green. Effortless.",
     bestForKeys: ["everyday","work"], bestFor: { en:["Everyday wear","Work","Warm days"], ar:["الاستخدام اليومي","الشغل","الأيام الدافئة"] },
     description: "Fresh air, green energy and effortless confidence. Your scent should move with you, not weigh you down.",
@@ -78,7 +78,7 @@ export const products = [
     notes: { "Top Notes":["Mint","Bergamot","Grapefruit","Lavender"], "Heart Notes":["Green Apple","Cranberry","Rose"], "Base Notes":["Cotton Flower","Cactus","Amber"] }
   },
   {
-    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp",
+    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
     positioning: "Creamy. Magnetic. Sensual.",
     bestForKeys: ["date","social"], bestFor: { en:["Dates","Evening wear","Special occasions"], ar:["المواعيد","السهرات","المناسبات الخاصة"] },
     description: "You lean toward creamy florals, sweet warmth and magnetic sensuality — a fragrance that feels soft, confident and unforgettable.",
@@ -175,4 +175,3 @@ export const productCopy = {
   "star-boy": { positioning:"منعش. أخضر. عفوي.", description:"هواء منعش وطاقة خضراء وثقة عفوية. عطرك يتحرك معك بخفة ومن غير ما يطغى عليك." },
   luna: { positioning:"كريمي. جذاب. حسي.", description:"تميل إلى الزهور الكريمية والدفء الحلو والجاذبية الحسية — رائحة ناعمة وواثقة ويصعب نسيانها." }
 };
-
