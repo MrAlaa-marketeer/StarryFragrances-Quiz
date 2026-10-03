@@ -10,15 +10,10 @@ const ASSET_BASE = "/images/";
 const WHATSAPP_NUMBER = "201207207794";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const labels = {
-  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"MATCH", order:"ORDER ON WHATSAPP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language" },
-  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"تطابق", order:"اطلب عبر واتساب", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
+  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", scoreNote:"Weighted fit to your answers", order:"ORDER ON WHATSAPP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language" },
+  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", scoreNote:"درجة محسوبة من أوزان إجاباتك", order:"اطلب عبر واتساب", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
 };
-const occasionLabels = {
-  a: { en:"Everyday", ar:"الاستخدام اليومي" },
-  b: { en:"Work", ar:"العمل" },
-  c: { en:"Dates & nights out", ar:"المواعيد والخروجات الليلية" },
-  d: { en:"Parties & social occasions", ar:"الحفلات والمناسبات" }
-};
+const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 
 function ResponsiveImage({ name, alt, priority = false, sizes = "(max-width: 700px) 100vw, 382px" }) {
   const base = name.replace(/-960\.webp$/, "").replace(/\.png$/, "");
@@ -29,8 +24,11 @@ function ResponsiveImage({ name, alt, priority = false, sizes = "(max-width: 700
 }
 
 function scoreProducts(answers) {
-  const totalWeight = questions.reduce((sum, question) => sum + question.weight, 0);
-  return products.map((product) => {
+  const occasion = occasionByAnswer[answers[0]?.id];
+  const candidates = products.filter((product) => product.bestForKeys?.includes(occasion));
+  const eligibleProducts = candidates.length ? candidates : products;
+  const totalWeight = questions.reduce((sum, question, index) => sum + question.weight * (index === 0 ? 2.5 : 1), 0);
+  return eligibleProducts.map((product) => {
     const fit = quizFit[product.id];
     let weightedFit = 0;
     let tieBreak = 0;
@@ -39,13 +37,13 @@ function scoreProducts(answers) {
       const optionIndex = question.options.findIndex((option) => option.id === answer?.id);
       if (optionIndex < 0) return;
       const value = fit[questionIndex][optionIndex];
-      weightedFit += (value / 5) * question.weight;
+      weightedFit += (value / 5) * question.weight * (questionIndex === 0 ? 2.5 : 1);
       if (question.id === "q4") tieBreak += value * 0.7;
       if (question.id === "q10") tieBreak += value * 0.3;
     });
     const score = weightedFit / totalWeight;
     return { ...product, score, match: Math.round(score * 100), tieBreak };
-  }).sort((a, b) => (b.score - a.score) || (b.tieBreak - a.tieBreak) || a.id.localeCompare(b.id));
+}).sort((a, b) => (b.score - a.score) || (b.tieBreak - a.tieBreak) || a.id.localeCompare(b.id));
 }
 
 function Header({ back, onBack, onGallery, lang = "en" }) {
@@ -133,22 +131,53 @@ function ShareButton({ product, lang }) {
   async function share() {
     const canvas = document.createElement("canvas"); canvas.width = 1080; canvas.height = 1350;
     const ctx = canvas.getContext("2d");
-    const gradient = ctx.createLinearGradient(0, 0, 1080, 1350); gradient.addColorStop(0, "#102236"); gradient.addColorStop(1, "#020509"); ctx.fillStyle = gradient; ctx.fillRect(0, 0, 1080, 1350);
-    ctx.fillStyle = "#e0ad5c"; ctx.textAlign = "center"; ctx.font = "32px Arial"; ctx.fillText("✦  STARRY  ✦", 540, 145);
-    ctx.fillStyle = "#ebe0c7"; ctx.font = "30px Arial"; ctx.fillText(lang === "ar" ? "توقيعي العطري" : "MY STARRY SIGNATURE", 540, 245);
-    ctx.font = "bold 58px Arial"; ctx.fillText(product.name, 540, 340);
     const artwork = new Image(); artwork.crossOrigin = "anonymous"; artwork.src = asset(product.resultImage);
-    try { await artwork.decode(); ctx.drawImage(artwork, 320, 650, 440, 390); } catch { /* Keep the share card usable when an image is unavailable. */ }
-    ctx.fillStyle = "#e0ad5c"; ctx.font = "bold 92px Arial"; ctx.fillText(`${product.match}%`, 540, 510);
-    ctx.fillStyle = "#ebe0c7"; ctx.font = "28px Arial"; ctx.fillText(product.positioning, 540, 590);
-    ctx.strokeStyle = "#73562f"; ctx.beginPath(); ctx.moveTo(180, 680); ctx.lineTo(900, 680); ctx.stroke();
-    ctx.fillStyle = "#bba77f"; ctx.font = "24px Arial"; ctx.fillText("A fragrance that feels like you", 540, 1240);
+    try {
+      await artwork.decode();
+      const scale = Math.max(canvas.width / artwork.naturalWidth, canvas.height / artwork.naturalHeight);
+      const drawWidth = artwork.naturalWidth * scale; const drawHeight = artwork.naturalHeight * scale;
+      ctx.drawImage(artwork, (canvas.width - drawWidth) / 2, (canvas.height - drawHeight) / 2, drawWidth, drawHeight);
+    } catch { ctx.fillStyle = "#07111d"; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+    const overlay = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    overlay.addColorStop(0, "rgba(2,7,13,.86)"); overlay.addColorStop(.38, "rgba(3,9,17,.25)"); overlay.addColorStop(.7, "rgba(2,7,13,.48)"); overlay.addColorStop(1, "rgba(2,7,13,.94)");
+    ctx.fillStyle = overlay; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "rgba(224,173,92,.72)"; ctx.lineWidth = 2; ctx.strokeRect(38, 38, 1004, 1274);
+    ctx.textAlign = "center"; ctx.direction = lang === "ar" ? "rtl" : "ltr";
+    ctx.fillStyle = "#e0ad5c"; ctx.font = "40px Georgia,serif"; ctx.fillText("✦  STARRY  ✦", 540, 126);
+    ctx.fillStyle = "#e5c78e"; ctx.font = "23px Arial,sans-serif"; ctx.fillText(lang === "ar" ? "توقيعك العطري" : "YOUR SIGNATURE SCENT", 540, 236);
+    let nameSize = 74; ctx.font = `bold ${nameSize}px Georgia,serif`;
+    while (ctx.measureText(product.name).width > 900 && nameSize > 48) { nameSize -= 2; ctx.font = `bold ${nameSize}px Georgia,serif`; }
+    ctx.fillStyle = "#fff8ea"; ctx.fillText(product.name, 540, 342);
+    const localized = lang === "ar" ? productCopy[product.id] : product;
+    ctx.fillStyle = "#e8ddc8"; ctx.font = "28px Arial,sans-serif"; ctx.fillText(localized.positioning, 540, 402, 920);
+    ctx.fillStyle = "rgba(5,11,18,.66)"; ctx.strokeStyle = "rgba(224,173,92,.78)"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect(385, 475, 310, 178, 28); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#e0ad5c"; ctx.font = "bold 90px Georgia,serif"; ctx.fillText(`${product.match}%`, 540, 573);
+    ctx.fillStyle = "#efe3ce"; ctx.font = "18px Arial,sans-serif"; ctx.fillText(copy.matchLabel.toUpperCase(), 540, 620);
+    const traits = product.core.slice(0, 3).map((trait) => lang === "ar" ? traitArabic[trait] : trait.toUpperCase());
+    let tagX = 540 - ((traits.length - 1) * 160);
+    traits.forEach((trait) => { ctx.fillStyle = "#f0d6a0"; ctx.font = "20px Arial,sans-serif"; ctx.fillText(trait, tagX, 1037, 150); tagX += 160; });
+    ctx.strokeStyle = "rgba(224,173,92,.55)"; ctx.beginPath(); ctx.moveTo(150, 1143); ctx.lineTo(930, 1143); ctx.stroke();
+    ctx.fillStyle = "#fff8ea"; ctx.font = "25px Georgia,serif"; ctx.fillText(lang === "ar" ? "عطر يشبهك" : "A fragrance that feels like you", 540, 1204);
+    ctx.fillStyle = "#c9b17e"; ctx.font = "17px Arial,sans-serif"; ctx.fillText("STARRY-FRAGRANCES-QUIZ.VERCEL.APP", 540, 1254);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+    if (!blob) return;
     const file = new File([blob], "my-starry-signature.png", { type: "image/png" });
     if (navigator.share && navigator.canShare?.({ files: [file] })) await navigator.share({ title: `My STARRY match: ${product.name}`, files: [file] });
     else { const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url; link.download = file.name; link.click(); URL.revokeObjectURL(url); }
   }
   return <button className="share-btn" onClick={share}><Share2 size={16}/>{copy.share}</button>;
+}
+
+function matchedAnswers(product, answers, lang) {
+  return questions.slice(0, 9).map((question, questionIndex) => {
+    const optionIndex = question.options.findIndex((option) => option.id === answers[questionIndex]?.id);
+    if (optionIndex < 0) return null;
+    return { label: question.options[optionIndex].label[lang], fit: quizFit[product.id][questionIndex][optionIndex], weight: question.weight * (questionIndex === 0 ? 2.5 : 1) };
+  }).filter((item) => item && item.fit >= 4)
+    .sort((a, b) => b.fit * b.weight - a.fit * a.weight)
+    .slice(0, 3)
+    .map((item) => item.label);
 }
 
 function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, lang }) {
@@ -159,8 +188,9 @@ function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, l
     <Header onGallery={onGallery} lang={lang}/>
     <div className="result-top"><span>{copy.match}</span><h1 dir="ltr">{product.name}</h1><p>{localized.positioning}</p></div>
     <div className="product-stage result-art"><ResponsiveImage name={product.resultImage} alt={product.name}/><div className="match-badge">{product.match}%<small>{copy.matchLabel}</small></div></div>
-    <div className="result-copy"><h3>{copy.why}</h3><p>{localized.description}</p><p className="match-reasons">{[questions[1].options.find((option) => option.id === answers[1]?.id)?.label[lang], questions[3].options.find((option) => option.id === answers[3]?.id)?.label[lang], questions[0].options.find((option) => option.id === answers[0]?.id)?.label[lang]].filter(Boolean).join(" · ")}</p><h3 className="profile-title">{copy.profile}</h3><DNA product={product} lang={lang}/></div>
-    <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{occasionLabels[answers[0]?.id]?.[lang] && <span>{occasionLabels[answers[0]?.id][lang]}</span>}</div></section>
+    <div className="score-note">{copy.scoreNote}</div>
+    <div className="result-copy"><h3>{copy.why}</h3><p>{localized.description}</p><p className="match-reasons">{matchedAnswers(product, answers, lang).join(" · ")}</p><h3 className="profile-title">{copy.profile}</h3><DNA product={product} lang={lang}/></div>
+    <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{product.bestFor[lang].map((item) => <span key={item}>{item}</span>)}</div></section>
     {secondary && <div className="secondary-match"><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}%</b></div>}
     <a className="whatsapp-btn" href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`}><MessageCircle size={17}/> {copy.order} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
     <button className="explore-btn" onClick={onOpen}>{copy.explore} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></button>
