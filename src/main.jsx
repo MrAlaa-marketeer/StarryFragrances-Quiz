@@ -17,6 +17,28 @@ const labels = {
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
 
+function readAnswers() {
+  try {
+    const saved = JSON.parse(sessionStorage.getItem("starry-quiz-answers") || "[]");
+    return Array.isArray(saved) ? saved.slice(0, questions.length) : [];
+  } catch { return []; }
+}
+
+function readStep() {
+  try {
+    const saved = Number(sessionStorage.getItem("starry-quiz-step") || 0);
+    return Number.isInteger(saved) && saved >= 0 && saved < questions.length ? saved : 0;
+  } catch { return 0; }
+}
+
+function writeSessionValue(key, value) {
+  try { sessionStorage.setItem(key, value); } catch { /* Keep the quiz usable when browser storage is unavailable. */ }
+}
+
+function removeSessionValue(key) {
+  try { sessionStorage.removeItem(key); } catch { /* Retaking still works for the current page session. */ }
+}
+
 function shuffleOptions(options) {
   const shuffled = [...options];
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -28,20 +50,24 @@ function shuffleOptions(options) {
 
 function makeOptionOrders() {
   let previous = {};
-  try { previous = JSON.parse(sessionStorage.getItem(OPTION_ORDER_STORAGE) || "{}"); } catch { /* Start with a fresh order when storage is unavailable. */ }
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(OPTION_ORDER_STORAGE) || "{}");
+    if (saved && typeof saved === "object" && !Array.isArray(saved)) previous = saved;
+  } catch { /* Start with a fresh order when storage is unavailable. */ }
   const current = {};
   const orders = questions.map((question) => {
+    const previousOrder = Array.isArray(previous[question.id]) ? previous[question.id].join(",") : null;
     let shuffled = shuffleOptions(question.options);
     let attempts = 0;
-    while (previous[question.id]?.join(",") === shuffled.map((option) => option.id).join(",") && attempts < 8) {
+    while (previousOrder === shuffled.map((option) => option.id).join(",") && attempts < 8) {
       shuffled = shuffleOptions(question.options);
       attempts += 1;
     }
-    if (previous[question.id]?.join(",") === shuffled.map((option) => option.id).join(",")) shuffled = [...shuffled.slice(1), shuffled[0]];
+    if (previousOrder === shuffled.map((option) => option.id).join(",")) shuffled = [...shuffled.slice(1), shuffled[0]];
     current[question.id] = shuffled.map((option) => option.id);
     return shuffled;
   });
-  try { sessionStorage.setItem(OPTION_ORDER_STORAGE, JSON.stringify(current)); } catch { /* The current attempt still keeps its shuffled order in memory. */ }
+  writeSessionValue(OPTION_ORDER_STORAGE, JSON.stringify(current));
   return orders;
 }
 
@@ -130,17 +156,22 @@ function Quiz({ onFinish, onExit, onGallery, lang, setLang, step, setStep, answe
   const q = questions[step];
   const [optionOrders] = useState(makeOptionOrders);
   const advancing = React.useRef(false);
+  const advanceTimer = React.useRef(null);
+  useEffect(() => () => window.clearTimeout(advanceTimer.current), []);
   function choose(option) {
     if (advancing.current) return;
     const nextAnswers = [...answers]; nextAnswers[step] = option; setAnswers(nextAnswers);
     advancing.current = true;
-    window.setTimeout(() => {
+    advanceTimer.current = window.setTimeout(() => {
       advancing.current = false;
       if (step === questions.length - 1) onFinish(nextAnswers);
       else setStep(step + 1);
     }, 320);
   }
-  function back() { if (step > 0) setStep(step - 1); else onExit(); }
+  function back() {
+    if (advancing.current) return;
+    if (step > 0) setStep(step - 1); else onExit();
+  }
   return <main className="screen" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
     <Header back={step > 0} onBack={back} onGallery={onGallery} lang={lang}/>
     <div className="quiz-wrap">
@@ -156,9 +187,9 @@ function Quiz({ onFinish, onExit, onGallery, lang, setLang, step, setStep, answe
   </main>;
 }
 
-function Analyzing({ lang }) {
+function Analyzing({ lang, onBack }) {
   const copy = labels[lang];
-  return <main className="screen analyzing" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back lang={lang}/><div className="analysis-symbol">✦</div><h2>{lang === "ar" ? copy.analyzing : <>ANALYZING<br/>YOUR PREFERENCES</>}</h2><p>{copy.reading}<br/>{copy.finding}</p><div className="loader"><span/></div></main>;
+  return <main className="screen analyzing" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} lang={lang}/><div className="analysis-symbol">✦</div><h2>{lang === "ar" ? copy.analyzing : <>ANALYZING<br/>YOUR PREFERENCES</>}</h2><p>{copy.reading}<br/>{copy.finding}</p><div className="loader"><span/></div></main>;
 }
 
 const traitArabic = { fresh:"منعش",fruity:"فاكهي",floral:"زهري",sweet:"حلو",vanilla:"فانيليا",woody:"خشبي",amber:"عنبر",spicy:"متبّل",creamy:"كريمي",powdery:"بودري",dark:"داكن",sensual:"حسي",elegant:"أنيق",mysterious:"غامض",playful:"مرح",energetic:"حيوي",warm:"دافئ",clean:"نظيف",luxurious:"فاخر",bold:"جريء" };
@@ -167,11 +198,17 @@ function DNA({ product, lang }) {
   return <div className="dna-bars">{visible.map((trait) => <div className="dna-row" key={trait}><span>{lang === "ar" ? traitArabic[trait] : trait.replace("woody","WOODY").toUpperCase()}</span><div><i style={{width:`${(product.dna[trait] / 5) * 100}%`}}/></div></div>)}</div>;
 }
 
+function traceRoundedRect(ctx, x, y, width, height, radius) {
+  if (typeof ctx.roundRect === "function") ctx.roundRect(x, y, width, height, radius);
+  else ctx.rect(x, y, width, height);
+}
+
 function ShareButton({ product, lang }) {
   const copy = labels[lang];
   async function share() {
     const canvas = document.createElement("canvas"); canvas.width = 1080; canvas.height = 1350;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
     const localized = lang === "ar" ? productCopy[product.id] : product;
     const background = ctx.createLinearGradient(0, 0, 1080, 1350);
     background.addColorStop(0, "#111d2a"); background.addColorStop(.56, "#07111b"); background.addColorStop(1, "#03070c");
@@ -184,7 +221,7 @@ function ShareButton({ product, lang }) {
     let nameSize = 67; ctx.font = `bold ${nameSize}px Georgia,serif`;
     while (ctx.measureText(product.name).width > 900 && nameSize > 42) { nameSize -= 2; ctx.font = `bold ${nameSize}px Georgia,serif`; }
     ctx.fillStyle = "#f7edda"; ctx.fillText(product.name, 540, 245);
-    ctx.save(); ctx.beginPath(); ctx.roundRect(104, 286, 872, 622, 24); ctx.clip();
+    ctx.save(); ctx.beginPath(); traceRoundedRect(ctx, 104, 286, 872, 622, 24); ctx.clip();
     const artwork = new Image(); artwork.crossOrigin = "anonymous"; artwork.src = asset(product.resultImage);
     try {
       await artwork.decode();
@@ -195,27 +232,37 @@ function ShareButton({ product, lang }) {
     const imageShade = ctx.createLinearGradient(0, 650, 0, 908);
     imageShade.addColorStop(0, "rgba(4,8,13,0)"); imageShade.addColorStop(1, "rgba(4,8,13,.62)");
     ctx.fillStyle = imageShade; ctx.fillRect(104, 286, 872, 622); ctx.restore();
-    ctx.strokeStyle = "rgba(222,177,105,.72)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(104, 286, 872, 622, 24); ctx.stroke();
+    ctx.strokeStyle = "rgba(222,177,105,.72)"; ctx.lineWidth = 2; ctx.beginPath(); traceRoundedRect(ctx, 104, 286, 872, 622, 24); ctx.stroke();
     ctx.fillStyle = "#efe2cb"; ctx.font = "26px Arial,sans-serif"; ctx.fillText(localized.positioning, 540, 973, 900);
     ctx.fillStyle = "#07111b"; ctx.strokeStyle = "#d9ae69"; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.roundRect(382, 1014, 316, 142, 20); ctx.fill(); ctx.stroke();
     ctx.fillStyle = "#e6bd78"; ctx.font = "bold 72px Georgia,serif"; ctx.fillText(`${product.match}%`, 540, 1090);
     ctx.fillStyle = "#ddd0b8"; ctx.font = "16px Arial,sans-serif"; ctx.fillText(copy.matchLabel.toUpperCase(), 540, 1129);
     const traits = product.core.slice(0, 3).map((trait) => lang === "ar" ? traitArabic[trait] : trait.toUpperCase());
+    ctx.font = "17px Arial,sans-serif";
     const totalWidth = traits.reduce((total, trait) => total + Math.max(126, ctx.measureText(trait).width + 38), 0) + (traits.length - 1) * 14;
     let tagX = (1080 - totalWidth) / 2;
     traits.forEach((trait) => {
       ctx.font = "17px Arial,sans-serif"; const chipWidth = Math.max(126, ctx.measureText(trait).width + 38);
       ctx.fillStyle = "rgba(222,177,105,.08)"; ctx.strokeStyle = "rgba(222,177,105,.42)"; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.roundRect(tagX, 1190, chipWidth, 42, 21); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); traceRoundedRect(ctx, tagX, 1190, chipWidth, 42, 21); ctx.fill(); ctx.stroke();
       ctx.fillStyle = "#e3d2b3"; ctx.fillText(trait, tagX + chipWidth / 2, 1217, chipWidth - 12); tagX += chipWidth + 14;
     });
     ctx.fillStyle = "#aa9a7e"; ctx.font = "17px Georgia,serif"; ctx.fillText(lang === "ar" ? "عطر يشبهك" : "A fragrance that feels like you", 540, 1281);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
     if (!blob) return;
     const file = new File([blob], "my-starry-signature.png", { type: "image/png" });
-    if (navigator.share && navigator.canShare?.({ files: [file] })) await navigator.share({ title: `My STARRY match: ${product.name}`, files: [file] });
-    else { const url = URL.createObjectURL(blob); const link = document.createElement("a"); link.href = url; link.download = file.name; link.click(); URL.revokeObjectURL(url); }
+    try {
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ title: `My STARRY match: ${product.name}`, files: [file] });
+        return;
+      }
+    } catch (error) {
+      if (error?.name === "AbortError") return;
+    }
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a"); link.href = url; link.download = file.name; link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   return <button className="share-btn" onClick={share}><Share2 size={16}/>{copy.share}</button>;
 }
@@ -266,21 +313,34 @@ function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
 
 function App() {
   const [screen, setScreen] = useState("landing");
-  const [answers, setAnswers] = useState(() => { try { return JSON.parse(sessionStorage.getItem("starry-quiz-answers") || "[]"); } catch { return []; } });
-  const [step, setStep] = useState(() => Number(sessionStorage.getItem("starry-quiz-step") || 0));
+  const [answers, setAnswers] = useState(readAnswers);
+  const [step, setStep] = useState(readStep);
   const [selected, setSelected] = useState(null);
   const [detailsReturnScreen, setDetailsReturnScreen] = useState("result");
   const [lang, setLang] = useState("en");
+  const analysisTimer = React.useRef(null);
   const results = useMemo(() => scoreProducts(answers), [answers]);
   const openGallery = () => setScreen("gallery");
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"; }, [lang]);
-  useEffect(() => { sessionStorage.setItem("starry-quiz-answers", JSON.stringify(answers)); }, [answers]);
-  useEffect(() => { sessionStorage.setItem("starry-quiz-step", String(step)); }, [step]);
-  function finish(value) { setAnswers(value); setScreen("analyzing"); window.setTimeout(() => setScreen("result"), 1100); }
-  function retake() { setAnswers([]); setStep(0); setSelected(null); sessionStorage.removeItem("starry-quiz-answers"); sessionStorage.removeItem("starry-quiz-step"); setScreen("quiz"); }
+  useEffect(() => { writeSessionValue("starry-quiz-answers", JSON.stringify(answers)); }, [answers]);
+  useEffect(() => { writeSessionValue("starry-quiz-step", String(step)); }, [step]);
+  useEffect(() => () => window.clearTimeout(analysisTimer.current), []);
+  function finish(value) {
+    setAnswers(value);
+    setScreen("analyzing");
+    window.clearTimeout(analysisTimer.current);
+    analysisTimer.current = window.setTimeout(() => setScreen("result"), 1100);
+  }
+  function exitAnalysis() { window.clearTimeout(analysisTimer.current); setScreen("quiz"); }
+  function retake() {
+    window.clearTimeout(analysisTimer.current);
+    setAnswers([]); setStep(0); setSelected(null);
+    removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
+    setScreen("quiz");
+  }
   if (screen === "landing") return <Landing onStart={() => setScreen("quiz")} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
-  if (screen === "analyzing") return <Analyzing lang={lang}/>;
+  if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
   if (screen === "result") { const product = results[0] || products[0]; return <MatchCard product={product} secondary={results[1]} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
   if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => setScreen(detailsReturnScreen)} onGallery={openGallery}/>;
   if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => setScreen("landing")} onGallery={openGallery} onOpen={(product) => {setSelected(product);setDetailsReturnScreen("gallery");setScreen("details")}}/>;
