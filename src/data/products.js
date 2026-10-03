@@ -96,55 +96,55 @@ export const questions = [
     {id:"c",label:{en:"Dates & nights out",ar:"المواعيد والخروجات بالليل"}},
     {id:"d",label:{en:"Parties & social occasions",ar:"الحفلات والمناسبات الاجتماعية"}}
   ]},
-  { id:"q2", weight:1.1, title:{en:"What first impression should it leave?",ar:"إيه أول انطباع تحب العطر يسيبه؟"}, options:[
+  { id:"q2", weight:0.7, title:{en:"What first impression should it leave?",ar:"إيه أول انطباع تحب العطر يسيبه؟"}, options:[
     {id:"a",label:{en:"Fresh and easy to be around",ar:"منعش وقريب من الناس"}},
     {id:"b",label:{en:"Elegant and quietly expensive",ar:"أنيق وفخم من غير مبالغة"}},
     {id:"c",label:{en:"Mysterious and hard to forget",ar:"غامض وصعب يتنسي"}},
     {id:"d",label:{en:"Fun, magnetic and addictive",ar:"مرح وجذاب ومغري بتكراره"}}
   ]},
-  { id:"q3", weight:0.9, title:{en:"How noticeable should it be in the air?",ar:"تحب العطر يكون واضح قد إيه في المكان؟"}, options:[
+  { id:"q3", weight:0.4, title:{en:"How noticeable should it be in the air?",ar:"تحب العطر يكون واضح قد إيه في المكان؟"}, options:[
     {id:"a",label:{en:"Soft and close to my skin",ar:"هادي وقريب من بشرتي"}},
     {id:"b",label:{en:"Noticeable when someone comes close",ar:"يتلاحظ لما حد يقرب مني"}},
     {id:"c",label:{en:"Leaves a beautiful trail as I pass",ar:"يسيب أثر جميل وأنا ماشي"}},
     {id:"d",label:{en:"Makes a bold entrance and fills the room",ar:"حضوره قوي ويملى المكان"}}
   ]},
-  { id:"q4", weight:1.0, title:{en:"Which opening would make you want to smell it again?",ar:"أنهي افتتاحية تخليك تحب تشم العطر تاني؟"}, options:[
+  { id:"q4", weight:2.0, title:{en:"Which opening would make you want to smell it again?",ar:"أنهي افتتاحية تخليك تحب تشم العطر تاني؟"}, options:[
     {id:"a",label:{en:"Crisp fruit and fresh citrus",ar:"فاكهة مقرمشة وحمضيات منعشة"}},
     {id:"b",label:{en:"Spices, woods and a warm edge",ar:"توابل وأخشاب ولمسة دافئة"}},
     {id:"c",label:{en:"Creamy vanilla and glowing amber",ar:"فانيليا كريمية وعنبر دافئ"}},
     {id:"d",label:{en:"Flowers, sweetness and soft sensuality",ar:"زهور وحلاوة وأنوثة ناعمة"}}
   ]},
-  { id:"q5", weight:1.1, title:{en:"What kind of sweetness do you actually enjoy?",ar:"إيه نوع الحلاوة اللي بتحبها فعلًا؟"}, options:[
+  { id:"q5", weight:2.0, title:{en:"What kind of sweetness do you actually enjoy?",ar:"إيه نوع الحلاوة اللي بتحبها فعلًا؟"}, options:[
     {id:"a",label:{en:"Almost none — keep it crisp and fresh",ar:"قليلة جدًا — خليه منعش وخفيف"}},
     {id:"b",label:{en:"Juicy and fruity",ar:"فاكهية وعصيرية"}},
     {id:"c",label:{en:"Creamy and smooth",ar:"كريمية وناعمة"}},
     {id:"d",label:{en:"Deep vanilla, warm and addictive",ar:"فانيليا غنية ودافئة ومغرية"}}
   ]},
-  { id:"q6", weight:0.85, title:{en:"Pick a place that feels like your scent.",ar:"اختار مكان تحس إنه شبه ريحتك."}, options:[
+  { id:"q6", weight:0.4, title:{en:"Pick a place that feels like your scent.",ar:"اختار مكان تحس إنه شبه ريحتك."}, options:[
     {id:"a",label:{en:"Rooftop at midnight, city lights below",ar:"سطح مبنى بعد نص الليل وأضواء المدينة تحتك"}},
     {id:"b",label:{en:"A luxury hotel lounge with warm lighting",ar:"لاونج فندق فخم بإضاءة دافئة"}},
     {id:"c",label:{en:"A private room lit by candles",ar:"مكان هادي على ضوء الشموع"}},
     {id:"d",label:{en:"A sunny beach or a colorful city afternoon",ar:"شاطئ مشمس أو جولة وسط مدينة مليانة ألوان"}}
   ]},
-  { id:"q7", weight:0.75, title:{en:"Which style feels most like the way you dress?",ar:"أنهي ستايل أقرب لطريقة لبسك؟"}, options:[
+  { id:"q7", weight:0.4, title:{en:"Which style feels most like the way you dress?",ar:"أنهي ستايل أقرب لطريقة لبسك؟"}, options:[
     {id:"a",label:{en:"Casual, relaxed and effortless",ar:"كاجوال ومريح ومن غير تكلف"}},
     {id:"b",label:{en:"Clean, tailored and polished",ar:"مرتب وأنيق وتفاصيله محسوبة"}},
     {id:"c",label:{en:"Dark, confident and statement-making",ar:"غامق وجريء وملفت"}},
     {id:"d",label:{en:"Expressive, colorful and individual",ar:"مميز وملون وبيعبر عن شخصيتي"}}
   ]},
-  { id:"q8", weight:0.9, title:{en:"What do you want to feel after spraying it?",ar:"تحب تحس بإيه بعد ما ترش العطر؟"}, options:[
+  { id:"q8", weight:0.7, title:{en:"What do you want to feel after spraying it?",ar:"تحب تحس بإيه بعد ما ترش العطر؟"}, options:[
     {id:"a",label:{en:"Energy — awake, fresh and ready to go",ar:"طاقة — صاحي ومنتعش ومستعد أبدأ"}},
     {id:"b",label:{en:"Confidence — composed and put together",ar:"ثقة — هادي ومرتب وواثق من نفسي"}},
     {id:"c",label:{en:"Seduction — magnetic and unforgettable",ar:"جاذبية — حضوري مغناطيسي وصعب يتنسي"}},
     {id:"d",label:{en:"Joy — playful, bright and a little addictive",ar:"بهجة — مرح ومشرق ويخليني مبسوط"}}
   ]},
-  { id:"q9", weight:1.0, title:{en:"Which weather feels right for your signature scent?",ar:"أنهي جو تحس إنه الأنسب لعطرك المميز؟"}, options:[
+  { id:"q9", weight:0.4, title:{en:"Which weather feels right for your signature scent?",ar:"أنهي جو تحس إنه الأنسب لعطرك المميز؟"}, options:[
     {id:"a",label:{en:"Cold and rainy",ar:"جو بارد وممطر"}},
     {id:"b",label:{en:"A cool evening",ar:"مساء لطيف ومائل للبرودة"}},
     {id:"c",label:{en:"A warm night",ar:"ليلة دافئة"}},
     {id:"d",label:{en:"A sunny, hot day",ar:"نهار مشمس وحار"}}
   ]},
-  { id:"q10", weight:1.3, title:{en:"Be honest: what would make you stop wearing a fragrance?",ar:"بصراحة، إيه أكتر حاجة ممكن تخليك تبطل تستخدم عطر؟"}, options:[
+  { id:"q10", weight:1.0, title:{en:"Be honest: what would make you stop wearing a fragrance?",ar:"بصراحة، إيه أكتر حاجة ممكن تخليك تبطل تستخدم عطر؟"}, options:[
     {id:"a",label:{en:"It turns too sweet",ar:"لو حلاوته زيادة عن اللزوم"}},
     {id:"b",label:{en:"It feels too heavy or suffocating",ar:"لو تقيل أو خانق"}},
     {id:"c",label:{en:"It smells too generic or forgettable",ar:"لو ريحته عادية أو سهلة النسيان"}},
@@ -155,14 +155,14 @@ export const questions = [
 // Each row scores fit for the four answers to q1…q10 (0–5). q10 scores
 // suitability when the user wants to avoid that drawback.
 export const quizFit = {
-  elite: [[4,5,3,3],[2,5,3,2],[2,3,3,2],[1,3,4,3],[1,2,3,3],[2,5,3,1],[2,5,3,2],[3,5,3,2],[1,4,2,1],[4,2,4,4]],
-  "starry-amber": [[2,0,5,4],[2,4,5,3],[2,3,4,4],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[2,4,5,2],[5,4,4,1],[2,1,4,5]],
-  "tropical-bomb": [[4,2,3,5],[5,2,2,4],[1,3,5,5],[5,1,1,2],[1,5,2,2],[3,1,1,5],[3,2,2,5],[5,3,2,5],[1,2,4,5],[2,3,4,1]],
-  perla: [[3,3,4,4],[3,5,3,4],[2,3,3,2],[2,2,3,5],[1,2,4,3],[2,5,4,2],[2,5,3,3],[2,4,5,3],[2,4,3,2],[2,4,4,4]],
-  "fizzy-apple": [[5,4,2,4],[5,2,2,4],[1,2,4,2],[5,1,1,2],[1,5,1,1],[2,1,1,5],[5,3,1,4],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
-  "spicy-vanilla": [[2,0,5,4],[2,4,5,4],[1,3,5,5],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[1,4,5,3],[4,5,4,1],[2,1,4,5]],
-  "star-boy": [[5,3,1,3],[5,3,2,2],[1,2,3,2],[5,3,1,1],[1,2,1,1],[3,2,1,4],[5,5,2,2],[5,4,1,2],[1,2,2,5],[2,5,2,1]],
-  luna: [[2,0,5,4],[2,4,4,4],[2,3,4,3],[2,3,5,5],[1,1,4,5],[2,4,5,2],[1,3,5,4],[2,4,5,4],[4,3,5,2],[2,1,4,4]]
+  elite: [[4,5,3,3],[2,5,4,2],[3,3,4,3],[2,5,3,1],[4,2,3,1],[5,5,4,1],[2,5,4,2],[2,5,4,1],[5,4,3,1],[4,4,4,3]],
+  "starry-amber": [[2,0,5,4],[2,5,5,2],[3,4,4,4],[1,4,5,2],[1,2,5,4],[4,5,5,1],[2,4,5,2],[1,4,5,1],[5,5,5,1],[1,1,5,5]],
+  "tropical-bomb": [[4,2,3,5],[5,2,2,5],[3,4,5,4],[5,1,2,2],[2,5,2,1],[2,1,1,5],[4,2,2,5],[5,3,1,5],[1,4,3,1],[2,3,4,1]],
+  perla: [[3,3,4,4],[3,5,3,4],[3,3,3,3],[3,2,3,5],[1,2,5,3],[2,5,5,1],[2,5,3,4],[2,4,5,3],[3,4,4,2],[2,4,4,4]],
+  "fizzy-apple": [[5,4,2,4],[5,3,2,5],[3,4,2,3],[5,1,2,2],[1,5,2,3],[1,2,1,5],[5,3,1,5],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
+  "spicy-vanilla": [[2,0,5,4],[2,3,5,4],[2,4,5,5],[1,5,5,2],[1,1,3,5],[5,5,5,1],[1,3,5,3],[1,4,5,2],[5,5,4,1],[2,1,4,5]],
+  "star-boy": [[5,3,1,3],[5,4,2,3],[3,3,3,3],[5,4,1,1],[5,2,1,1],[3,3,1,5],[5,5,1,2],[5,5,1,2],[1,2,2,5],[5,5,3,1]],
+  luna: [[2,0,5,4],[2,4,4,5],[3,3,4,4],[1,1,5,5],[1,2,5,5],[3,4,5,1],[1,4,3,4],[1,4,5,4],[3,4,5,1],[2,1,4,4]]
 };
 
 export const productCopy = {
