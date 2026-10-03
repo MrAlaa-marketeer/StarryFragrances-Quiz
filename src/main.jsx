@@ -81,7 +81,7 @@ function scoreProducts(answers) {
 function Header({ back, onBack, onGallery, lang = "en" }) {
   return <header className="header" dir="ltr">
     {back ? <button className="icon-btn" onClick={onBack} aria-label={labels[lang].back}><ArrowLeft size={19}/></button> : <div className="header-spacer"/>}
-    <div className="logo">STARRY</div>
+    <a className="logo" href="https://starry-fragrances-quiz.vercel.app/" aria-label="STARRY quiz home">STARRY</a>
     <button className="icon-btn" onClick={onGallery} aria-label={lang === "ar" ? "استكشف كل العطور" : "Explore all fragrances"}><Menu size={20}/></button>
   </header>;
 }

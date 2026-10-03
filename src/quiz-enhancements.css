@@ -66,3 +66,5 @@
 .price-block.compact .price-values .old-price{font-size:10px}
 .price-block.compact .price-values strong{font-size:17px}
 @media(max-width:360px){.price-block.compact .price-values .old-price{font-size:9px}.price-block.compact .price-values strong{font-size:15px}}
+.header .logo{color:#e0ad5c;text-decoration:none;cursor:pointer}
+.header .logo:focus-visible{outline:1px solid #e0ad5c;outline-offset:5px;border-radius:2px}
