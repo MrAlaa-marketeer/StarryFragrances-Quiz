@@ -10,6 +10,7 @@ export const products = [
   {
     id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp",
     positioning: "Woody. Warm. Sophisticated.",
+    bestForKeys: ["everyday","work"], bestFor: { en:["Work & meetings","Everyday wear","Formal occasions"], ar:["الشغل والاجتماعات","الاستخدام اليومي","المناسبات الرسمية"] },
     description: "You gravitate toward refined woods, warm spices and a polished presence — a scent that feels confident, sophisticated and effortlessly put together.",
     dna: dna({ woody:5, spicy:4, powdery:4, elegant:5, warm:4, sensual:4, luxurious:5, creamy:3, sweet:3, dark:2 }),
     core: ["woody","elegant","warm","luxurious"],
@@ -19,6 +20,7 @@ export const products = [
   {
     id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp",
     positioning: "Deep. Warm. Mysterious.",
+    bestForKeys: ["date","social"], bestFor: { en:["Date nights","Evening wear","Cool weather"], ar:["المواعيد الليلية","السهرات","الأجواء الباردة"] },
     description: "Your choices lean toward resinous warmth, rich woods and an intriguing presence — luxurious, mysterious and made for the night.",
     dna: dna({ amber:5, woody:4, sweet:4, dark:4, warm:5, mysterious:5, luxurious:5, sensual:4, vanilla:3, spicy:2 }),
     core: ["amber","warm","mysterious","luxurious"],
@@ -28,6 +30,7 @@ export const products = [
   {
     id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp",
     positioning: "Fresh. Vibrant. Unforgettable.",
+    bestForKeys: ["everyday","date","social"], bestFor: { en:["Social occasions","Daytime outings","Summer days"], ar:["المناسبات والخروجات","مشاوير النهار","أيام الصيف"] },
     description: "Bright, juicy and energetic. You want a fragrance that feels alive, playful and impossible to overlook.",
     dna: dna({ fruity:5, fresh:4, sweet:4, energetic:5, playful:5, vanilla:3, floral:3, creamy:2, sensual:2 }),
     core: ["fruity","playful","energetic","fresh"],
@@ -37,6 +40,7 @@ export const products = [
   {
     id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp",
     positioning: "Soft. Elegant. Radiant.",
+    bestForKeys: ["everyday","work","date","social"], bestFor: { en:["Work & daytime","Dates","Special occasions"], ar:["الشغل والنهار","المواعيد","المناسبات الخاصة"] },
     description: "You are drawn to luminous florals, creamy sweetness and elegant sensuality — soft enough to feel beautiful, strong enough to be remembered.",
     dna: dna({ floral:5, sweet:4, amber:4, creamy:4, sensual:5, elegant:5, vanilla:3, warm:3, fruity:3, spicy:2, luxurious:5 }),
     core: ["floral","elegant","sensual","luxurious"],
@@ -46,6 +50,7 @@ export const products = [
   {
     id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp",
     positioning: "Juicy. Bright. Effortless.",
+    bestForKeys: ["everyday","work","social"], bestFor: { en:["Everyday wear","Daytime","Casual outings"], ar:["الاستخدام اليومي","النهار","الخروجات البسيطة"] },
     description: "Your profile is bright, playful and juicy. You want something refreshing, addictive and easy to wear whenever the mood hits.",
     dna: dna({ fresh:5, fruity:5, sweet:4, playful:5, energetic:5, clean:5, floral:3, sensual:2 }),
     core: ["fresh","fruity","playful","energetic"],
@@ -55,6 +60,7 @@ export const products = [
   {
     id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp",
     positioning: "Dark. Spicy. Addictive.",
+    bestForKeys: ["date","social"], bestFor: { en:["Date nights","Nights out","Cool evenings"], ar:["المواعيد الليلية","السهرات","الأمسيات الباردة"] },
     description: "Your choices point toward dark vanilla, warm spice and a magnetic presence — intimate, bold and made to leave a trace.",
     dna: dna({ vanilla:5, spicy:5, sweet:5, dark:5, sensual:5, warm:5, bold:5, amber:4, creamy:4, mysterious:5 }),
     core: ["vanilla","spicy","dark","sensual","bold"],
@@ -64,6 +70,7 @@ export const products = [
   {
     id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp",
     positioning: "Fresh. Green. Effortless.",
+    bestForKeys: ["everyday","work"], bestFor: { en:["Everyday wear","Work","Warm days"], ar:["الاستخدام اليومي","الشغل","الأيام الدافئة"] },
     description: "Fresh air, green energy and effortless confidence. Your scent should move with you, not weigh you down.",
     dna: dna({ fresh:5, energetic:5, clean:5, fruity:3, playful:4, woody:2, sweet:1 }),
     core: ["fresh","clean","energetic","playful"],
@@ -73,6 +80,7 @@ export const products = [
   {
     id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp",
     positioning: "Creamy. Magnetic. Sensual.",
+    bestForKeys: ["date","social"], bestFor: { en:["Dates","Evening wear","Special occasions"], ar:["المواعيد","السهرات","المناسبات الخاصة"] },
     description: "You lean toward creamy florals, sweet warmth and magnetic sensuality — a fragrance that feels soft, confident and unforgettable.",
     dna: dna({ floral:5, sweet:5, vanilla:4, creamy:5, sensual:5, elegant:4, amber:4, bold:5, warm:4 }),
     core: ["floral","creamy","sensual","sweet","bold"],
@@ -148,13 +156,13 @@ export const questions = [
 // suitability when the user wants to avoid that drawback.
 export const quizFit = {
   elite: [[4,5,3,3],[2,5,3,2],[2,3,3,2],[1,3,4,3],[1,2,3,3],[2,5,3,1],[2,5,3,2],[3,5,3,2],[1,4,2,1],[4,2,4,4]],
-  "starry-amber": [[2,2,5,4],[2,4,5,3],[2,3,4,4],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[2,4,5,2],[5,4,4,1],[2,1,4,5]],
-  "tropical-bomb": [[4,1,3,5],[5,2,2,4],[1,3,5,5],[5,1,1,2],[1,5,2,2],[3,1,1,5],[3,2,2,5],[5,3,2,5],[1,2,4,5],[2,3,4,1]],
+  "starry-amber": [[2,0,5,4],[2,4,5,3],[2,3,4,4],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[2,4,5,2],[5,4,4,1],[2,1,4,5]],
+  "tropical-bomb": [[4,2,3,5],[5,2,2,4],[1,3,5,5],[5,1,1,2],[1,5,2,2],[3,1,1,5],[3,2,2,5],[5,3,2,5],[1,2,4,5],[2,3,4,1]],
   perla: [[3,3,4,4],[3,5,3,4],[2,3,3,2],[2,2,3,5],[1,2,4,3],[2,5,4,2],[2,5,3,3],[2,4,5,3],[2,4,3,2],[2,4,4,4]],
-  "fizzy-apple": [[5,3,2,4],[5,2,2,4],[1,2,4,2],[5,1,1,2],[1,5,1,1],[2,1,1,5],[5,3,1,4],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
-  "spicy-vanilla": [[2,2,5,4],[2,4,5,4],[1,3,5,5],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[1,4,5,3],[4,5,4,1],[2,1,4,5]],
+  "fizzy-apple": [[5,4,2,4],[5,2,2,4],[1,2,4,2],[5,1,1,2],[1,5,1,1],[2,1,1,5],[5,3,1,4],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
+  "spicy-vanilla": [[2,0,5,4],[2,4,5,4],[1,3,5,5],[1,4,5,2],[1,2,4,5],[4,3,5,1],[2,4,5,3],[1,4,5,3],[4,5,4,1],[2,1,4,5]],
   "star-boy": [[5,3,1,3],[5,3,2,2],[1,2,3,2],[5,3,1,1],[1,2,1,1],[3,2,1,4],[5,5,2,2],[5,4,1,2],[1,2,2,5],[2,5,2,1]],
-  luna: [[2,2,4,4],[2,4,4,4],[2,3,4,3],[2,3,5,5],[1,1,4,5],[2,4,5,2],[1,3,5,4],[2,4,5,4],[4,3,5,2],[2,1,4,4]]
+  luna: [[2,0,5,4],[2,4,4,4],[2,3,4,3],[2,3,5,5],[1,1,4,5],[2,4,5,2],[1,3,5,4],[2,4,5,4],[4,3,5,2],[2,1,4,4]]
 };
 
 export const productCopy = {
@@ -167,3 +175,4 @@ export const productCopy = {
   "star-boy": { positioning:"منعش. أخضر. عفوي.", description:"هواء منعش وطاقة خضراء وثقة عفوية. عطرك يتحرك معك بخفة ومن غير ما يطغى عليك." },
   luna: { positioning:"كريمي. جذاب. حسي.", description:"تميل إلى الزهور الكريمية والدفء الحلو والجاذبية الحسية — رائحة ناعمة وواثقة ويصعب نسيانها." }
 };
+
