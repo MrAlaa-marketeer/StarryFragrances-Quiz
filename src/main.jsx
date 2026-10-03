@@ -279,7 +279,7 @@ function matchedAnswers(product, answers, lang) {
     .map((item) => item.label);
 }
 
-function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, lang }) {
+function MatchCard({ product, secondary, answers, onOpen, onOpenSecondary, onGallery, onRetake, lang }) {
   const copy = labels[lang];
   const localized = lang === "ar" ? productCopy[product.id] : product;
   const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
@@ -290,7 +290,7 @@ function MatchCard({ product, secondary, answers, onOpen, onGallery, onRetake, l
     <div className="product-stage result-art"><ResponsiveImage name={product.resultImage} alt={product.name}/><div className="match-badge">{product.match}%<small>{copy.matchLabel}</small></div></div>
     <div className="result-copy"><h3>{copy.why}</h3><p>{localized.description}</p><p className="match-reasons">{matchedAnswers(product, answers, lang).join(" · ")}</p><h3 className="profile-title">{copy.profile}</h3><DNA product={product} lang={lang}/></div>
     <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{product.bestFor[lang].map((item) => <span key={item}>{item}</span>)}</div></section>
-    {secondary && <div className="secondary-match"><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}%</b></div>}
+    {secondary && <button type="button" className="secondary-match" onClick={onOpenSecondary} aria-label={lang === "ar" ? `عرض تفاصيل عطر ${secondary.name}` : `View details for ${secondary.name}`}><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}% <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></b></button>}
     <section className="purchase-panel result-purchase"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div></section>
     <button className="explore-btn" onClick={onOpen}>{copy.explore} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></button>
     <ShareButton product={product} lang={lang}/><button className="retake-btn" onClick={onRetake}><RotateCcw size={14}/>{copy.retake}</button>
@@ -350,7 +350,7 @@ function App() {
   if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
-  if (screen === "result") { const product = results[0] || products[0]; return <MatchCard product={product} secondary={results[1]} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
+  if (screen === "result") { const product = results[0] || products[0]; const secondary = results[1]; return <MatchCard product={product} secondary={secondary} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onOpenSecondary={() => {if (!secondary) return; setSelected(secondary);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
   if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => setScreen(detailsReturnScreen)} onGallery={openGallery}/>;
   if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => setScreen("landing")} onGallery={openGallery} onOpen={(product) => {setSelected(product);setDetailsReturnScreen("gallery");setScreen("details")}}/>;
   return null;
