@@ -34,8 +34,8 @@
 .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;margin-top:24px}
 .mini-product{width:100%;min-width:0;appearance:none;border:1px solid rgba(209,176,118,.17);border-radius:13px;padding:9px 9px 12px;background:linear-gradient(155deg,rgba(14,27,40,.96),rgba(4,9,14,.98));color:#ebe0c7;cursor:pointer;text-align:inherit;transition:border-color .2s ease,transform .2s ease,background .2s ease}
 .mini-product:hover,.mini-product:focus-visible{border-color:rgba(224,173,92,.72);background:linear-gradient(155deg,rgba(20,35,49,.98),rgba(5,10,15,.99));transform:translateY(-2px);outline:none}
-.mini-bottle{height:144px;margin:0 0 10px;border-color:rgba(209,176,118,.14);background:radial-gradient(circle at 50% 40%,rgba(224,173,92,.1),transparent 60%),#050b13}
-.mini-bottle img{max-height:94%}
+.mini-bottle{height:158px;margin:0 0 10px;border-color:rgba(209,176,118,.14);background:radial-gradient(circle at 50% 40%,rgba(224,173,92,.1),transparent 60%),#050b13}
+.mini-bottle img{max-width:92%;max-height:97%;object-fit:contain}
 .mini-name{display:block;min-height:23px;font-size:9px;font-weight:600;letter-spacing:.35px;color:#f1e6d2}
 .price-block{border:1px solid rgba(213,177,111,.2);border-radius:13px;padding:14px 16px;background:linear-gradient(135deg,rgba(16,29,42,.94),rgba(5,10,16,.96));color:#eee2cc}
 .price-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;color:#cbb995;font-size:10px;letter-spacing:.8px}
@@ -56,7 +56,7 @@
 .order-actions .whatsapp-btn{background:#dfb263;color:#090a0b}
 .instagram-btn{background:linear-gradient(120deg,#231a21,#171a25);border:1px solid rgba(224,173,92,.48);color:#e9d7b3}
 .order-actions .whatsapp-btn:hover,.order-actions .instagram-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
-@media(max-width:360px){.product-grid{gap:10px 8px}.mini-product{padding:7px}.mini-bottle{height:122px}.price-block.compact .price-values strong{font-size:14px}.price-block.compact .price-values .old-price{font-size:8px}.order-actions .whatsapp-btn,.order-actions .instagram-btn{font-size:8px}}
+@media(max-width:360px){.product-grid{gap:10px 8px}.mini-product{padding:7px}.mini-bottle{height:136px}.price-block.compact .price-values strong{font-size:14px}.price-block.compact .price-values .old-price{font-size:8px}.order-actions .whatsapp-btn,.order-actions .instagram-btn{font-size:8px}}
 .price-meta{font-size:12px}
 .price-values .old-price{position:relative;display:inline-block;font-size:14px;font-variant-numeric:tabular-nums;text-decoration:none;white-space:nowrap}
 .price-values .old-price::after{content:"";position:absolute;inset-inline:0;top:52%;height:1px;background:rgba(174,145,103,.9);pointer-events:none}
