@@ -57,3 +57,12 @@
 .instagram-btn{background:linear-gradient(120deg,#231a21,#171a25);border:1px solid rgba(224,173,92,.48);color:#e9d7b3}
 .order-actions .whatsapp-btn:hover,.order-actions .instagram-btn:hover{filter:brightness(1.12);transform:translateY(-1px)}
 @media(max-width:360px){.product-grid{gap:10px 8px}.mini-product{padding:7px}.mini-bottle{height:122px}.price-block.compact .price-values strong{font-size:14px}.price-block.compact .price-values .old-price{font-size:8px}.order-actions .whatsapp-btn,.order-actions .instagram-btn{font-size:8px}}
+.price-meta{font-size:12px}
+.price-values .old-price{position:relative;display:inline-block;font-size:14px;font-variant-numeric:tabular-nums;text-decoration:none;white-space:nowrap}
+.price-values .old-price::after{content:"";position:absolute;inset-inline:0;top:52%;height:1px;background:rgba(174,145,103,.9);pointer-events:none}
+.price-values small{font-size:10px}
+.price-values strong{font-size:27px}
+.price-block.compact .price-meta{font-size:9px}
+.price-block.compact .price-values .old-price{font-size:10px}
+.price-block.compact .price-values strong{font-size:17px}
+@media(max-width:360px){.price-block.compact .price-values .old-price{font-size:9px}.price-block.compact .price-values strong{font-size:15px}}
