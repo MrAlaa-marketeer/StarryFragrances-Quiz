@@ -56,17 +56,19 @@ function scoreProducts(answers) {
   const occasion = occasionByAnswer[answers[0]?.id];
   const candidates = products.filter((product) => product.bestForKeys?.includes(occasion));
   const eligibleProducts = candidates.length ? candidates : products;
-  const totalWeight = questions.reduce((sum, question, index) => sum + question.weight * (index === 0 ? 2.5 : 1), 0);
+  const scoredQuestions = questions.slice(1);
+  const totalWeight = scoredQuestions.reduce((sum, question) => sum + question.weight, 0);
   return eligibleProducts.map((product) => {
     const fit = quizFit[product.id];
     let weightedFit = 0;
     let tieBreak = 0;
-    answers.forEach((answer, questionIndex) => {
-      const question = questions[questionIndex];
+    scoredQuestions.forEach((question, offset) => {
+      const questionIndex = offset + 1;
+      const answer = answers[questionIndex];
       const optionIndex = question.options.findIndex((option) => option.id === answer?.id);
       if (optionIndex < 0) return;
       const value = fit[questionIndex][optionIndex];
-      weightedFit += (value / 5) * question.weight * (questionIndex === 0 ? 2.5 : 1);
+      weightedFit += (value / 5) * question.weight;
       if (question.id === "q4") tieBreak += value * 0.7;
       if (question.id === "q10") tieBreak += value * 0.3;
     });
@@ -210,10 +212,11 @@ function ShareButton({ product, lang }) {
 }
 
 function matchedAnswers(product, answers, lang) {
-  return questions.slice(0, 9).map((question, questionIndex) => {
+  return questions.slice(1, 9).map((question, offset) => {
+    const questionIndex = offset + 1;
     const optionIndex = question.options.findIndex((option) => option.id === answers[questionIndex]?.id);
     if (optionIndex < 0) return null;
-    return { label: question.options[optionIndex].label[lang], fit: quizFit[product.id][questionIndex][optionIndex], weight: question.weight * (questionIndex === 0 ? 2.5 : 1) };
+    return { label: question.options[optionIndex].label[lang], fit: quizFit[product.id][questionIndex][optionIndex], weight: question.weight };
   }).filter((item) => item && item.fit >= 4)
     .sort((a, b) => b.fit * b.weight - a.fit * a.weight)
     .slice(0, 3)
