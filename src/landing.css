@@ -95,6 +95,22 @@ body:has(.landing) #root { width:100%; min-height:100vh; min-height:100svh; }
   .landing-footer-links { margin-inline:12vw; }
 }
 
+/* Clear Arabic typography and consistent RTL rhythm */
+html[lang="ar"] .screen { font-family:"Cairo",Arial,sans-serif; }
+html[lang="ar"] .screen :is(p,button,a,label,li,.sort-control>span,.mini-name,.price-meta,.section-title,.accords h3,.note-card small,.note-card strong,.product-description h2,.similar-section h2) { font-family:"Cairo",Arial,sans-serif; letter-spacing:0; }
+html[lang="ar"] .landing .landing-kicker { justify-content:center; font-size:12px; letter-spacing:0; }
+html[lang="ar"] .landing h1,html[lang="ar"] .quiz-wrap h2,html[lang="ar"] .shop-heading h1,html[lang="ar"] .shop-quiz-cta h2,html[lang="ar"] .policy-content h1 { font-family:"Cairo",Arial,sans-serif; line-height:1.4; letter-spacing:0; }
+html[lang="ar"] .landing-copy .primary-btn,html[lang="ar"] .landing-copy .quiz-link { font-size:15px; letter-spacing:0; }
+html[lang="ar"] .landing-copy p { font-size:15px; line-height:1.9; letter-spacing:0; }
+html[lang="ar"] .policy-intro,html[lang="ar"] .policy-content li { font-size:15px; line-height:2; }
+html[lang="ar"] .policy-back-link { font-size:13px; letter-spacing:0; }
+html[lang="ar"] .language-label { font-family:"Cairo",Arial,sans-serif; font-size:12px; letter-spacing:0; }
+@media (min-width:700px) {
+  .landing-kicker { justify-content:center; }
+  html[lang="ar"] .landing-copy { text-align:right; }
+  html[lang="ar"] .landing-copy .primary-btn,html[lang="ar"] .landing-copy .quiz-link { margin-inline:0; }
+}
+
 /* Storefront collection and product details */
 .shop-heading { padding:34px 25px 0; text-align:center; }
 .shop-kicker { color:#dfb975; font-size:9px; letter-spacing:2.5px; }

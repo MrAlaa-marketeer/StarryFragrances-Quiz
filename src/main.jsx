@@ -419,6 +419,7 @@ function App() {
     const match = window.location.pathname.match(/^\/fragrance\/([^/]+)$/);
     if (match) setSelected(products.find((product) => product.id === decodeURIComponent(match[1])) || products[0]);
   }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, [screen, selected]);
   const openGallery = () => {
     if (window.location.pathname !== "/shop") window.history.pushState({ screen: "gallery" }, "", "/shop");
     setScreen("gallery");
