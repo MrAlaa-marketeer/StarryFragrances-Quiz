@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/return-exchange-policy", "destination": "/" },
     { "source": "/shop", "destination": "/" },
+    { "source": "/quiz", "destination": "/" },
     { "source": "/fragrance/:path*", "destination": "/" }
   ]
 }

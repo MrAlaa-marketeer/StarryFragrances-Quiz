@@ -141,7 +141,7 @@ function Landing({ onStart, onGallery, onPolicy, lang, setLang }) {
     <Header onGallery={onGallery}/>
     <div className="landing-language"><LanguageToggle lang={lang} onChange={setLang}/></div>
     <div className="landing-art" aria-hidden="true"><ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw"/><span className="landing-star landing-star-one">✦</span><span className="landing-star landing-star-two">✧</span></div>
-    <div className="landing-copy"><div className="landing-kicker"><span/> {lang === "ar" ? "عالم STARRY للعطور" : "THE STARRY SCENT EDIT"}</div><h1>{lang === "ar" ? <><span>اختار عطرك</span><span>المميز</span></> : <><span>YOUR NEXT</span><span>SIGNATURE SCENT</span></>}</h1><p>{lang === "ar" ? "اكتشف مجموعتنا أو دع الاختبار يختار عطرك الأقرب إليك." : "Explore the collection or let our quiz find the scent that feels like you."}</p><PrimaryButton onClick={onGallery} lang={lang}>{labels[lang].shop}</PrimaryButton><button type="button" className="quiz-link" onClick={onStart}>{labels[lang].quiz}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button></div>
+    <div className="landing-copy"><div className="landing-kicker"><span/> {lang === "ar" ? "عالم STARRY للعطور" : "THE STARRY SCENT EDIT"}</div><h1>{lang === "ar" ? <><span>اختار عطرك</span><span>المميز</span></> : <><span>YOUR NEXT</span><span>SIGNATURE SCENT</span></>}</h1><p>{lang === "ar" ? "اكتشف مجموعتنا أو دع الاختبار يختار عطرك الأقرب إليك." : "Explore the collection or let our quiz find the scent that feels like you."}</p><PrimaryButton onClick={onGallery} lang={lang}>{labels[lang].shop}</PrimaryButton><a className="quiz-link" href="/quiz" onClick={(event) => { event.preventDefault(); onStart(); }}>{labels[lang].quiz}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a></div>
     <div className="landing-note"><span>STARRY</span><i/> {lang === "ar" ? "عطرك. حكايتك." : "YOUR SCENT. YOUR STORY."}</div>
     <SocialLinks lang={lang} onPolicy={onPolicy}/>
   </main>;
@@ -340,7 +340,7 @@ function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
     <div className="product-grid">{sortedProducts.map((product) => { const isCompared = compareIds.includes(product.id); return <article key={product.id} className={`mini-product${isCompared ? " is-compared" : ""}`}><button type="button" className="mini-product-open" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${copy.priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 44vw, 260px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/><span className="card-detail-link">{copy.viewDetails} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={12}/></span></button><button type="button" className="compare-pick" aria-pressed={isCompared} disabled={compareIds.length === 2 && !isCompared} onClick={() => toggleCompare(product.id)}>{isCompared ? copy.added : copy.compare}</button></article>; })}</div>
     {compareIds.length > 0 && <div className="compare-dock"><span>{compareIds.length === 1 ? copy.compareOneMore : copy.compareNow}</span><button type="button" disabled={compareIds.length < 2} onClick={() => setShowComparison((value) => !value)}>{showComparison ? copy.close : compareIds.length === 1 ? `${compareIds.length}/2` : copy.compareNow}</button></div>}
     {showComparison && compareProducts.length === 2 && <section className="compare-panel" ref={compareRef} aria-labelledby="compare-title"><header className="compare-header"><h2 id="compare-title">{copy.compareTitle}</h2><button type="button" onClick={() => setShowComparison(false)}>{copy.close}</button></header><div className="compare-heads"><span aria-hidden="true"/>{compareProducts.map((product) => <div className="compare-product-head" key={product.id}><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 30vw, 180px"/><strong dir="ltr">{product.name}</strong></div>)}</div><div className="compare-row"><span>{copy.compareSize}</span>{compareProducts.map((product) => <b key={product.id}>{product.size}</b>)}</div><div className="compare-row"><span>{copy.comparePrice}</span>{compareProducts.map((product) => <b className="compare-price" key={product.id}>{product.offerPrice} <small>{copy.priceUnit}</small>{product.listPrice > product.offerPrice && <del>{product.listPrice} {copy.priceUnit}</del>}</b>)}</div><div className="compare-row"><span>{copy.compareScent}</span>{compareProducts.map((product) => <b key={product.id}>{(lang === "ar" ? productCopy[product.id]?.positioning : product.positioning) || product.positioning}</b>)}</div><div className="compare-row"><span>{copy.compareNotes}</span>{compareProducts.map((product) => <b key={product.id}>{product.accords.slice(0,3).map((accord) => lang === "ar" ? (accordArabic[accord.name] || accord.name) : accord.name).join(" · ")}</b>)}</div><div className="compare-actions">{compareProducts.map((product) => <button type="button" key={product.id} onClick={() => onOpen(product)}>{copy.viewDetails}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></button>)}</div></section>}
-    <section className="shop-quiz-cta"><Sparkles size={19}/><h2>{copy.notSure}</h2><a href="/" onClick={(event) => {event.preventDefault();onAgain();}}>{copy.findScent}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a></section><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+    <section className="shop-quiz-cta"><Sparkles size={19}/><h2>{copy.notSure}</h2><a href="/quiz" onClick={(event) => {event.preventDefault();onAgain();}}>{copy.findScent}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a></section><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
 }
 
 const policyCopy = {
@@ -388,7 +388,7 @@ function PolicyPage({ lang, setLang, onBack, onGallery }) {
         <li>{copy.lower}</li>
         <li>{copy.higher}</li>
       </ul>
-      <a className="policy-back-link" href="/" onClick={(event) => { event.preventDefault(); onBack(); }}>{lang === "ar" ? "العودة إلى الاختبار" : "Back to the quiz"}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
+      <a className="policy-back-link" href="/shop" onClick={(event) => { event.preventDefault(); onBack(); }}>{lang === "ar" ? "العودة إلى المتجر" : "Back to the shop"}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
     </article>
   </main>;
 }
@@ -401,6 +401,7 @@ function readLanguage() {
 function screenFromPath(pathname) {
   if (pathname === "/return-exchange-policy") return "policy";
   if (pathname === "/shop") return "gallery";
+  if (pathname === "/quiz") return "quiz";
   if (pathname.startsWith("/fragrance/")) return "details";
   return "landing";
 }
@@ -423,7 +424,7 @@ function App() {
     setScreen("gallery");
   };
   function openPolicy() { window.history.pushState({ screen: "policy" }, "", "/return-exchange-policy"); setScreen("policy"); }
-  function backFromPolicy() { window.history.replaceState({ screen: "landing" }, "", "/"); setScreen("landing"); }
+  function backFromPolicy() { window.history.replaceState({ screen: "gallery" }, "", "/shop"); setScreen("gallery"); }
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"; }, [lang]);
   useEffect(() => { try { localStorage.setItem("starry-quiz-language", lang); } catch { /* Keep language selection for the current visit. */ } }, [lang]);
   useEffect(() => {
@@ -462,7 +463,7 @@ function App() {
   function exitAnalysis() { window.clearTimeout(analysisTimer.current); setScreen("quiz"); }
   function retake() {
     window.clearTimeout(analysisTimer.current);
-    if (window.location.pathname !== "/") window.history.pushState({screen:"quiz"},"", "/");
+    if (window.location.pathname !== "/quiz") window.history.pushState({screen:"quiz"},"", "/quiz");
     setAnswers([]); setStep(0); setSelected(null);
     removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
     setScreen("quiz");
@@ -473,14 +474,19 @@ function App() {
       setAnswers([]); setStep(0); setSelected(null);
       removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
     }
+    if (window.location.pathname !== "/quiz") window.history.pushState({screen:"quiz"},"", "/quiz");
     setScreen("quiz");
+  }
+  function exitQuiz() {
+    if (window.location.pathname !== "/") window.history.pushState({screen:"landing"},"", "/");
+    setScreen("landing");
   }
   if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery} lang={lang} setLang={setLang} onPolicy={openPolicy}/>;
   if (screen === "policy") return <PolicyPage lang={lang} setLang={setLang} onBack={backFromPolicy} onGallery={openGallery}/>;
-  if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
+  if (screen === "quiz") return <Quiz onFinish={finish} onExit={exitQuiz} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
   if (screen === "result") { const product = results[0] || products[0]; const secondary = results[1]; return <MatchCard product={product} secondary={secondary} answers={answers} lang={lang} onRetake={retake} onOpen={() => openDetails(product,"result")} onOpenSecondary={() => {if (secondary) openDetails(secondary,"result");}} onGallery={openGallery}/>; }
-  if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => { if (detailsReturnScreen === "details") { window.history.back(); return; } const path = detailsReturnScreen === "gallery" ? "/shop" : "/"; window.history.replaceState({screen:detailsReturnScreen},"",path); setScreen(detailsReturnScreen); }} onGallery={openGallery} onOpen={(product) => openDetails(product,"details")}/>;
+  if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => { if (detailsReturnScreen === "details") { window.history.back(); return; } const path = detailsReturnScreen === "gallery" ? "/shop" : "/quiz"; window.history.replaceState({screen:detailsReturnScreen},"",path); setScreen(detailsReturnScreen); }} onGallery={openGallery} onOpen={(product) => openDetails(product,"details")}/>;
   if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => {window.history.pushState({screen:"landing"},"", "/");setScreen("landing");}} onGallery={openGallery} onOpen={(product) => openDetails(product,"gallery")}/>;
   return null;
 }
