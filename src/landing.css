@@ -35,7 +35,7 @@ body:has(.landing) #root { width:100%; min-height:100vh; min-height:100svh; }
 .policy-link { min-height:32px; display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:0 13px; border:1px solid rgba(224,173,92,.58); border-radius:18px; background:linear-gradient(110deg,rgba(7,20,34,.88),rgba(10,27,43,.72)); color:#e4bd7a; text-decoration:none; font-size:9px; font-weight:600; letter-spacing:.55px; transition:background .18s ease,border-color .18s ease,transform .18s ease; }
 .policy-link:hover { background:rgba(224,173,92,.13); border-color:#e0ad5c; transform:translateY(-1px); }
 .policy-link:focus-visible,.policy-back-link:focus-visible { outline:2px solid #f0d39a; outline-offset:3px; }
-.policy-page { min-height:100vh; min-height:100svh; overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; background:radial-gradient(ellipse at 50% 5%,rgba(33,76,119,.32),transparent 44%),linear-gradient(155deg,#061426 0%,#030a13 55%,#020509 100%); }
+.policy-page { height:100vh; height:100dvh; min-height:100vh; min-height:100svh; overflow-x:hidden; overflow-y:auto; overscroll-behavior-y:contain; touch-action:pan-y; -webkit-overflow-scrolling:touch; background:radial-gradient(ellipse at 50% 5%,rgba(33,76,119,.32),transparent 44%),linear-gradient(155deg,#061426 0%,#030a13 55%,#020509 100%); }
 .policy-content { width:min(100%,620px); margin:clamp(38px,8vh,76px) auto 0; padding:0 30px 64px; }
 .policy-language { width:min(100%,620px); margin:0 auto; padding:0 30px; }
 .policy-language .language-row { margin-bottom:0; }
@@ -45,6 +45,7 @@ body:has(.landing) #root { width:100%; min-height:100vh; min-height:100svh; }
 .policy-rule { display:flex; align-items:center; justify-content:center; gap:12px; margin:23px auto 22px; color:#e0ad5c; font-size:13px; }
 .policy-rule::before,.policy-rule::after { content:""; width:48px; height:1px; background:rgba(224,173,92,.38); }
 .policy-intro,.policy-content li { color:rgba(239,231,216,.86); font-size:13px; line-height:1.9; }
+.policy-content strong { color:#f1d19a; font-weight:600; }
 .policy-intro { margin:0 0 18px; }
 .policy-content ul { display:grid; gap:13px; margin:0; padding-inline-start:20px; }
 .policy-content li { padding-inline-start:4px; }

@@ -315,17 +315,27 @@ function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
 const policyCopy = {
   en: {
     title: "Return & Exchange Policy",
-    intro: "To ensure your satisfaction, you may request an exchange or return within 7 days of receiving your order.",
+    introStart: "For your peace of mind, you may request an exchange or return within ",
+    days: "7 days",
+    introEnd: " of receiving your order.",
     defect: "If your product arrives with any defect—including a faulty atomizer, a damaged bottle, leakage, or any other damage—Starry will cover the full cost of the exchange.",
-    exchange: "If you try the fragrance and it is not the right fit for you, you may exchange it for another fragrance, provided no more than 5 ml has been used. You will only be responsible for the shipping cost.",
+    exchangeStart: "If you try the fragrance and it is not the right fit for you, you may exchange it for another fragrance, provided no more than ",
+    amount: "5 ml",
+    exchangeMiddle: " has been used. You will only be responsible for the ",
+    shippingCost: "shipping cost.",
     lower: "If the replacement fragrance costs less, you will receive the price difference.",
     higher: "If the replacement fragrance costs more, you will only pay the difference.",
   },
   ar: {
     title: "سياسة الاستبدال والاسترجاع",
-    intro: "حرصًا منّا على رضاك، تقدر تطلب الاستبدال أو الاسترجاع خلال 7 أيام من استلام الطلب.",
+    introStart: "حرصًا منّا على رضاك، تقدر تطلب الاستبدال أو الاسترجاع خلال ",
+    days: "7 أيام",
+    introEnd: " من استلام الطلب.",
     defect: "لو المنتج وصلك فيه أي عيب، سواء في الأوتمايزر، الزجاجة، التسريب أو أي تلف آخر، Starry هتتحمل تكلفة الاستبدال بالكامل.",
-    exchange: "لو جربت العطر ومناسبكش، تقدر تستبدله بعطر آخر بشرط ألا يكون المستخدم منه أكثر من 5 مل، وتتحمل فقط تكلفة الشحن.",
+    exchangeStart: "لو جربت العطر ومناسبكش، تقدر تستبدله بعطر آخر بشرط ألا يكون المستخدم منه أكثر من ",
+    amount: "5 مل",
+    exchangeMiddle: "، وتتحمل فقط ",
+    shippingCost: "تكلفة الشحن.",
     lower: "لو العطر البديل سعره أقل، هتحصل على فرق السعر.",
     higher: "لو العطر البديل سعره أعلى، هتدفع فرق السعر فقط.",
   },
@@ -340,10 +350,10 @@ function PolicyPage({ lang, setLang, onBack, onGallery }) {
       <div className="policy-kicker"><span/> STARRY <span/></div>
       <h1>{copy.title}</h1>
       <div className="policy-rule" aria-hidden="true">✦</div>
-      <p className="policy-intro">{copy.intro}</p>
+      <p className="policy-intro">{copy.introStart}<strong>{copy.days}</strong>{copy.introEnd}</p>
       <ul>
         <li>{copy.defect}</li>
-        <li>{copy.exchange}</li>
+        <li>{copy.exchangeStart}<strong>{copy.amount}</strong>{copy.exchangeMiddle}<strong>{copy.shippingCost}</strong></li>
         <li>{copy.lower}</li>
         <li>{copy.higher}</li>
       </ul>
