@@ -11,8 +11,8 @@ const WHATSAPP_NUMBER = "201207207794";
 const INSTAGRAM_PROFILE = "https://www.instagram.com/starryfragrances/";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const labels = {
-  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language" },
-  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة" }
+  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy" },
+  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع" }
 };
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
@@ -124,24 +124,24 @@ function Price({ product, lang, compact = false }) {
   </div>;
 }
 
-function SocialLinks() {
+function SocialLinks({ lang = "en", onPolicy }) {
   const links = [
     { name:"Instagram", url:"https://www.instagram.com/starryfragrances/", Icon:Instagram },
     { name:"Facebook", url:"https://www.facebook.com/starryfragrances", Icon:Facebook },
     { name:"TikTok", url:"https://www.tiktok.com/@starryfragrances", Icon:Music2 }
   ];
-  return <nav className="social-links" aria-label="Follow STARRY">
+  return <div className="landing-footer-links"><nav className="social-links" aria-label="Follow STARRY">
     {links.map(({name,url,Icon}) => <a key={name} href={url} target="_blank" rel="noopener noreferrer" aria-label={`STARRY on ${name}`}><Icon size={15} aria-hidden="true"/><span>{name}</span></a>)}
-  </nav>;
+  </nav><a className="policy-link" href="/return-exchange-policy" onClick={onPolicy ? (event) => { event.preventDefault(); onPolicy(); } : undefined}>{lang === "ar" ? <ArrowLeft size={13} aria-hidden="true"/> : <ArrowRight size={13} aria-hidden="true"/>}<span>{labels[lang].policyLink}</span></a></div>;
 }
 
-function Landing({ onStart, onGallery }) {
-  return <main className="screen landing">
+function Landing({ onStart, onGallery, onPolicy, lang }) {
+  return <main className="screen landing" lang={lang}>
     <Header onGallery={onGallery}/>
     <div className="landing-art" aria-hidden="true"><ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw"/><span className="landing-star landing-star-one">✦</span><span className="landing-star landing-star-two">✧</span></div>
     <div className="landing-copy"><div className="landing-kicker"><span/> THE STARRY SCENT EDIT</div><h1><span>FIND YOUR</span><span>SIGNATURE</span><span>SCENT</span></h1><p>A few questions.<br/>One fragrance that feels like you.</p><PrimaryButton onClick={onStart}>START THE JOURNEY</PrimaryButton></div>
     <div className="landing-note"><span>01 — 10</span><i/> A PERSONAL SCENT DISCOVERY</div>
-    <SocialLinks/>
+    <SocialLinks lang={lang} onPolicy={onPolicy}/>
   </main>;
 }
 
@@ -309,20 +309,80 @@ function Details({ product, onBack, onGallery, lang }) {
 }
 
 function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
-  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <button type="button" key={product.id} className="mini-product" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${labels[lang].priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 430px) 40vw, 170px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/></button>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <button type="button" key={product.id} className="mini-product" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${labels[lang].priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 430px) 40vw, 170px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/></button>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+}
+
+const policyCopy = {
+  en: {
+    title: "Return & Exchange Policy",
+    intro: "To ensure your satisfaction, you may request an exchange or return within 7 days of receiving your order.",
+    defect: "If your product arrives with any defect—including a faulty atomizer, a damaged bottle, leakage, or any other damage—Starry will cover the full cost of the exchange.",
+    exchange: "If you try the fragrance and it is not the right fit for you, you may exchange it for another fragrance, provided no more than 5 ml has been used. You will only be responsible for the shipping cost.",
+    lower: "If the replacement fragrance costs less, you will receive the price difference.",
+    higher: "If the replacement fragrance costs more, you will only pay the difference.",
+  },
+  ar: {
+    title: "سياسة الاستبدال والاسترجاع",
+    intro: "حرصًا منّا على رضاك، تقدر تطلب الاستبدال أو الاسترجاع خلال 7 أيام من استلام الطلب.",
+    defect: "لو المنتج وصلك فيه أي عيب، سواء في الأوتمايزر، الزجاجة، التسريب أو أي تلف آخر، Starry هتتحمل تكلفة الاستبدال بالكامل.",
+    exchange: "لو جربت العطر ومناسبكش، تقدر تستبدله بعطر آخر بشرط ألا يكون المستخدم منه أكثر من 5 مل، وتتحمل فقط تكلفة الشحن.",
+    lower: "لو العطر البديل سعره أقل، هتحصل على فرق السعر.",
+    higher: "لو العطر البديل سعره أعلى، هتدفع فرق السعر فقط.",
+  },
+};
+
+function PolicyPage({ lang, setLang, onBack, onGallery }) {
+  const copy = policyCopy[lang];
+  return <main className="screen policy-page" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
+    <Header back onBack={onBack} onGallery={onGallery} lang={lang}/>
+    <div className="policy-language"><LanguageToggle lang={lang} onChange={setLang}/></div>
+    <article className="policy-content">
+      <div className="policy-kicker"><span/> STARRY <span/></div>
+      <h1>{copy.title}</h1>
+      <div className="policy-rule" aria-hidden="true">✦</div>
+      <p className="policy-intro">{copy.intro}</p>
+      <ul>
+        <li>{copy.defect}</li>
+        <li>{copy.exchange}</li>
+        <li>{copy.lower}</li>
+        <li>{copy.higher}</li>
+      </ul>
+      <a className="policy-back-link" href="/" onClick={(event) => { event.preventDefault(); onBack(); }}>{lang === "ar" ? "العودة إلى الاختبار" : "Back to the quiz"}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a>
+    </article>
+  </main>;
+}
+
+function readLanguage() {
+  try { return localStorage.getItem("starry-quiz-language") === "ar" ? "ar" : "en"; }
+  catch { return "en"; }
 }
 
 function App() {
-  const [screen, setScreen] = useState("landing");
+  const [screen, setScreen] = useState(() => window.location.pathname === "/return-exchange-policy" ? "policy" : "landing");
   const [answers, setAnswers] = useState(readAnswers);
   const [step, setStep] = useState(readStep);
   const [selected, setSelected] = useState(null);
   const [detailsReturnScreen, setDetailsReturnScreen] = useState("result");
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState(readLanguage);
   const analysisTimer = React.useRef(null);
   const results = useMemo(() => scoreProducts(answers), [answers]);
-  const openGallery = () => setScreen("gallery");
+  const openGallery = () => {
+    if (window.location.pathname === "/return-exchange-policy") window.history.replaceState({ screen: "gallery" }, "", "/");
+    setScreen("gallery");
+  };
+  function openPolicy() { window.history.pushState({ screen: "policy" }, "", "/return-exchange-policy"); setScreen("policy"); }
+  function backFromPolicy() { window.history.replaceState({ screen: "landing" }, "", "/"); setScreen("landing"); }
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"; }, [lang]);
+  useEffect(() => { try { localStorage.setItem("starry-quiz-language", lang); } catch { /* Keep language selection for the current visit. */ } }, [lang]);
+  useEffect(() => {
+    function syncRoute() { setScreen(window.location.pathname === "/return-exchange-policy" ? "policy" : "landing"); }
+    window.addEventListener("popstate", syncRoute);
+    return () => window.removeEventListener("popstate", syncRoute);
+  }, []);
+  useEffect(() => {
+    const isPolicy = screen === "policy";
+    document.title = isPolicy ? `${policyCopy[lang].title} | STARRY` : "STARRY — Find Your Signature Scent";
+  }, [screen, lang]);
   useEffect(() => { writeSessionValue("starry-quiz-answers", JSON.stringify(answers)); }, [answers]);
   useEffect(() => { writeSessionValue("starry-quiz-step", String(step)); }, [step]);
   useEffect(() => () => window.clearTimeout(analysisTimer.current), []);
@@ -347,7 +407,8 @@ function App() {
     }
     setScreen("quiz");
   }
-  if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery}/>;
+  if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery} lang={lang} onPolicy={openPolicy}/>;
+  if (screen === "policy") return <PolicyPage lang={lang} setLang={setLang} onBack={backFromPolicy} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
   if (screen === "result") { const product = results[0] || products[0]; const secondary = results[1]; return <MatchCard product={product} secondary={secondary} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onOpenSecondary={() => {if (!secondary) return; setSelected(secondary);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
@@ -357,3 +418,4 @@ function App() {
 }
 
 createRoot(document.getElementById("root")).render(<App/>);
+

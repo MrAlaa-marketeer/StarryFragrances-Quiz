@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/return-exchange-policy", "destination": "/" }
+  ]
+}
+
