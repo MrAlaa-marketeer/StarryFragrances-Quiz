@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2, Share2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2, Share2, SlidersHorizontal, Sparkles } from "lucide-react";
 import "./styles.css";
 import "./landing.css";
 import "./quiz-enhancements.css";
@@ -11,8 +11,8 @@ const WHATSAPP_NUMBER = "201207207794";
 const INSTAGRAM_PROFILE = "https://www.instagram.com/starryfragrances/";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const labels = {
-  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy" },
-  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع" }
+  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy", shop:"SHOP FRAGRANCES", quiz:"TAKE THE SCENT QUIZ", shopTitle:"THE FRAGRANCE COLLECTION", shopIntro:"Find the scent that feels like you.", sort:"SORT BY", featured:"Featured", priceLow:"Price: Low to high", priceHigh:"Price: High to low", nameSort:"Name: A to Z", notSure:"NOT SURE WHICH SCENT IS YOURS?", findScent:"FIND YOUR SCENT", description:"THE STORY", mayLike:"YOU MAY ALSO LIKE", viewDetails:"VIEW DETAILS", continueShopping:"Continue shopping", compare:"COMPARE", added:"ADDED", compareOneMore:"Choose one more scent to compare", compareNow:"COMPARE TWO SCENTS", compareTitle:"Compare fragrances", close:"Close", compareSize:"SIZE", comparePrice:"PRICE", compareScent:"SCENT PROFILE", compareNotes:"MAIN ACCORDS" },
+  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"اختار العطر الأقرب لذوقك.", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك أيضًا", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح" }
 };
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
@@ -118,9 +118,10 @@ function PrimaryButton({ children, onClick, lang = "en" }) {
 
 function Price({ product, lang, compact = false }) {
   const copy = labels[lang];
+  const discount = Math.max(0, Math.round((1 - product.offerPrice / product.listPrice) * 100));
   return <div className={`price-block${compact ? " compact" : ""}`} aria-label={`${product.size}, ${product.offerPrice} ${copy.priceUnit}`}>
-    <div className="price-meta"><span>{product.size}</span><span className="offer-badge">{copy.offer}</span></div>
-    <div className="price-values"><span className="old-price">{product.listPrice} <small>{copy.priceUnit}</small></span><strong>{product.offerPrice} <small>{copy.priceUnit}</small></strong></div>
+    <div className="price-meta"><span>{product.size}</span>{discount > 0 && <span className="offer-badge">{lang === "ar" ? `خصم ${discount}٪` : `${discount}% OFF`}</span>}</div>
+    <div className="price-values">{discount > 0 && <span className="old-price">{product.listPrice} <small>{copy.priceUnit}</small></span>}<strong>{product.offerPrice} <small>{copy.priceUnit}</small></strong></div>
   </div>;
 }
 
@@ -135,12 +136,13 @@ function SocialLinks({ lang = "en", onPolicy }) {
   </nav><a className="policy-link" href="/return-exchange-policy" onClick={onPolicy ? (event) => { event.preventDefault(); onPolicy(); } : undefined}>{lang === "ar" ? <ArrowLeft size={13} aria-hidden="true"/> : <ArrowRight size={13} aria-hidden="true"/>}<span>{labels[lang].policyLink}</span></a></div>;
 }
 
-function Landing({ onStart, onGallery, onPolicy, lang }) {
+function Landing({ onStart, onGallery, onPolicy, lang, setLang }) {
   return <main className="screen landing" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
     <Header onGallery={onGallery}/>
+    <div className="landing-language"><LanguageToggle lang={lang} onChange={setLang}/></div>
     <div className="landing-art" aria-hidden="true"><ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw"/><span className="landing-star landing-star-one">✦</span><span className="landing-star landing-star-two">✧</span></div>
-    <div className="landing-copy"><div className="landing-kicker"><span/> THE STARRY SCENT EDIT</div><h1><span>FIND YOUR</span><span>SIGNATURE</span><span>SCENT</span></h1><p>A few questions.<br/>One fragrance that feels like you.</p><PrimaryButton onClick={onStart}>START THE JOURNEY</PrimaryButton></div>
-    <div className="landing-note"><span>01 — 10</span><i/> A PERSONAL SCENT DISCOVERY</div>
+    <div className="landing-copy"><div className="landing-kicker"><span/> {lang === "ar" ? "عالم STARRY للعطور" : "THE STARRY SCENT EDIT"}</div><h1>{lang === "ar" ? <><span>اختار عطرك</span><span>المميز</span></> : <><span>YOUR NEXT</span><span>SIGNATURE SCENT</span></>}</h1><p>{lang === "ar" ? "اكتشف مجموعتنا أو دع الاختبار يختار عطرك الأقرب إليك." : "Explore the collection or let our quiz find the scent that feels like you."}</p><PrimaryButton onClick={onGallery} lang={lang}>{labels[lang].shop}</PrimaryButton><button type="button" className="quiz-link" onClick={onStart}>{labels[lang].quiz}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button></div>
+    <div className="landing-note"><span>STARRY</span><i/> {lang === "ar" ? "عطرك. حكايتك." : "YOUR SCENT. YOUR STORY."}</div>
     <SocialLinks lang={lang} onPolicy={onPolicy}/>
   </main>;
 }
@@ -297,19 +299,48 @@ function MatchCard({ product, secondary, answers, onOpen, onOpenSecondary, onGal
   </main>;
 }
 
-function Details({ product, onBack, onGallery, lang }) {
+function dnaSimilarity(first, second) {
+  const traits = new Set([...Object.keys(first.dna), ...Object.keys(second.dna)]);
+  const distance = [...traits].reduce((sum, trait) => sum + Math.abs((first.dna[trait] || 0) - (second.dna[trait] || 0)), 0);
+  return 1 - distance / (traits.size * 5);
+}
+
+const accordArabic = { Fruity:"فاكهي", Fresh:"منعش", Sweet:"حلو", Musky:"مسكي", Floral:"زهري", Amber:"عنبر", Creamy:"كريمي", Clean:"نظيف", Vanilla:"فانيليا", Spicy:"متبّل", Warm:"دافئ", Suede:"جلد شامواه", Green:"أخضر", Citrus:"حمضيات" };
+
+function Details({ product, onBack, onGallery, onOpen, lang }) {
   const copy = labels[lang];
   const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  return <main className="screen details" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1 dir="ltr">{product.name}</h1>
-    <section className="purchase-panel"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div></section>
+  const localized = lang === "ar" ? productCopy[product.id] : product;
+  const similar = products.filter((item) => item.id !== product.id).sort((a,b) => dnaSimilarity(product,b) - dnaSimilarity(product,a)).slice(0,2);
+  return <main className="screen details" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1 dir="ltr">{product.name}</h1><p className="product-positioning">{localized.positioning}</p>
+    <section className="purchase-panel"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div><a className="product-policy-link" href="/return-exchange-policy">{copy.policyLink}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></a></section>
+    <a className="mobile-order-dock" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><span className="mobile-order-price"><small>{product.size}</small><strong>{product.offerPrice} <i>{copy.priceUnit}</i></strong></span><span className="mobile-order-cta"><MessageCircle size={17}/>{copy.order}</span></a>
+    <section className="product-description"><h2>{copy.description}</h2><p>{localized.description}</p></section>
     <section className="accords"><h3>{lang === "ar" ? "الروائح الأساسية" : "MAIN ACCORDS"}</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span>{a.name}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
     <section><h3 className="section-title">{lang === "ar" ? "مكونات العطر" : "FRAGRANCE NOTES"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{list.join(" · ")}</strong></div>)}</div></section>
+    <section className="similar-section"><h2>{copy.mayLike}</h2><div className="similar-grid">{similar.map((item) => <button type="button" className="similar-card" key={item.id} onClick={() => onOpen(item)}><span className="similar-art"><ResponsiveImage name={item.resultImage} alt="" sizes="(max-width: 700px) 42vw, 220px"/></span><strong dir="ltr">{item.name}</strong><span className="similar-price">{item.offerPrice} {copy.priceUnit}</span></button>)}</div></section>
   </main>;
 }
 
 function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
-  return <main className="screen gallery" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><h1>{lang === "ar" ? "اكتشف كل العطور" : "EXPLORE ALL FRAGRANCES"}</h1><p>{lang === "ar" ? "حكايات مختلفة. عالم واحد." : "Different stories. The same universe."}</p><div className="product-grid">{products.map((product) => <button type="button" key={product.id} className="mini-product" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${labels[lang].priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 430px) 40vw, 170px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/></button>)}</div><button className="again-btn" onClick={onAgain}><RotateCcw size={15}/> {lang === "ar" ? "ابدأ الاختبار من جديد" : "TAKE THE QUIZ AGAIN"} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></button><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
+  const [sort, setSort] = useState("featured");
+  const [compareIds, setCompareIds] = useState([]);
+  const [showComparison, setShowComparison] = useState(false);
+  const compareRef = React.useRef(null);
+  const copy = labels[lang];
+  const sortedProducts = [...products].sort((a,b) => sort === "price-low" ? a.offerPrice-b.offerPrice : sort === "price-high" ? b.offerPrice-a.offerPrice : sort === "name" ? a.name.localeCompare(b.name) : products.indexOf(a)-products.indexOf(b));
+  const compareProducts = compareIds.map((id) => products.find((product) => product.id === id)).filter(Boolean);
+  useEffect(() => { if (showComparison) compareRef.current?.scrollIntoView({ behavior:"smooth", block:"start" }); }, [showComparison]);
+  function toggleCompare(productId) {
+    setCompareIds((current) => current.includes(productId) ? current.filter((id) => id !== productId) : current.length < 2 ? [...current, productId] : current);
+    setShowComparison(false);
+  }
+  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1><p>{copy.shopIntro}</p></div><label className="sort-control"><span><SlidersHorizontal size={15}/>{copy.sort}</span><select value={sort} onChange={(event) => setSort(event.target.value)} aria-label={copy.sort}><option value="featured">{copy.featured}</option><option value="price-low">{copy.priceLow}</option><option value="price-high">{copy.priceHigh}</option><option value="name">{copy.nameSort}</option></select></label>
+    <div className="product-grid">{sortedProducts.map((product) => { const isCompared = compareIds.includes(product.id); return <article key={product.id} className={`mini-product${isCompared ? " is-compared" : ""}`}><button type="button" className="mini-product-open" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${copy.priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 44vw, 260px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/><span className="card-detail-link">{copy.viewDetails} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={12}/></span></button><button type="button" className="compare-pick" aria-pressed={isCompared} disabled={compareIds.length === 2 && !isCompared} onClick={() => toggleCompare(product.id)}>{isCompared ? copy.added : copy.compare}</button></article>; })}</div>
+    {compareIds.length > 0 && <div className="compare-dock"><span>{compareIds.length === 1 ? copy.compareOneMore : copy.compareNow}</span><button type="button" disabled={compareIds.length < 2} onClick={() => setShowComparison((value) => !value)}>{showComparison ? copy.close : compareIds.length === 1 ? `${compareIds.length}/2` : copy.compareNow}</button></div>}
+    {showComparison && compareProducts.length === 2 && <section className="compare-panel" ref={compareRef} aria-labelledby="compare-title"><header className="compare-header"><h2 id="compare-title">{copy.compareTitle}</h2><button type="button" onClick={() => setShowComparison(false)}>{copy.close}</button></header><div className="compare-heads"><span aria-hidden="true"/>{compareProducts.map((product) => <div className="compare-product-head" key={product.id}><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 30vw, 180px"/><strong dir="ltr">{product.name}</strong></div>)}</div><div className="compare-row"><span>{copy.compareSize}</span>{compareProducts.map((product) => <b key={product.id}>{product.size}</b>)}</div><div className="compare-row"><span>{copy.comparePrice}</span>{compareProducts.map((product) => <b className="compare-price" key={product.id}>{product.offerPrice} <small>{copy.priceUnit}</small>{product.listPrice > product.offerPrice && <del>{product.listPrice} {copy.priceUnit}</del>}</b>)}</div><div className="compare-row"><span>{copy.compareScent}</span>{compareProducts.map((product) => <b key={product.id}>{(lang === "ar" ? productCopy[product.id]?.positioning : product.positioning) || product.positioning}</b>)}</div><div className="compare-row"><span>{copy.compareNotes}</span>{compareProducts.map((product) => <b key={product.id}>{product.accords.slice(0,3).map((accord) => lang === "ar" ? (accordArabic[accord.name] || accord.name) : accord.name).join(" · ")}</b>)}</div><div className="compare-actions">{compareProducts.map((product) => <button type="button" key={product.id} onClick={() => onOpen(product)}>{copy.viewDetails}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></button>)}</div></section>}
+    <section className="shop-quiz-cta"><Sparkles size={19}/><h2>{copy.notSure}</h2><a href="/" onClick={(event) => {event.preventDefault();onAgain();}}>{copy.findScent}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a></section><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
 }
 
 const policyCopy = {
@@ -367,8 +398,15 @@ function readLanguage() {
   catch { return "en"; }
 }
 
+function screenFromPath(pathname) {
+  if (pathname === "/return-exchange-policy") return "policy";
+  if (pathname === "/shop") return "gallery";
+  if (pathname.startsWith("/fragrance/")) return "details";
+  return "landing";
+}
+
 function App() {
-  const [screen, setScreen] = useState(() => window.location.pathname === "/return-exchange-policy" ? "policy" : "landing");
+  const [screen, setScreen] = useState(() => screenFromPath(window.location.pathname));
   const [answers, setAnswers] = useState(readAnswers);
   const [step, setStep] = useState(readStep);
   const [selected, setSelected] = useState(null);
@@ -376,8 +414,12 @@ function App() {
   const [lang, setLang] = useState(readLanguage);
   const analysisTimer = React.useRef(null);
   const results = useMemo(() => scoreProducts(answers), [answers]);
+  useEffect(() => {
+    const match = window.location.pathname.match(/^\/fragrance\/([^/]+)$/);
+    if (match) setSelected(products.find((product) => product.id === decodeURIComponent(match[1])) || products[0]);
+  }, []);
   const openGallery = () => {
-    if (window.location.pathname === "/return-exchange-policy") window.history.replaceState({ screen: "gallery" }, "", "/");
+    if (window.location.pathname !== "/shop") window.history.pushState({ screen: "gallery" }, "", "/shop");
     setScreen("gallery");
   };
   function openPolicy() { window.history.pushState({ screen: "policy" }, "", "/return-exchange-policy"); setScreen("policy"); }
@@ -385,14 +427,29 @@ function App() {
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr"; }, [lang]);
   useEffect(() => { try { localStorage.setItem("starry-quiz-language", lang); } catch { /* Keep language selection for the current visit. */ } }, [lang]);
   useEffect(() => {
-    function syncRoute() { setScreen(window.location.pathname === "/return-exchange-policy" ? "policy" : "landing"); }
+    function syncRoute() {
+      const nextScreen = screenFromPath(window.location.pathname);
+      setScreen(nextScreen);
+      if (nextScreen === "details") {
+        const id = decodeURIComponent(window.location.pathname.split("/").pop() || "");
+        setSelected(products.find((product) => product.id === id) || products[0]);
+      }
+    }
     window.addEventListener("popstate", syncRoute);
     return () => window.removeEventListener("popstate", syncRoute);
   }, []);
   useEffect(() => {
     const isPolicy = screen === "policy";
-    document.title = isPolicy ? `${policyCopy[lang].title} | STARRY` : "STARRY — Find Your Signature Scent";
-  }, [screen, lang]);
+    const isShop = screen === "gallery";
+    const isDetails = screen === "details";
+    document.title = isPolicy ? `${policyCopy[lang].title} | STARRY` : isShop ? `${labels[lang].shopTitle} | STARRY` : isDetails ? `${selected?.name || "Fragrance"} | STARRY` : "STARRY — Find Your Signature Scent";
+  }, [screen, lang, selected]);
+  function openDetails(product, returnScreen = "gallery") {
+    setSelected(product);
+    setDetailsReturnScreen(returnScreen);
+    window.history.pushState({ screen: "details", productId: product.id }, "", `/fragrance/${product.id}`);
+    setScreen("details");
+  }
   useEffect(() => { writeSessionValue("starry-quiz-answers", JSON.stringify(answers)); }, [answers]);
   useEffect(() => { writeSessionValue("starry-quiz-step", String(step)); }, [step]);
   useEffect(() => () => window.clearTimeout(analysisTimer.current), []);
@@ -405,6 +462,7 @@ function App() {
   function exitAnalysis() { window.clearTimeout(analysisTimer.current); setScreen("quiz"); }
   function retake() {
     window.clearTimeout(analysisTimer.current);
+    if (window.location.pathname !== "/") window.history.pushState({screen:"quiz"},"", "/");
     setAnswers([]); setStep(0); setSelected(null);
     removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
     setScreen("quiz");
@@ -417,15 +475,14 @@ function App() {
     }
     setScreen("quiz");
   }
-  if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery} lang={lang} onPolicy={openPolicy}/>;
+  if (screen === "landing") return <Landing onStart={startQuiz} onGallery={openGallery} lang={lang} setLang={setLang} onPolicy={openPolicy}/>;
   if (screen === "policy") return <PolicyPage lang={lang} setLang={setLang} onBack={backFromPolicy} onGallery={openGallery}/>;
   if (screen === "quiz") return <Quiz onFinish={finish} onExit={() => setScreen("landing")} onGallery={openGallery} lang={lang} setLang={setLang} step={step} setStep={setStep} answers={answers} setAnswers={setAnswers}/>;
   if (screen === "analyzing") return <Analyzing lang={lang} onBack={exitAnalysis}/>;
-  if (screen === "result") { const product = results[0] || products[0]; const secondary = results[1]; return <MatchCard product={product} secondary={secondary} answers={answers} lang={lang} onRetake={retake} onOpen={() => {setSelected(product);setDetailsReturnScreen("result");setScreen("details")}} onOpenSecondary={() => {if (!secondary) return; setSelected(secondary);setDetailsReturnScreen("result");setScreen("details")}} onGallery={openGallery}/>; }
-  if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => setScreen(detailsReturnScreen)} onGallery={openGallery}/>;
-  if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => setScreen("landing")} onGallery={openGallery} onOpen={(product) => {setSelected(product);setDetailsReturnScreen("gallery");setScreen("details")}}/>;
+  if (screen === "result") { const product = results[0] || products[0]; const secondary = results[1]; return <MatchCard product={product} secondary={secondary} answers={answers} lang={lang} onRetake={retake} onOpen={() => openDetails(product,"result")} onOpenSecondary={() => {if (secondary) openDetails(secondary,"result");}} onGallery={openGallery}/>; }
+  if (screen === "details") return <Details product={selected || products[0]} lang={lang} onBack={() => { if (detailsReturnScreen === "details") { window.history.back(); return; } const path = detailsReturnScreen === "gallery" ? "/shop" : "/"; window.history.replaceState({screen:detailsReturnScreen},"",path); setScreen(detailsReturnScreen); }} onGallery={openGallery} onOpen={(product) => openDetails(product,"details")}/>;
+  if (screen === "gallery") return <Gallery lang={lang} onAgain={retake} onBack={() => {window.history.pushState({screen:"landing"},"", "/");setScreen("landing");}} onGallery={openGallery} onOpen={(product) => openDetails(product,"gallery")}/>;
   return null;
 }
 
 createRoot(document.getElementById("root")).render(<App/>);
-
