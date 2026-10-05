@@ -35,7 +35,7 @@ body:has(.landing) #root { width:100%; min-height:100vh; min-height:100svh; }
 .policy-link { min-height:32px; display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:0 13px; border:1px solid rgba(224,173,92,.58); border-radius:18px; background:linear-gradient(110deg,rgba(7,20,34,.88),rgba(10,27,43,.72)); color:#e4bd7a; text-decoration:none; font-size:9px; font-weight:600; letter-spacing:.55px; transition:background .18s ease,border-color .18s ease,transform .18s ease; }
 .policy-link:hover { background:rgba(224,173,92,.13); border-color:#e0ad5c; transform:translateY(-1px); }
 .policy-link:focus-visible,.policy-back-link:focus-visible { outline:2px solid #f0d39a; outline-offset:3px; }
-.policy-page { min-height:100vh; min-height:100svh; background:radial-gradient(ellipse at 50% 5%,rgba(33,76,119,.32),transparent 44%),linear-gradient(155deg,#061426 0%,#030a13 55%,#020509 100%); }
+.policy-page { min-height:100vh; min-height:100svh; overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; background:radial-gradient(ellipse at 50% 5%,rgba(33,76,119,.32),transparent 44%),linear-gradient(155deg,#061426 0%,#030a13 55%,#020509 100%); }
 .policy-content { width:min(100%,620px); margin:clamp(38px,8vh,76px) auto 0; padding:0 30px 64px; }
 .policy-language { width:min(100%,620px); margin:0 auto; padding:0 30px; }
 .policy-language .language-row { margin-bottom:0; }
@@ -76,13 +76,13 @@ body:has(.landing) #root { width:100%; min-height:100vh; min-height:100svh; }
   .landing-note { justify-content:flex-start; margin:22px 0 34px 9.5vw; font-size:9px; }
 }
 @media (min-width:700px) {
-  .landing-footer-links { align-items:flex-start; margin:0 0 24px 9.5vw; }
+  .landing-footer-links { align-items:flex-start; margin:0 9.5vw 24px; }
   .policy-content { margin-top:clamp(54px,10vh,92px); padding-inline:48px; }
 }
 @media (min-width:1200px) {
   .landing-art img { width:55%; object-position:center 42%; }
   .landing-copy { margin-left:12vw; }
   .landing-note { margin-left:12vw; }
-  .landing-footer-links { margin-left:12vw; }
+  .landing-footer-links { margin-inline:12vw; }
 }
 

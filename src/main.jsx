@@ -136,7 +136,7 @@ function SocialLinks({ lang = "en", onPolicy }) {
 }
 
 function Landing({ onStart, onGallery, onPolicy, lang }) {
-  return <main className="screen landing" lang={lang}>
+  return <main className="screen landing" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>
     <Header onGallery={onGallery}/>
     <div className="landing-art" aria-hidden="true"><ResponsiveImage name={products[0].resultImage} alt="" priority sizes="100vw"/><span className="landing-star landing-star-one">✦</span><span className="landing-star landing-star-two">✧</span></div>
     <div className="landing-copy"><div className="landing-kicker"><span/> THE STARRY SCENT EDIT</div><h1><span>FIND YOUR</span><span>SIGNATURE</span><span>SCENT</span></h1><p>A few questions.<br/>One fragrance that feels like you.</p><PrimaryButton onClick={onStart}>START THE JOURNEY</PrimaryButton></div>
