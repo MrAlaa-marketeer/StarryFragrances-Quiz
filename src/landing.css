@@ -156,3 +156,8 @@ html[lang="ar"] .language-label { font-family:"Cairo",Arial,sans-serif; font-siz
   .shop-heading { padding-top:26px; }
   .gallery { padding-inline:17px; }
 }
+
+/* Keep the language control anchored to the physical right in both locales. */
+.landing-language { right:22px; left:auto; inset-inline-end:auto; }
+.landing-language .language-row { direction:ltr; justify-content:flex-end; }
+@media (min-width:700px) { .landing-language { right:5.2vw; left:auto; inset-inline-end:auto; } }
