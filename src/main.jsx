@@ -305,7 +305,6 @@ function dnaSimilarity(first, second) {
   return 1 - distance / (traits.size * 5);
 }
 
-const accordArabic = { Fruity:"فاكهي", Fresh:"منعش", Sweet:"حلو", Musky:"مسكي", Floral:"زهري", Amber:"عنبر", Creamy:"كريمي", Clean:"نظيف", Vanilla:"فانيليا", Spicy:"متبّل", Warm:"دافئ", Suede:"جلد شامواه", Green:"أخضر", Citrus:"حمضيات" };
 
 const accordArabic = { Woody:"خشبي", "Warm Spicy":"توابل دافئة", Powdery:"بودري ناعم", Fruity:"فاكهي", Fresh:"منعش", Sweet:"حلو", Musky:"مسكي", Floral:"زهري", Amber:"عنبر", Creamy:"كريمي", Clean:"نظيف", Vanilla:"فانيليا", Spicy:"متبّل", Warm:"دافئ", Suede:"جلد شامواه", Green:"أخضر", Citrus:"حمضيات" };
 const noteArabic = {
