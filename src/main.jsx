@@ -307,6 +307,17 @@ function dnaSimilarity(first, second) {
 
 const accordArabic = { Fruity:"فاكهي", Fresh:"منعش", Sweet:"حلو", Musky:"مسكي", Floral:"زهري", Amber:"عنبر", Creamy:"كريمي", Clean:"نظيف", Vanilla:"فانيليا", Spicy:"متبّل", Warm:"دافئ", Suede:"جلد شامواه", Green:"أخضر", Citrus:"حمضيات" };
 
+const accordArabic = { Woody:"خشبي", "Warm Spicy":"توابل دافئة", Powdery:"بودري ناعم", Fruity:"فاكهي", Fresh:"منعش", Sweet:"حلو", Musky:"مسكي", Floral:"زهري", Amber:"عنبر", Creamy:"كريمي", Clean:"نظيف", Vanilla:"فانيليا", Spicy:"متبّل", Warm:"دافئ", Suede:"جلد شامواه", Green:"أخضر", Citrus:"حمضيات" };
+const noteArabic = {
+  Fig:"تين", "Black Tea":"شاي أسود", Cardamom:"هيل", Iris:"سوسن", Vetiver:"فيتيفير", Sandalwood:"خشب الصندل", "Tonka Bean":"حبوب التونكا",
+  Cedar:"خشب الأرز", Amber:"عنبر", "Ylang-Ylang":"يلانغ يلانغ", "Gurjun Balsam":"بلسم الجورجون", Myrrh:"مُرّ", Vanilla:"فانيليا", Benzoin:"الجاوي",
+  Pear:"كمثرى", Bergamot:"برغموت", "Orange Blossom":"زهر البرتقال", Jasmine:"ياسمين", Musks:"مسك", "Amber Woods":"أخشاب عنبرية",
+  Frankincense:"لبان", Hazelnut:"بندق", Saffron:"زعفران", Rose:"ورد", "Jasmine Sambac":"ياسمين سامباك", Osmanthus:"أوسمانثوس",
+  "Red Apple":"تفاح أحمر", Lychee:"ليتشي", "Black Currant":"كشمش أسود", "Pink Grapefruit":"جريب فروت وردي", "Wild Berries":"توت بري", Sugar:"سكر", Musk:"مسك",
+  "Pink Pepper":"فلفل وردي", "Black Pepper":"فلفل أسود", Elemi:"إليمي", Olibanum:"لبان", Cedarwood:"خشب الأرز", Mint:"نعناع", Grapefruit:"جريب فروت", Lavender:"لافندر",
+  "Green Apple":"تفاح أخضر", Cranberry:"توت بري أحمر", "Cotton Flower":"زهرة القطن", Cactus:"صبار", Almond:"لوز", Coffee:"قهوة", Tuberose:"مسك الروم", Cocoa:"كاكاو", Akigalawood:"خشب أكيجالا"
+};
+
 function Details({ product, onBack, onGallery, onOpen, lang }) {
   const copy = labels[lang];
   const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
@@ -316,9 +327,9 @@ function Details({ product, onBack, onGallery, onOpen, lang }) {
   return <main className="screen details" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1 dir="ltr">{product.name}</h1><p className="product-positioning">{localized.positioning}</p>
     <section className="purchase-panel"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div><a className="product-policy-link" href="/return-exchange-policy">{copy.policyLink}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></a></section>
     <a className="mobile-order-dock" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><span className="mobile-order-price"><small>{product.size}</small><strong>{product.offerPrice} <i>{copy.priceUnit}</i></strong></span><span className="mobile-order-cta"><MessageCircle size={17}/>{copy.order}</span></a>
-    <section className="product-description"><h2>{copy.description}</h2><p>{localized.description}</p></section>
-    <section className="accords"><h3>{lang === "ar" ? "الروائح الأساسية" : "MAIN ACCORDS"}</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span>{a.name}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
-    <section><h3 className="section-title">{lang === "ar" ? "مكونات العطر" : "FRAGRANCE NOTES"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{list.join(" · ")}</strong></div>)}</div></section>
+    <section className="product-description"><h2>{copy.description}</h2><p>{localized.description}</p>{lang === "ar" && localized.feeling && <p className="product-feeling"><strong>الإحساس العام:</strong> {localized.feeling}</p>}</section>
+    <section className="accords"><h3>{lang === "ar" ? "الروائح الأساسية" : "MAIN ACCORDS"}</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span className="accord-label"><span>{a.name}</span>{lang === "ar" && <small>{accordArabic[a.name] || a.name}</small>}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
+    <section><h3 className="section-title">{lang === "ar" ? "مكونات العطر" : "FRAGRANCE NOTES"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{lang === "ar" ? <span className="note-list">{list.map((note) => <span className="note-entry" key={note}><span dir="ltr">{note}</span><small dir="rtl">({noteArabic[note] || note})</small></span>)}</span> : list.join(" · ")}</strong></div>)}</div></section>
     <section className="similar-section"><h2>{copy.mayLike}</h2><div className="similar-grid">{similar.map((item) => <button type="button" className="similar-card" key={item.id} onClick={() => onOpen(item)}><span className="similar-art"><ResponsiveImage name={item.resultImage} alt="" sizes="(max-width: 700px) 42vw, 220px"/></span><strong dir="ltr">{item.name}</strong><span className="similar-price">{item.offerPrice} {copy.priceUnit}</span></button>)}</div></section>
   </main>;
 }
