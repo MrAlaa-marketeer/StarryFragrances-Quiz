@@ -13,11 +13,11 @@ export const questions = [
     {id:"date",label:{en:"Dates and evenings out",ar:"خروجات ومواعيد بالليل"},reasonTag:{en:"captivating evening allure",ar:"طابع جذاب للسهرات"},weights:{luna:3,"spicy-vanilla":3,perla:2}},
     {id:"events",label:{en:"Parties and special occasions",ar:"حفلات ومناسبات خاصة"},reasonTag:{en:"standout presence for special events",ar:"حضور لافت للمناسبات"},weights:{"starry-amber":3,"spicy-vanilla":2,"tropical-bomb":2,luna:2}}
   ]},
-  { id:"notes", title:{en:"Which kinds of notes do you usually enjoy?",ar:"أنهي روائح بتشدك أكتر في العطور؟"}, options:[
-    {id:"fruity",label:{en:"Juicy fruit, crisp apple and fresh citrus",ar:"فواكه وتفاح منعش وحمضيات"},reasonTag:{en:"vibrant fruity and citrus notes",ar:"فواكه وحمضيات منعشة"},weights:{"fizzy-apple":4,"tropical-bomb":4,"star-boy":3}},
-    {id:"floral",label:{en:"Soft flowers, rose and jasmine",ar:"ورد وياسمين وزهور ناعمة"},reasonTag:{en:"soft floral notes",ar:"زهور ناعمة"},weights:{perla:4,luna:3,"tropical-bomb":1}},
-    {id:"vanilla",label:{en:"Vanilla, coffee, almond and warm spices",ar:"فانيليا وقهوة ولوز وتوابل دافية"},reasonTag:{en:"rich vanilla and warm spice",ar:"فانيليا وتوابل دافية"},weights:{"spicy-vanilla":4,luna:4,"starry-amber":2}},
-    {id:"woods",label:{en:"Sandalwood, amber, cardamom and black tea",ar:"خشب صندل وعنبر وهيل وشاي أسود"},reasonTag:{en:"sophisticated woods and amber",ar:"أخشاب وعنبر دافيين"},weights:{elite:4,"starry-amber":4,"spicy-vanilla":2}}
+  { id:"notes", title:{en:"What kind of fragrance do you usually gravitate toward?",ar:"تحب العطور غالبًا بطابع إيه؟"}, options:[
+    {id:"fruity",label:{en:"Fresh and light, with a lively fruity feel",ar:"منعشة وخفيفة، وفيها إحساس فاكهي"},reasonTag:{en:"a fresh, lively fragrance style",ar:"طابع منعش وحيوي"},weights:{"fizzy-apple":4,"tropical-bomb":4,"star-boy":3}},
+    {id:"floral",label:{en:"Soft and smooth, with a gentle floral feel",ar:"ناعمة وهادية، وفيها لمسة زهور"},reasonTag:{en:"a soft, gentle fragrance style",ar:"طابع ناعم وهادي"},weights:{perla:4,luna:3,"tropical-bomb":1}},
+    {id:"vanilla",label:{en:"Warm and sweet, with a cozy feel",ar:"دافية وحلوة، وإحساسها مريح"},reasonTag:{en:"a warm, comforting fragrance style",ar:"طابع دافي ومريح"},weights:{"spicy-vanilla":4,luna:4,"starry-amber":2}},
+    {id:"woods",label:{en:"Deep and bold, with a woody, spicy feel",ar:"عميقة وجريئة، بطابع خشبي ومتبل"},reasonTag:{en:"a deep, bold fragrance style",ar:"طابع عميق وجريء"},weights:{elite:4,"starry-amber":4,"spicy-vanilla":2}}
   ]},
   { id:"projection", title:{en:"How much do you like a fragrance to project?",ar:"تحب فوحان العطر يبقى عامل إزاي؟"}, options:[
     {id:"light",label:{en:"Soft and close to me",ar:"هادي وقريب مني"},reasonTag:{en:"light, airy projection",ar:"فوحان هادي وخفيف"},weights:{"star-boy":3,"fizzy-apple":3}},
