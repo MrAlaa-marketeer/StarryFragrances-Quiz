@@ -1,0 +1,7 @@
+
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { products } from "../src/data/products.js";
+const template=await readFile(new URL("../dist/index.html",import.meta.url),"utf8");
+const esc=(v)=>String(v||"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll('"',"&quot;");
+for(const p of products){const title=esc(`${p.name} | STARRY Fragrance House`),description=esc(p.description),image=`https://starry-fragrances-quiz.vercel.app/images/${p.resultImage.replace("-960.webp","-1600.webp")}`;for(const route of ["fragrance","product"]){const out=new URL(`../dist/${route}/${p.id}/`,import.meta.url);await mkdir(out,{recursive:true});const url=`https://starry-fragrances-quiz.vercel.app/${route}/${p.id}`;const html=template.replace(/<title>[^<]*<\/title>/,`<title>${title}</title>`).replace(/<meta name="description" content="[^"]*"\s*\/>/,`<meta name="description" content="${description}" />`).replace(/<meta property="og:title" content="[^"]*"\s*\/>/,`<meta property="og:title" content="${title}" />`).replace(/<meta property="og:description" content="[^"]*"\s*\/>/,`<meta property="og:description" content="${description}" />`).replace(/<meta property="og:image" content="[^"]*"\s*\/>/,`<meta property="og:image" content="${image}" />`).replace("</head>",`<link rel="canonical" href="${url}" /></head>`);await writeFile(new URL("index.html",out),html,"utf8");}}
+console.log(`Generated SEO pages for ${products.length} fragrances.`);
