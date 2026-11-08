@@ -10,6 +10,11 @@ export const products = [
   {
     id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
     positioning: "Woody. Warm. Sophisticated.",
+    inspiredBy: "BDK Gris Charnel EDP",
+    longevity: { en: "+8 Hours", ar: "+8 ساعات" },
+    sillage: { en: "Balanced to Strong", ar: "متوسط إلى قوي" },
+    gender: "unisex",
+    season: "winter",
     bestForKeys: ["everyday","work"], bestFor: { en:["Work & meetings","Everyday wear","Formal occasions"], ar:["الشغل والاجتماعات","الاستخدام اليومي","المناسبات الرسمية"] },
     description: "You gravitate toward refined woods, warm spices and a polished presence — a scent that feels confident, sophisticated and effortlessly put together.",
     dna: dna({ woody:5, spicy:4, powdery:4, elegant:5, warm:4, sensual:4, luxurious:5, creamy:3, sweet:3, dark:2 }),
@@ -20,6 +25,11 @@ export const products = [
   {
     id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
     positioning: "Deep. Warm. Mysterious.",
+    inspiredBy: "Xerjoff Amber Star",
+    longevity: { en: "9+ Hours", ar: "+9 ساعات" },
+    sillage: { en: "Strong", ar: "قوي" },
+    gender: "unisex",
+    season: "winter",
     bestForKeys: ["date","social"], bestFor: { en:["Date nights","Evening wear","Cool weather"], ar:["المواعيد الليلية","السهرات","الأجواء الباردة"] },
     description: "Your choices lean toward resinous warmth, rich woods and an intriguing presence — luxurious, mysterious and made for the night.",
     dna: dna({ amber:5, woody:4, sweet:4, dark:4, warm:5, mysterious:5, luxurious:5, sensual:4, vanilla:3, spicy:2 }),
@@ -30,6 +40,11 @@ export const products = [
   {
     id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp", size: "50ml", listPrice: 575, offerPrice: 520,
     positioning: "Fresh. Vibrant. Unforgettable.",
+    inspiredBy: "Ex Nihilo Blue Talisman Extrait",
+    longevity: { en: "+8 Hours", ar: "+8 ساعات" },
+    sillage: { en: "Strong", ar: "قوي" },
+    gender: "unisex",
+    season: "summer",
     bestForKeys: ["everyday","date","social"], bestFor: { en:["Social occasions","Daytime outings","Summer days"], ar:["المناسبات والخروجات","مشاوير النهار","أيام الصيف"] },
     description: "Bright, juicy and energetic. You want a fragrance that feels alive, playful and impossible to overlook.",
     dna: dna({ fruity:5, fresh:4, sweet:4, energetic:5, playful:5, vanilla:3, floral:3, creamy:2, sensual:2 }),
@@ -40,6 +55,11 @@ export const products = [
   {
     id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
     positioning: "Soft. Elegant. Radiant.",
+    inspiredBy: null,
+    longevity: { en: "+9 Hours", ar: "+9 ساعات" },
+    sillage: { en: "Strong", ar: "قوي" },
+    gender: "women",
+    season: "all",
     bestForKeys: ["everyday","work","date","social"], bestFor: { en:["Work & daytime","Dates","Special occasions"], ar:["الشغل والنهار","المواعيد","المناسبات الخاصة"] },
     description: "You are drawn to luminous florals, creamy sweetness and elegant sensuality — soft enough to feel beautiful, strong enough to be remembered.",
     dna: dna({ floral:5, sweet:4, amber:4, creamy:4, sensual:5, elegant:5, vanilla:3, warm:3, fruity:3, spicy:2, luxurious:5 }),
@@ -50,6 +70,11 @@ export const products = [
   {
     id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
     positioning: "Juicy. Bright. Effortless.",
+    inspiredBy: "Kayali Eden Juicy Apple",
+    longevity: { en: "6+ Hours", ar: "+6 ساعات" },
+    sillage: { en: "Moderate", ar: "متوسط" },
+    gender: "women",
+    season: "summer",
     bestForKeys: ["everyday","work","social"], bestFor: { en:["Everyday wear","Daytime","Casual outings"], ar:["الاستخدام اليومي","النهار","الخروجات البسيطة"] },
     description: "Your profile is bright, playful and juicy. You want something refreshing, addictive and easy to wear whenever the mood hits.",
     dna: dna({ fresh:5, fruity:5, sweet:4, playful:5, energetic:5, clean:5, floral:3, sensual:2 }),
@@ -60,6 +85,11 @@ export const products = [
   {
     id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp", size: "50ml", listPrice: 620, offerPrice: 560,
     positioning: "Dark. Spicy. Addictive.",
+    inspiredBy: "YSL Babycat",
+    longevity: { en: "10+ Hours", ar: "+10 ساعات" },
+    sillage: { en: "Strong", ar: "قوي" },
+    gender: "unisex",
+    season: "winter",
     bestForKeys: ["date","social"], bestFor: { en:["Date nights","Nights out","Cool evenings"], ar:["المواعيد الليلية","السهرات","الأمسيات الباردة"] },
     description: "Your choices point toward dark vanilla, warm spice and a magnetic presence — intimate, bold and made to leave a trace.",
     dna: dna({ vanilla:5, spicy:5, sweet:5, dark:5, sensual:5, warm:5, bold:5, amber:4, creamy:4, mysterious:5 }),
@@ -70,6 +100,11 @@ export const products = [
   {
     id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
     positioning: "Fresh. Green. Effortless.",
+    inspiredBy: null,
+    longevity: { en: "+6 Hours", ar: "+6 ساعات" },
+    sillage: { en: "Moderate", ar: "متوسط" },
+    gender: "men",
+    season: "summer",
     bestForKeys: ["everyday","work"], bestFor: { en:["Everyday wear","Work","Warm days"], ar:["الاستخدام اليومي","الشغل","الأيام الدافئة"] },
     description: "Fresh air, green energy and effortless confidence. Your scent should move with you, not weigh you down.",
     dna: dna({ fresh:5, energetic:5, clean:5, fruity:3, playful:4, woody:2, sweet:1 }),
@@ -80,6 +115,11 @@ export const products = [
   {
     id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
     positioning: "Creamy. Magnetic. Sensual.",
+    inspiredBy: null,
+    longevity: { en: "+7 Hours", ar: "+7 ساعات" },
+    sillage: { en: "Balanced to Strong", ar: "متوسط إلى قوي" },
+    gender: "women",
+    season: "winter",
     bestForKeys: ["date","social"], bestFor: { en:["Dates","Evening wear","Special occasions"], ar:["المواعيد","السهرات","المناسبات الخاصة"] },
     description: "You lean toward creamy florals, sweet warmth and magnetic sensuality — a fragrance that feels soft, confident and unforgettable.",
     dna: dna({ floral:5, sweet:5, vanilla:4, creamy:5, sensual:5, elegant:4, amber:4, bold:5, warm:4 }),
@@ -88,82 +128,6 @@ export const products = [
     notes: { "Top Notes":["Almond","Coffee"], "Heart Notes":["Jasmine","Tuberose"], "Base Notes":["Tonka Bean","Cocoa"] }
   }
 ];
-
-export const questions = [
-  { id:"q1", weight:1.1, title:{en:"When do you see yourself reaching for this fragrance?",ar:"إمتى تتخيل نفسك بتستخدم العطر ده؟"}, options:[
-    {id:"a",label:{en:"Every day, wherever the day takes me",ar:"كل يوم، في أي مشوار"}},
-    {id:"b",label:{en:"Work, meetings & polished moments",ar:"الشغل والاجتماعات والمواقف الرسمية"}},
-    {id:"c",label:{en:"Dates & nights out",ar:"المواعيد والخروجات بالليل"}},
-    {id:"d",label:{en:"Parties & social occasions",ar:"الحفلات والمناسبات الاجتماعية"}}
-  ]},
-  { id:"q2", weight:0.7, title:{en:"What first impression should it leave?",ar:"إيه أول انطباع تحب العطر يسيبه؟"}, options:[
-    {id:"a",label:{en:"Fresh and easy to be around",ar:"منعش وقريب من الناس"}},
-    {id:"b",label:{en:"Elegant and quietly expensive",ar:"أنيق وفخم من غير مبالغة"}},
-    {id:"c",label:{en:"Mysterious and hard to forget",ar:"غامض وصعب يتنسي"}},
-    {id:"d",label:{en:"Fun, magnetic and addictive",ar:"مرح وجذاب ويصعب مقاومته"}}
-  ]},
-  { id:"q3", weight:0.4, title:{en:"How noticeable should it be in the air?",ar:"تحب العطر يكون واضح قد إيه في المكان؟"}, options:[
-    {id:"a",label:{en:"Soft and close to my skin",ar:"هادي وقريب من بشرتي"}},
-    {id:"b",label:{en:"Noticeable when someone comes close",ar:"يتلاحظ لما حد يقرب مني"}},
-    {id:"c",label:{en:"Leaves a beautiful trail as I pass",ar:"يسيب أثر جميل وأنا ماشي"}},
-    {id:"d",label:{en:"Makes a bold entrance and fills the room",ar:"حضوره قوي ويملى المكان"}}
-  ]},
-  { id:"q4", weight:2.0, title:{en:"Which opening would make you want to smell it again?",ar:"إيه المكونات اللي تحب تبدأ بيها تجربة العطر؟"}, options:[
-    {id:"a",label:{en:"Crisp fruit and fresh citrus",ar:"فاكهة مقرمشة وحمضيات منعشة"}},
-    {id:"b",label:{en:"Spices, woods and a warm edge",ar:"توابل وأخشاب ولمسة دافئة"}},
-    {id:"c",label:{en:"Creamy vanilla and glowing amber",ar:"فانيليا كريمية وعنبر دافئ"}},
-    {id:"d",label:{en:"Flowers, sweetness and soft sensuality",ar:"زهور وحلاوة وأنوثة ناعمة"}}
-  ]},
-  { id:"q5", weight:2.0, title:{en:"What kind of sweetness do you actually enjoy?",ar:"إيه نوع الحلاوة اللي بتحبها فعلًا؟"}, options:[
-    {id:"a",label:{en:"Almost none — keep it crisp and fresh",ar:"قليلة جدًا — خليه منعش وخفيف"}},
-    {id:"b",label:{en:"Juicy and fruity",ar:"فاكهية وعصيرية"}},
-    {id:"c",label:{en:"Creamy and smooth",ar:"كريمية وناعمة"}},
-    {id:"d",label:{en:"Deep vanilla, warm and addictive",ar:"فانيليا غنية ودافئة ومغرية"}}
-  ]},
-  { id:"q6", weight:0.4, title:{en:"Pick a place that feels like your scent.",ar:"اختار مكان تحس إنه شبه ريحتك."}, options:[
-    {id:"a",label:{en:"Rooftop at midnight, city lights below",ar:"سطح مبنى بعد نص الليل وأضواء المدينة تحتك"}},
-    {id:"b",label:{en:"A luxury hotel lounge with warm lighting",ar:"ردهة فندق فخم بإضاءة دافئة"}},
-    {id:"c",label:{en:"A private room lit by candles",ar:"مكان هادي على ضوء الشموع"}},
-    {id:"d",label:{en:"A sunny beach or a colorful city afternoon",ar:"شاطئ مشمس أو جولة وسط مدينة مليانة ألوان"}}
-  ]},
-  { id:"q7", weight:0.4, title:{en:"Which style feels most like the way you dress?",ar:"أنهي ستايل أقرب لطريقة لبسك؟"}, options:[
-    {id:"a",label:{en:"Casual, relaxed and effortless",ar:"كاجوال ومريح ومن غير تكلف"}},
-    {id:"b",label:{en:"Clean, tailored and polished",ar:"مرتب وأنيق وتفاصيله محسوبة"}},
-    {id:"c",label:{en:"Dark, confident and statement-making",ar:"غامق وجريء وملفت"}},
-    {id:"d",label:{en:"Expressive, colorful and individual",ar:"مميز وملون وبيعبر عن شخصيتي"}}
-  ]},
-  { id:"q8", weight:0.7, title:{en:"What do you want to feel after spraying it?",ar:"تحب تحس بإيه بعد ما ترش العطر؟"}, options:[
-    {id:"a",label:{en:"Energy — awake, fresh and ready to go",ar:"طاقة — صاحي ومنتعش ومستعد أبدأ"}},
-    {id:"b",label:{en:"Confidence — composed and put together",ar:"ثقة — هادي ومرتب وواثق من نفسي"}},
-    {id:"c",label:{en:"Seduction — magnetic and unforgettable",ar:"جاذبية — حضور ملفت وصعب يتنسي"}},
-    {id:"d",label:{en:"Joy — playful, bright and a little addictive",ar:"بهجة — مرح ومشرق ويخليني مبسوط"}}
-  ]},
-  { id:"q9", weight:0.4, title:{en:"Which weather feels right for your signature scent?",ar:"أنهي جو تحس إنه الأنسب لعطرك المميز؟"}, options:[
-    {id:"a",label:{en:"Cold and rainy",ar:"جو بارد وممطر"}},
-    {id:"b",label:{en:"A cool evening",ar:"مساء لطيف ومائل للبرودة"}},
-    {id:"c",label:{en:"A warm night",ar:"ليلة دافئة"}},
-    {id:"d",label:{en:"A sunny, hot day",ar:"نهار مشمس وحار"}}
-  ]},
-  { id:"q10", weight:1.0, title:{en:"Be honest: what would make you stop wearing a fragrance?",ar:"بصراحة، إيه أكتر حاجة ممكن تخليك تبطل تستخدم عطر؟"}, options:[
-    {id:"a",label:{en:"It turns too sweet",ar:"لو حلاوته زيادة عن اللزوم"}},
-    {id:"b",label:{en:"It feels too heavy or suffocating",ar:"لو تقيل أو خانق"}},
-    {id:"c",label:{en:"It smells too generic or forgettable",ar:"لو ريحته عادية أو سهلة النسيان"}},
-    {id:"d",label:{en:"It is too sharp or relentlessly fresh",ar:"لو حاد أو منعش بشكل مزعج"}}
-  ]}
-];
-
-// Each row scores fit for the four answers to q1…q10 (0–5). q10 scores
-// suitability when the user wants to avoid that drawback.
-export const quizFit = {
-  elite: [[4,5,3,3],[2,5,4,2],[3,3,4,3],[2,5,3,1],[4,2,3,1],[5,5,4,1],[2,5,4,2],[2,5,4,1],[5,4,3,1],[4,4,4,3]],
-  "starry-amber": [[2,0,5,4],[2,5,5,2],[3,4,4,4],[1,4,5,2],[1,2,5,4],[4,5,5,1],[2,4,5,2],[1,4,5,1],[5,5,5,1],[1,1,5,5]],
-  "tropical-bomb": [[4,2,3,5],[5,2,2,5],[3,4,5,4],[5,1,2,2],[2,5,2,1],[2,1,1,5],[4,2,2,5],[5,3,1,5],[1,4,3,1],[2,3,4,1]],
-  perla: [[3,3,4,4],[3,5,3,4],[3,3,3,3],[3,2,3,5],[1,2,5,3],[2,5,5,1],[2,5,3,4],[2,4,5,3],[3,4,4,2],[2,4,4,4]],
-  "fizzy-apple": [[5,4,2,4],[5,3,2,5],[3,4,2,3],[5,1,2,2],[1,5,2,3],[1,2,1,5],[5,3,1,5],[5,3,1,5],[1,1,3,5],[1,2,4,1]],
-  "spicy-vanilla": [[2,0,5,4],[2,3,5,4],[2,4,5,5],[1,5,5,2],[1,1,3,5],[5,5,5,1],[1,3,5,3],[1,4,5,2],[5,5,4,1],[2,1,4,5]],
-  "star-boy": [[5,3,1,3],[5,4,2,3],[3,3,3,3],[5,4,1,1],[5,2,1,1],[3,3,1,5],[5,5,1,2],[5,5,1,2],[1,2,2,5],[5,5,3,1]],
-  luna: [[2,0,5,4],[2,4,4,5],[3,3,4,4],[1,1,5,5],[1,2,5,5],[3,4,5,1],[1,4,3,4],[1,4,5,4],[3,4,5,1],[2,1,4,4]]
-};
 
 export const productCopy = {
   elite: { positioning:"خشبي. دافئ. راقٍ.", description:"ذوقك يميل للأخشاب المصقولة والتوابل الدافئة والحضور الأنيق — عطر يعكس الثقة والرقي من غير مجهود.", feeling:"خشب ناعم ودافئ مع توابل أنيقة ولمسة بودرية." },
@@ -175,3 +139,4 @@ export const productCopy = {
   "star-boy": { positioning:"منعش. أخضر. عفوي.", description:"هواء منعش وطاقة خضراء وثقة عفوية. عطرك يتحرك معك بخفة ومن غير ما يطغى عليك.", feeling:"انتعاش أخضر وحمضي بحضور خفيف." },
   luna: { positioning:"كريمي. جذاب. حسي.", description:"تميل إلى الزهور الكريمية والدفء الحلو والجاذبية الحسية — رائحة ناعمة وواثقة ويصعب نسيانها.", feeling:"زهور كريمية بحلاوة دافئة وطابع ناعم." }
 };
+
