@@ -100,7 +100,7 @@ export const questions = [
     {id:"a",label:{en:"Fresh and easy to be around",ar:"منعش وقريب من الناس"}},
     {id:"b",label:{en:"Elegant and quietly expensive",ar:"أنيق وفخم من غير مبالغة"}},
     {id:"c",label:{en:"Mysterious and hard to forget",ar:"غامض وصعب يتنسي"}},
-    {id:"d",label:{en:"Fun, magnetic and addictive",ar:"مرح وجذاب ومغري بتكراره"}}
+    {id:"d",label:{en:"Fun, magnetic and addictive",ar:"مرح وجذاب ويصعب مقاومته"}}
   ]},
   { id:"q3", weight:0.4, title:{en:"How noticeable should it be in the air?",ar:"تحب العطر يكون واضح قد إيه في المكان؟"}, options:[
     {id:"a",label:{en:"Soft and close to my skin",ar:"هادي وقريب من بشرتي"}},
@@ -108,7 +108,7 @@ export const questions = [
     {id:"c",label:{en:"Leaves a beautiful trail as I pass",ar:"يسيب أثر جميل وأنا ماشي"}},
     {id:"d",label:{en:"Makes a bold entrance and fills the room",ar:"حضوره قوي ويملى المكان"}}
   ]},
-  { id:"q4", weight:2.0, title:{en:"Which opening would make you want to smell it again?",ar:"أنهي افتتاحية تخليك تحب تشم العطر تاني؟"}, options:[
+  { id:"q4", weight:2.0, title:{en:"Which opening would make you want to smell it again?",ar:"إيه المكونات اللي تحب تبدأ بيها تجربة العطر؟"}, options:[
     {id:"a",label:{en:"Crisp fruit and fresh citrus",ar:"فاكهة مقرمشة وحمضيات منعشة"}},
     {id:"b",label:{en:"Spices, woods and a warm edge",ar:"توابل وأخشاب ولمسة دافئة"}},
     {id:"c",label:{en:"Creamy vanilla and glowing amber",ar:"فانيليا كريمية وعنبر دافئ"}},
@@ -122,7 +122,7 @@ export const questions = [
   ]},
   { id:"q6", weight:0.4, title:{en:"Pick a place that feels like your scent.",ar:"اختار مكان تحس إنه شبه ريحتك."}, options:[
     {id:"a",label:{en:"Rooftop at midnight, city lights below",ar:"سطح مبنى بعد نص الليل وأضواء المدينة تحتك"}},
-    {id:"b",label:{en:"A luxury hotel lounge with warm lighting",ar:"لاونج فندق فخم بإضاءة دافئة"}},
+    {id:"b",label:{en:"A luxury hotel lounge with warm lighting",ar:"ردهة فندق فخم بإضاءة دافئة"}},
     {id:"c",label:{en:"A private room lit by candles",ar:"مكان هادي على ضوء الشموع"}},
     {id:"d",label:{en:"A sunny beach or a colorful city afternoon",ar:"شاطئ مشمس أو جولة وسط مدينة مليانة ألوان"}}
   ]},
@@ -135,7 +135,7 @@ export const questions = [
   { id:"q8", weight:0.7, title:{en:"What do you want to feel after spraying it?",ar:"تحب تحس بإيه بعد ما ترش العطر؟"}, options:[
     {id:"a",label:{en:"Energy — awake, fresh and ready to go",ar:"طاقة — صاحي ومنتعش ومستعد أبدأ"}},
     {id:"b",label:{en:"Confidence — composed and put together",ar:"ثقة — هادي ومرتب وواثق من نفسي"}},
-    {id:"c",label:{en:"Seduction — magnetic and unforgettable",ar:"جاذبية — حضوري مغناطيسي وصعب يتنسي"}},
+    {id:"c",label:{en:"Seduction — magnetic and unforgettable",ar:"جاذبية — حضور ملفت وصعب يتنسي"}},
     {id:"d",label:{en:"Joy — playful, bright and a little addictive",ar:"بهجة — مرح ومشرق ويخليني مبسوط"}}
   ]},
   { id:"q9", weight:0.4, title:{en:"Which weather feels right for your signature scent?",ar:"أنهي جو تحس إنه الأنسب لعطرك المميز؟"}, options:[

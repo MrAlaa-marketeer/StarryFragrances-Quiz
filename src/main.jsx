@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2, Share2, SlidersHorizontal, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2, Share2, SlidersHorizontal, Sparkles, ShoppingBag, X } from "lucide-react";
 import "./styles.css";
 import "./landing.css";
 import "./quiz-enhancements.css";
@@ -10,16 +10,23 @@ const ASSET_BASE = "/images/";
 const WHATSAPP_NUMBER = "201207207794";
 const INSTAGRAM_PROFILE = "https://www.instagram.com/starryfragrances/";
 const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
+const CART_STORAGE = "starry-cart";
+const RESULT_STORAGE = "starry-quiz-result";
+function track(event) { try { const key="starry-funnel-analytics"; const events=JSON.parse(localStorage.getItem(key)||"{}"); events[event]=(events[event]||0)+1; events.lastEventAt=new Date().toISOString(); localStorage.setItem(key,JSON.stringify(events)); } catch { /* Analytics must not block the experience. */ } }
+function readCart() { try { const v=JSON.parse(localStorage.getItem(CART_STORAGE)||"[]"); return Array.isArray(v)?v:[]; } catch { return []; } }
+function addToCart(product) { const cart=readCart(); const item=cart.find((entry)=>entry.id===product.id); if(item)item.quantity+=1;else cart.push({id:product.id,quantity:1}); try{localStorage.setItem(CART_STORAGE,JSON.stringify(cart));window.dispatchEvent(new Event("starry-cart-updated"));track("add_to_cart");}catch{/* WhatsApp checkout remains available. */} }
+function AddToCartButton({product,lang}) { const [added,setAdded]=useState(false); function add(){addToCart(product);setAdded(true);window.setTimeout(()=>setAdded(false),1600)} return <button type="button" className="add-to-cart" onClick={add}><ShoppingBag size={15}/>{added?labels[lang].addedToBag:labels[lang].add}</button>; }
+
 const labels = {
-  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy", shop:"SHOP FRAGRANCES", quiz:"TAKE THE SCENT QUIZ", shopTitle:"THE FRAGRANCE COLLECTION", shopIntro:"Find the scent that feels like you.", sort:"SORT BY", featured:"Featured", priceLow:"Price: Low to high", priceHigh:"Price: High to low", nameSort:"Name: A to Z", notSure:"NOT SURE WHICH SCENT IS YOURS?", findScent:"FIND YOUR SCENT", description:"THE STORY", mayLike:"YOU MAY ALSO LIKE", viewDetails:"VIEW DETAILS", continueShopping:"Continue shopping", compare:"COMPARE", added:"ADDED", compareOneMore:"Choose one more scent to compare", compareNow:"COMPARE TWO SCENTS", compareTitle:"Compare fragrances", close:"Close", compareSize:"SIZE", comparePrice:"PRICE", compareScent:"SCENT PROFILE", compareNotes:"MAIN ACCORDS" },
-  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"اختار العطر الأقرب لذوقك.", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك أيضًا", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح" }
+  en: { back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"ANSWER FIT", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"10% OFF", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy", shop:"SHOP FRAGRANCES", quiz:"TAKE THE SCENT QUIZ", shopTitle:"THE FRAGRANCE COLLECTION", shopIntro:"Find the scent that feels like you.", sort:"SORT BY", featured:"Featured", priceLow:"Price: Low to high", priceHigh:"Price: High to low", nameSort:"Name: A to Z", notSure:"NOT SURE WHICH SCENT IS YOURS?", findScent:"FIND YOUR SCENT", description:"THE STORY", mayLike:"YOU MAY ALSO LIKE", viewDetails:"VIEW DETAILS", continueShopping:"Continue shopping", compare:"COMPARE", added:"ADDED", compareOneMore:"Choose one more scent to compare", compareNow:"COMPARE TWO SCENTS", compareTitle:"Compare fragrances", close:"Close", compareSize:"SIZE", comparePrice:"PRICE", compareScent:"SCENT PROFILE", compareNotes:"MAIN ACCORDS", bag:"Your bag", checkout:"Checkout on WhatsApp", emptyCart:"Your bag is empty", add:"Add to bag", addedToBag:"Added to your bag", bundle:"Discover the collection", bundleCopy:"Ask us about a discovery set", shareSuccess:"Your result is ready to share", shareError:"Could not prepare your result card. Please try again." },
+  ar: { back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"لماذا يناسبك هذا العطر؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر آخر قريب من ذوقك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"توافق إجاباتك", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"خصم 10٪", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"اختار العطر الأقرب لذوقك.", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك أيضًا", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", bag:"حقيبة التسوق", checkout:"أكمل الطلب عبر واتساب", emptyCart:"حقيبتك فارغة", add:"أضف للحقيبة", addedToBag:"تمت الإضافة إلى حقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"تعذّر تجهيز بطاقة النتيجة. حاول مرة أخرى." }
 };
 const occasionByAnswer = { a:"everyday", b:"work", c:"date", d:"social" };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
 
 function readAnswers() {
   try {
-    const saved = JSON.parse(sessionStorage.getItem("starry-quiz-answers") || "[]");
+    const saved = JSON.parse(sessionStorage.getItem("starry-quiz-answers") || JSON.stringify(JSON.parse(localStorage.getItem(RESULT_STORAGE) || "{}").answers || []));
     return Array.isArray(saved) ? saved.slice(0, questions.length) : [];
   } catch { return []; }
 }
@@ -105,10 +112,15 @@ function scoreProducts(answers) {
 }
 
 function Header({ back, onBack, onGallery, lang = "en" }) {
-  return <header className="header" dir="ltr">
-    {back ? <button className="icon-btn" onClick={onBack} aria-label={labels[lang].back}><ArrowLeft size={19}/></button> : <div className="header-spacer"/>}
-    <a className="logo" href="https://starry-fragrances-quiz.vercel.app/" aria-label="STARRY quiz home">STARRY</a>
-    <button className="icon-btn" onClick={onGallery} aria-label={lang === "ar" ? "استكشف كل العطور" : "Explore all fragrances"}><Menu size={20}/></button>
+  const [drawerOpen,setDrawerOpen]=useState(false),[cartOpen,setCartOpen]=useState(false),[cart,setCart]=useState(readCart);
+  useEffect(()=>{const sync=()=>setCart(readCart());window.addEventListener("starry-cart-updated",sync);window.addEventListener("storage",sync);return()=>{window.removeEventListener("starry-cart-updated",sync);window.removeEventListener("storage",sync)}},[]);
+  const items=cart.map((entry)=>({product:products.find((p)=>p.id===entry.id),quantity:entry.quantity})).filter((x)=>x.product);
+  const count=items.reduce((n,x)=>n+x.quantity,0),total=items.reduce((n,x)=>n+x.product.offerPrice*x.quantity,0);
+  const orderText=items.map(({product,quantity})=>`${quantity} × ${product.name} (${product.size}) — ${product.offerPrice*quantity} ${labels[lang].priceUnit}`).join("\n");
+  const checkoutUrl=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lang==="ar"?`مرحبًا، أرغب في طلب:\n${orderText}`:`Hello, I would like to order:\n${orderText}`)}`;
+  const close=()=>{setDrawerOpen(false);setCartOpen(false)};
+  return <header className="header" dir="ltr">{back?<button className="icon-btn" onClick={onBack} aria-label={labels[lang].back}><ArrowLeft size={19}/></button>:<div className="header-spacer"/>}<a className="logo" href="/" aria-label="STARRY home">STARRY</a><div className="header-actions"><button className="icon-btn cart-trigger" onClick={()=>setCartOpen(true)} aria-label={labels[lang].bag}><ShoppingBag size={18}/><span>{count}</span></button><button className="icon-btn" onClick={()=>setDrawerOpen(true)} aria-label={lang==="ar"?"فتح القائمة":"Open navigation menu"}><Menu size={20}/></button></div>
+  {(drawerOpen||cartOpen)&&<div className="drawer-backdrop" onClick={close}><aside className="navigation-drawer" dir={lang==="ar"?"rtl":"ltr"} onClick={(e)=>e.stopPropagation()}><button className="drawer-close" onClick={close} aria-label={lang==="ar"?"إغلاق":"Close"}><X size={19}/></button>{drawerOpen?<><span className="drawer-kicker">STARRY FRAGRANCE HOUSE</span><h2>{lang==="ar"?"إلى أين تأخذك رائحتك؟":"Where will your scent take you?"}</h2><a href="/shop" onClick={(e)=>{e.preventDefault();close();onGallery()}}>{labels[lang].shop}<ArrowRight size={16}/></a><a href="/quiz">{labels[lang].quiz}<ArrowRight size={16}/></a><a href="/return-exchange-policy">{labels[lang].policyLink}<ArrowRight size={16}/></a><a href="https://www.instagram.com/starryfragrances/" target="_blank" rel="noopener noreferrer">Instagram</a></>:<><span className="drawer-kicker">STARRY</span><h2>{labels[lang].bag}</h2>{items.length?<><div className="cart-items">{items.map(({product,quantity})=><div className="cart-item" key={product.id}><span><strong>{product.name}</strong><small>{quantity} × {product.size}</small></span><b>{product.offerPrice*quantity} {labels[lang].priceUnit}</b></div>)}</div><div className="cart-total"><span>{lang==="ar"?"الإجمالي":"Total"}</span><strong>{total} {labels[lang].priceUnit}</strong></div><a className="cart-checkout" href={checkoutUrl} onClick={()=>track("whatsapp_checkout")} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{labels[lang].checkout}</a></>:<p>{labels[lang].emptyCart}</p>}<a href="/shop" onClick={(e)=>{e.preventDefault();close();onGallery()}}>{labels[lang].shop}<ArrowRight size={16}/></a></>}</aside></div>}
   </header>;
 }
 
@@ -207,10 +219,11 @@ function traceRoundedRect(ctx, x, y, width, height, radius) {
 
 function ShareButton({ product, lang }) {
   const copy = labels[lang];
+  const [shareStatus,setShareStatus]=useState("");
   async function share() {
     const canvas = document.createElement("canvas"); canvas.width = 1080; canvas.height = 1350;
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    if (!ctx) {setShareStatus(copy.shareError);return;}
     const localized = lang === "ar" ? productCopy[product.id] : product;
     const background = ctx.createLinearGradient(0, 0, 1080, 1350);
     background.addColorStop(0, "#111d2a"); background.addColorStop(.56, "#07111b"); background.addColorStop(1, "#03070c");
@@ -252,21 +265,21 @@ function ShareButton({ product, lang }) {
     });
     ctx.fillStyle = "#aa9a7e"; ctx.font = "17px Georgia,serif"; ctx.fillText(lang === "ar" ? "عطر يشبهك" : "A fragrance that feels like you", 540, 1281);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-    if (!blob) return;
+    if (!blob) {setShareStatus(copy.shareError);return;}
     const file = new File([blob], "my-starry-signature.png", { type: "image/png" });
     try {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         await navigator.share({ title: `My STARRY match: ${product.name}`, files: [file] });
-        return;
+        setShareStatus(copy.shareSuccess);track("share_result");return;
       }
     } catch (error) {
       if (error?.name === "AbortError") return;
     }
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a"); link.href = url; link.download = file.name; link.click();
-    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);setShareStatus(copy.shareSuccess);track("share_result");
   }
-  return <button className="share-btn" onClick={share}><Share2 size={16}/>{copy.share}</button>;
+  return <div className="share-area"><button className="share-btn" onClick={share}><Share2 size={16}/>{copy.share}</button>{shareStatus&&<div className="success-toast" role="status" aria-live="polite">{shareStatus}</div>}</div>;
 }
 
 function matchedAnswers(product, answers, lang) {
@@ -294,6 +307,7 @@ function MatchCard({ product, secondary, answers, onOpen, onOpenSecondary, onGal
     <section className="best-for"><h3>{copy.bestFor}</h3><div className="occasion-chips">{product.bestFor[lang].map((item) => <span key={item}>{item}</span>)}</div></section>
     {secondary && <button type="button" className="secondary-match" onClick={onOpenSecondary} aria-label={lang === "ar" ? `عرض تفاصيل عطر ${secondary.name}` : `View details for ${secondary.name}`}><span>{copy.second}</span><strong>{secondary.name}</strong><b>{secondary.match}% <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></b></button>}
     <section className="purchase-panel result-purchase"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div></section>
+    <AddToCartButton product={product} lang={lang}/>
     <button className="explore-btn" onClick={onOpen}>{copy.explore} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={14}/></button>
     <ShareButton product={product} lang={lang}/><button className="retake-btn" onClick={onRetake}><RotateCcw size={14}/>{copy.retake}</button>
   </main>;
@@ -325,10 +339,11 @@ function Details({ product, onBack, onGallery, onOpen, lang }) {
   const similar = products.filter((item) => item.id !== product.id).sort((a,b) => dnaSimilarity(product,b) - dnaSimilarity(product,a)).slice(0,2);
   return <main className="screen details" dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="details-bottle detail-art"><ResponsiveImage name={product.resultImage} alt={product.name}/></div><h1 dir="ltr">{product.name}</h1><p className="product-positioning">{localized.positioning}</p>
     <section className="purchase-panel"><Price product={product} lang={lang}/><div className="order-actions"><a className="whatsapp-btn" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.order}</a><a className="instagram-btn" href={INSTAGRAM_PROFILE} target="_blank" rel="noopener noreferrer"><Instagram size={17}/>{copy.orderInstagram}</a></div><a className="product-policy-link" href="/return-exchange-policy">{copy.policyLink}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></a></section>
+    <AddToCartButton product={product} lang={lang}/>
     <a className="mobile-order-dock" href={whatsappUrl} target="_blank" rel="noopener noreferrer"><span className="mobile-order-price"><small>{product.size}</small><strong>{product.offerPrice} <i>{copy.priceUnit}</i></strong></span><span className="mobile-order-cta"><MessageCircle size={17}/>{copy.order}</span></a>
     <section className="product-description"><h2>{copy.description}</h2><p>{localized.description}</p>{lang === "ar" && localized.feeling && <p className="product-feeling"><strong>الإحساس العام:</strong> {localized.feeling}</p>}</section>
     <section className="accords"><h3>{lang === "ar" ? "الروائح الأساسية" : "MAIN ACCORDS"}</h3>{product.accords.map((a) => <div className="accord" key={a.name}><span className="accord-label"><span>{a.name}</span>{lang === "ar" && <small>{accordArabic[a.name] || a.name}</small>}</span><div><i style={{width:`${a.level}%`}}/></div></div>)}</section>
-    <section><h3 className="section-title">{lang === "ar" ? "مكونات العطر" : "FRAGRANCE NOTES"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{lang === "ar" ? <span className="note-list">{list.map((note) => <span className="note-entry" key={note}><span dir="ltr">{note}</span><small dir="rtl">({noteArabic[note] || note})</small></span>)}</span> : list.join(" · ")}</strong></div>)}</div></section>
+    <section><h3 className="section-title">{lang === "ar" ? "هرم العطر" : "FRAGRANCE PYRAMID"}</h3><div className="notes-grid">{Object.entries(product.notes).map(([type,list]) => <div className="note-card" key={type}><small>{lang === "ar" ? ({"Top Notes":"مقدمة العطر","Heart Notes":"قلب العطر","Base Notes":"قاعدة العطر"}[type] || type) : type}</small><strong>{lang === "ar" ? <span className="note-list">{list.map((note) => <span className="note-entry" key={note}><span dir="ltr">{note}</span><small dir="rtl">({noteArabic[note] || note})</small></span>)}</span> : list.join(" · ")}</strong></div>)}</div></section>
     <section className="similar-section"><h2>{copy.mayLike}</h2><div className="similar-grid">{similar.map((item) => <button type="button" className="similar-card" key={item.id} onClick={() => onOpen(item)}><span className="similar-art"><ResponsiveImage name={item.resultImage} alt="" sizes="(max-width: 700px) 42vw, 220px"/></span><strong dir="ltr">{item.name}</strong><span className="similar-price">{item.offerPrice} {copy.priceUnit}</span></button>)}</div></section>
   </main>;
 }
@@ -348,6 +363,7 @@ function Gallery({ onAgain, onBack, onGallery, onOpen, lang }) {
   }
   return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} lang={lang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1><p>{copy.shopIntro}</p></div><label className="sort-control"><span><SlidersHorizontal size={15}/>{copy.sort}</span><select value={sort} onChange={(event) => setSort(event.target.value)} aria-label={copy.sort}><option value="featured">{copy.featured}</option><option value="price-low">{copy.priceLow}</option><option value="price-high">{copy.priceHigh}</option><option value="name">{copy.nameSort}</option></select></label>
     <div className="product-grid">{sortedProducts.map((product) => { const isCompared = compareIds.includes(product.id); return <article key={product.id} className={`mini-product${isCompared ? " is-compared" : ""}`}><button type="button" className="mini-product-open" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${copy.priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 44vw, 260px"/></span><span className="mini-name" dir="ltr">{product.name}</span><Price product={product} lang={lang} compact/><span className="card-detail-link">{copy.viewDetails} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={12}/></span></button><button type="button" className="compare-pick" aria-pressed={isCompared} disabled={compareIds.length === 2 && !isCompared} onClick={() => toggleCompare(product.id)}>{isCompared ? copy.added : copy.compare}</button></article>; })}</div>
+    <section className="discovery-set"><span className="drawer-kicker">STARRY DISCOVERY</span><h2>{copy.bundle}</h2><p>{copy.bundleCopy}</p><a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lang === "ar" ? "مرحبًا، أود الاستفسار عن مجموعة اكتشاف عطور STARRY." : "Hello, I would like to ask about a STARRY fragrance discovery set.")}`} onClick={() => track("discovery_set_inquiry")} target="_blank" rel="noopener noreferrer"><MessageCircle size={16}/>{lang === "ar" ? "استفسر عبر واتساب" : "Ask on WhatsApp"}</a></section>
     {compareIds.length > 0 && <div className="compare-dock"><span>{compareIds.length === 1 ? copy.compareOneMore : copy.compareNow}</span><button type="button" disabled={compareIds.length < 2} onClick={() => setShowComparison((value) => !value)}>{showComparison ? copy.close : compareIds.length === 1 ? `${compareIds.length}/2` : copy.compareNow}</button></div>}
     {showComparison && compareProducts.length === 2 && <section className="compare-panel" ref={compareRef} aria-labelledby="compare-title"><header className="compare-header"><h2 id="compare-title">{copy.compareTitle}</h2><button type="button" onClick={() => setShowComparison(false)}>{copy.close}</button></header><div className="compare-heads"><span aria-hidden="true"/>{compareProducts.map((product) => <div className="compare-product-head" key={product.id}><ResponsiveImage name={product.resultImage} alt="" sizes="(max-width: 600px) 30vw, 180px"/><strong dir="ltr">{product.name}</strong></div>)}</div><div className="compare-row"><span>{copy.compareSize}</span>{compareProducts.map((product) => <b key={product.id}>{product.size}</b>)}</div><div className="compare-row"><span>{copy.comparePrice}</span>{compareProducts.map((product) => <b className="compare-price" key={product.id}>{product.offerPrice} <small>{copy.priceUnit}</small>{product.listPrice > product.offerPrice && <del>{product.listPrice} {copy.priceUnit}</del>}</b>)}</div><div className="compare-row"><span>{copy.compareScent}</span>{compareProducts.map((product) => <b key={product.id}>{(lang === "ar" ? productCopy[product.id]?.positioning : product.positioning) || product.positioning}</b>)}</div><div className="compare-row"><span>{copy.compareNotes}</span>{compareProducts.map((product) => <b key={product.id}>{product.accords.slice(0,3).map((accord) => lang === "ar" ? (accordArabic[accord.name] || accord.name) : accord.name).join(" · ")}</b>)}</div><div className="compare-actions">{compareProducts.map((product) => <button type="button" key={product.id} onClick={() => onOpen(product)}>{copy.viewDetails}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></button>)}</div></section>}
     <section className="shop-quiz-cta"><Sparkles size={19}/><h2>{copy.notSure}</h2><a href="/quiz" onClick={(event) => {event.preventDefault();onAgain();}}>{copy.findScent}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={15}/></a></section><SocialLinks lang={lang}/><div className="footer-brand">STARRY<br/><small>FRAGRANCE HOUSE</small></div></main>;
@@ -412,7 +428,8 @@ function screenFromPath(pathname) {
   if (pathname === "/return-exchange-policy") return "policy";
   if (pathname === "/shop") return "gallery";
   if (pathname === "/quiz") return "quiz";
-  if (pathname.startsWith("/fragrance/")) return "details";
+  if (pathname === "/result") return "result";
+  if (pathname.startsWith("/fragrance/") || pathname.startsWith("/product/")) return "details";
   return "landing";
 }
 
@@ -426,7 +443,7 @@ function App() {
   const analysisTimer = React.useRef(null);
   const results = useMemo(() => scoreProducts(answers), [answers]);
   useEffect(() => {
-    const match = window.location.pathname.match(/^\/fragrance\/([^/]+)$/);
+    const match = window.location.pathname.match(/^\/(?:fragrance|product)\/([^/]+)$/);
     if (match) setSelected(products.find((product) => product.id === decodeURIComponent(match[1])) || products[0]);
   }, []);
   useEffect(() => { window.scrollTo(0, 0); }, [screen, selected]);
@@ -463,10 +480,13 @@ function App() {
     setScreen("details");
   }
   useEffect(() => { writeSessionValue("starry-quiz-answers", JSON.stringify(answers)); }, [answers]);
+  useEffect(() => { if(screen==="gallery") track("shop_open"); }, [screen]);
   useEffect(() => { writeSessionValue("starry-quiz-step", String(step)); }, [step]);
   useEffect(() => () => window.clearTimeout(analysisTimer.current), []);
   function finish(value) {
     setAnswers(value);
+    try { const product=scoreProducts(value)[0]; localStorage.setItem(RESULT_STORAGE,JSON.stringify({answers:value,productId:product?.id,savedAt:Date.now()})); } catch { /* The result stays available during this visit. */ }
+    track("quiz_complete");
     setScreen("analyzing");
     window.clearTimeout(analysisTimer.current);
     analysisTimer.current = window.setTimeout(() => setScreen("result"), 1100);
@@ -476,6 +496,7 @@ function App() {
     window.clearTimeout(analysisTimer.current);
     if (window.location.pathname !== "/quiz") window.history.pushState({screen:"quiz"},"", "/quiz");
     setAnswers([]); setStep(0); setSelected(null);
+    try { localStorage.removeItem(RESULT_STORAGE); } catch { /* Retaking still works. */ }
     removeSessionValue("starry-quiz-answers"); removeSessionValue("starry-quiz-step");
     setScreen("quiz");
   }

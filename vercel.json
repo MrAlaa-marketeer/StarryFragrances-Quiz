@@ -1,8 +1,32 @@
 {
   "rewrites": [
-    { "source": "/return-exchange-policy", "destination": "/" },
-    { "source": "/shop", "destination": "/" },
-    { "source": "/quiz", "destination": "/" },
-    { "source": "/fragrance/:path*", "destination": "/" }
+    {
+      "source": "/return-exchange-policy",
+      "destination": "/"
+    },
+    {
+      "source": "/shop",
+      "destination": "/"
+    },
+    {
+      "source": "/quiz",
+      "destination": "/"
+    },
+    {
+      "source": "/result",
+      "destination": "/"
+    },
+    {
+      "source": "/fragrance/:slug",
+      "destination": "/fragrance/:slug/index.html"
+    },
+    {
+      "source": "/product/:slug",
+      "destination": "/product/:slug/index.html"
+    },
+    {
+      "source": "/fragrance/:path*",
+      "destination": "/"
+    }
   ]
 }
