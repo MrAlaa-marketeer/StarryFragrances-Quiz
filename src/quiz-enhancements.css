@@ -94,6 +94,7 @@
 .details .product-positioning{text-align:center;margin:9px 24px 0;font-size:16px}
 .details .purchase-panel{width:min(calc(100% - 40px),660px);margin:22px auto 0;padding:18px 20px;border-color:rgba(224,173,92,.24);border-radius:18px}
 .details .purchase-panel .price-meta{font-size:14px}
+.details .purchase-panel>.add-to-cart{width:100%;max-width:none;min-height:54px;margin:12px 0 4px;padding:0 16px;flex:none;border:1px solid rgba(224,173,92,.68);border-radius:10px;background:linear-gradient(135deg,rgba(224,173,92,.13),rgba(224,173,92,.05));color:#f0d39a;font-size:12px;font-weight:600;letter-spacing:.35px}
 .details .purchase-panel .offer-badge{font-size:12px;padding:6px 11px}
 .details .purchase-panel .price-values .old-price{font-size:18px}
 .details .purchase-panel .price-values strong{font-size:31px}
