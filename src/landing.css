@@ -186,3 +186,8 @@ html[lang="ar"] .note-entry small { color:#c7b58d; font-size:10px; }
   letter-spacing: 3px !important;
 }
 
+/* Product bottle artwork: preserve the full transparent packshot in shop cards. */
+.mini-bottle img { width:100%; height:100%; max-width:none; max-height:none; object-fit:contain; padding:10px; filter:drop-shadow(0 8px 14px rgba(0,0,0,.42)); }
+.detail-art img { object-fit:contain; padding:18px; }
+.detail-art:after { display:none; }
+.similar-art img { width:100%; height:100%; padding:8px; object-fit:contain; }
