@@ -173,3 +173,16 @@ html[lang="ar"] .note-list { display:flex; flex-direction:column; gap:4px; }
 html[lang="ar"] .note-entry { display:flex; flex-wrap:wrap; justify-content:flex-end; align-items:baseline; gap:2px 4px; line-height:1.35; }
 html[lang="ar"] .note-entry small { color:#c7b58d; font-size:10px; }
 
+/* Apply the Arabic typeface consistently inside RTL content without changing layout rules. */
+[dir="rtl"],
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] span,
+[dir="rtl"] p,
+[dir="rtl"] button {
+  font-family: 'Tajawal', sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
