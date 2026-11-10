@@ -467,3 +467,10 @@
   border-top: 0;
   padding-top: 4px;
 }
+
+.checkout-error {
+  color: #f0a49a;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 10px 0 0;
+}
