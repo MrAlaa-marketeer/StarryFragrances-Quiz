@@ -482,7 +482,7 @@ const noteArabic = {
 
 function Details({ product, onBack, onGallery, onStartQuiz, onPolicy, onHome, onOpen, lang, setLang }) {
   const copy = labels[lang];
-  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر العرض ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at the offer price of EGP ${product.offerPrice} from STARRY.`;
+  const message = lang === "ar" ? `مرحبًا، أرغب في طلب عطر ${product.name} حجم ${product.size} بسعر ${product.offerPrice} جنيه من STARRY.` : `I want to order ${product.name} (${product.size}) at EGP ${product.offerPrice} from STARRY.`;
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   const localized = lang === "ar" ? productCopy[product.id] : product;
   const similar = products.filter((item) => item.id !== product.id).sort((a,b) => dnaSimilarity(product,b) - dnaSimilarity(product,a)).slice(0,2);
