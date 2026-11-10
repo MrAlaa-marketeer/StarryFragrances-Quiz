@@ -469,8 +469,13 @@
 }
 
 .checkout-error {
-  color: #f0a49a;
-  font-size: 12px;
-  line-height: 1.4;
+  color: #ffd2ca;
+  background: rgba(240, 164, 154, 0.09);
+  border: 1px solid rgba(240, 164, 154, 0.4);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
   margin: 10px 0 0;
 }
