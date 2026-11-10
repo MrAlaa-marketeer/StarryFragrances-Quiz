@@ -8,7 +8,7 @@ const dna = (values) => Object.fromEntries(TRAITS.map((t) => [t, values[t] ?? 0]
 
 export const products = [
   {
-    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
+    id: "elite", name: "THE ELITE", image: "the-elite.png", resultImage: "the-elite-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 775,
     positioning: "Woody. Warm. Sophisticated.",
     inspiredBy: "BDK Gris Charnel EDP",
     longevity: { en: "+8 Hours", ar: "+8 ساعات" },
@@ -23,7 +23,7 @@ export const products = [
     notes: { "Top Notes":["Fig","Black Tea","Cardamom"], "Heart Notes":["Iris","Vetiver"], "Base Notes":["Sandalwood","Tonka Bean"] }
   },
   {
-    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 700,
+    id: "starry-amber", name: "STARRY AMBER", image: "starry-amber.png", resultImage: "starry-amber-result-960.webp", size: "50ml", listPrice: 775, offerPrice: 775,
     positioning: "Deep. Warm. Mysterious.",
     inspiredBy: "Xerjoff Amber Star",
     longevity: { en: "9+ Hours", ar: "+9 ساعات" },
@@ -38,7 +38,7 @@ export const products = [
     notes: { "Top Notes":["Cedar","Amber","Ylang-Ylang"], "Heart Notes":["Gurjun Balsam","Iris","Myrrh"], "Base Notes":["Vanilla","Sandalwood","Benzoin"] }
   },
   {
-    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp", size: "50ml", listPrice: 575, offerPrice: 520,
+    id: "tropical-bomb", name: "TROPICAL BOMB", image: "tropical-bomb.png", resultImage: "tropical-bomb-result-960.webp", size: "50ml", listPrice: 575, offerPrice: 575,
     positioning: "Fresh. Vibrant. Unforgettable.",
     inspiredBy: "Ex Nihilo Blue Talisman Extrait",
     longevity: { en: "+8 Hours", ar: "+8 ساعات" },
@@ -53,7 +53,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Bergamot"], "Heart Notes":["Orange Blossom","Jasmine"], "Base Notes":["Sandalwood","Vanilla","Musks","Amber Woods"] }
   },
   {
-    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
+    id: "perla", name: "PERLA", image: "perla.png", resultImage: "perla-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 500,
     positioning: "Soft. Elegant. Radiant.",
     inspiredBy: null,
     longevity: { en: "+9 Hours", ar: "+9 ساعات" },
@@ -68,7 +68,7 @@ export const products = [
     notes: { "Top Notes":["Pear","Frankincense","Hazelnut"], "Heart Notes":["Saffron","Rose","Jasmine Sambac","Osmanthus"], "Base Notes":["Sandalwood","Vanilla","Akigalawood","Amber"] }
   },
   {
-    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 450,
+    id: "fizzy-apple", name: "FIZZY APPLE", image: "fizzy-apple.png", resultImage: "fizzy-apple-result-960.webp", size: "50ml", listPrice: 500, offerPrice: 500,
     positioning: "Juicy. Bright. Effortless.",
     inspiredBy: "Kayali Eden Juicy Apple",
     longevity: { en: "6+ Hours", ar: "+6 ساعات" },
@@ -83,7 +83,7 @@ export const products = [
     notes: { "Top Notes":["Red Apple","Lychee","Black Currant","Pink Grapefruit"], "Heart Notes":["Wild Berries","Jasmine","Rose"], "Base Notes":["Sugar","Musk","Vanilla","Amber"] }
   },
   {
-    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp", size: "50ml", listPrice: 620, offerPrice: 560,
+    id: "spicy-vanilla", name: "SPICY VANILLA", image: "spicy-vanilla.png", resultImage: "spicy-vanilla-result-960.webp", size: "50ml", listPrice: 620, offerPrice: 620,
     positioning: "Dark. Spicy. Addictive.",
     inspiredBy: "YSL Babycat",
     longevity: { en: "10+ Hours", ar: "+10 ساعات" },
@@ -98,7 +98,7 @@ export const products = [
     notes: { "Top Notes":["Pink Pepper","Black Pepper","Elemi"], "Heart Notes":["Olibanum","Saffron"], "Base Notes":["Vanilla","Cedarwood","Suede"] }
   },
   {
-    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
+    id: "star-boy", name: "STAR BOY", image: "star-boy.png", resultImage: "star-boy-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 475,
     positioning: "Fresh. Green. Effortless.",
     inspiredBy: null,
     longevity: { en: "+6 Hours", ar: "+6 ساعات" },
@@ -113,7 +113,7 @@ export const products = [
     notes: { "Top Notes":["Mint","Bergamot","Grapefruit","Lavender"], "Heart Notes":["Green Apple","Cranberry","Rose"], "Base Notes":["Cotton Flower","Cactus","Amber"] }
   },
   {
-    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 430,
+    id: "luna", name: "LUNA", image: "luna.png", resultImage: "luna-result-960.webp", size: "50ml", listPrice: 475, offerPrice: 475,
     positioning: "Creamy. Magnetic. Sensual.",
     inspiredBy: null,
     longevity: { en: "+7 Hours", ar: "+7 ساعات" },
