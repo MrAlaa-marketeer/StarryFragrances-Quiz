@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Music2, Share2, SlidersHorizontal, Sparkles, ShoppingBag, X, Plus, Minus, Clock, Wind, Users, SunSnow } from "lucide-react";
+import { ArrowLeft, ArrowRight, Menu, RotateCcw, MessageCircle, Instagram, Facebook, Share2, SlidersHorizontal, Sparkles, ShoppingBag, X, Plus, Minus, Clock, Wind, Users, SunSnow } from "lucide-react";
 import "./styles.css";
 import "./landing.css";
 import "./quiz-enhancements.css";
@@ -315,7 +315,6 @@ function SocialLinks({ lang = "en", onPolicy }) {
   const links = [
     { name:"Instagram", url:"https://www.instagram.com/starryfragrances/", Icon:Instagram },
     { name:"Facebook", url:"https://www.facebook.com/starryfragrances", Icon:Facebook },
-    { name:"TikTok", url:"https://www.tiktok.com/@starryfragrances", Icon:Music2 }
   ];
   return <div className="landing-footer-links"><nav className="social-links" aria-label="Follow STARRY">
     {links.map(({name,url,Icon}) => <a key={name} href={url} target="_blank" rel="noopener noreferrer" aria-label={`STARRY on ${name}`}><Icon size={15} aria-hidden="true"/><span>{name}</span></a>)}
