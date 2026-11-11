@@ -541,6 +541,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
   const [showComparison, setShowComparison] = useState(false);
   const compareRef = React.useRef(null);
   const copy = labels[lang];
+  const offerActive = useBlackFridayActive();
 
   const categories = [
     { id: "all", label: copy.filterAll },
@@ -566,7 +567,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
     setCompareIds((current) => current.includes(productId) ? current.filter((id) => id !== productId) : current.length < 2 ? [...current, productId] : current);
     setShowComparison(false);
   }
-  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1>{useBlackFridayActive()&&<p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p>}</div>
+  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1>{offerActive&&<p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p>}</div>
     <div className="category-pills" role="tablist" aria-label={lang === "ar" ? "تصنيف العطور" : "Filter fragrances"}>
       {categories.map((cat) => (
         <button
