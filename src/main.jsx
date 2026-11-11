@@ -26,33 +26,33 @@ function useBlackFridayActive() {
 }
 
 const GOVERNORATES = [
-  { id: "Cairo", en: "Cairo", ar: "القاهرة" },
-  { id: "Giza", en: "Giza", ar: "الجيزة" },
-  { id: "Alexandria", en: "Alexandria", ar: "الإسكندرية" },
-  { id: "Qalyubia", en: "Qalyubia", ar: "القليوبية" },
-  { id: "Dakahlia", en: "Dakahlia", ar: "الدقهلية" },
-  { id: "Gharbia", en: "Gharbia", ar: "الغربية" },
-  { id: "Sharqia", en: "Sharqia", ar: "الشرقية" },
-  { id: "Monufia", en: "Monufia", ar: "المنوفية" },
-  { id: "Beheira", en: "Beheira", ar: "البحيرة" },
-  { id: "Kafr El Sheikh", en: "Kafr El Sheikh", ar: "كفر الشيخ" },
-  { id: "Damietta", en: "Damietta", ar: "دمياط" },
-  { id: "Port Said", en: "Port Said", ar: "بورسعيد" },
-  { id: "Ismailia", en: "Ismailia", ar: "الإسماعيلية" },
-  { id: "Suez", en: "Suez", ar: "السويس" },
-  { id: "Fayoum", en: "Fayoum", ar: "الفيوم" },
-  { id: "Beni Suef", en: "Beni Suef", ar: "بني سويف" },
-  { id: "Minia", en: "Minia", ar: "المنيا" },
-  { id: "Assiut", en: "Assiut", ar: "أسيوط" },
-  { id: "Sohag", en: "Sohag", ar: "سوهاج" },
-  { id: "Qena", en: "Qena", ar: "قنا" },
-  { id: "Luxor", en: "Luxor", ar: "الأقصر" },
-  { id: "Aswan", en: "Aswan", ar: "أسوان" },
-  { id: "Red Sea", en: "Red Sea", ar: "البحر الأحمر" },
-  { id: "Matrouh", en: "Matrouh", ar: "مرسى مطروح" },
-  { id: "North Sinai", en: "North Sinai", ar: "شمال سيناء" },
-  { id: "South Sinai", en: "South Sinai", ar: "جنوب سيناء" },
-  { id: "New Valley", en: "New Valley", ar: "الوادي الجديد" }
+  { id: "Cairo", en: "Cairo", ar: "القاهرة", shippingFee: 85 },
+  { id: "Giza", en: "Giza", ar: "الجيزة", shippingFee: 85 },
+  { id: "Alexandria", en: "Alexandria", ar: "الإسكندرية", shippingFee: 60 },
+  { id: "Qalyubia", en: "Qalyubia", ar: "القليوبية", shippingFee: 85 },
+  { id: "Dakahlia", en: "Dakahlia", ar: "الدقهلية", shippingFee: 90 },
+  { id: "Gharbia", en: "Gharbia", ar: "الغربية", shippingFee: 90 },
+  { id: "Sharqia", en: "Sharqia", ar: "الشرقية", shippingFee: 90 },
+  { id: "Monufia", en: "Monufia", ar: "المنوفية", shippingFee: 90 },
+  { id: "Beheira", en: "Beheira", ar: "البحيرة", shippingFee: 85 },
+  { id: "Kafr El Sheikh", en: "Kafr El Sheikh", ar: "كفر الشيخ", shippingFee: 90 },
+  { id: "Damietta", en: "Damietta", ar: "دمياط", shippingFee: 90 },
+  { id: "Port Said", en: "Port Said", ar: "بورسعيد", shippingFee: 95 },
+  { id: "Ismailia", en: "Ismailia", ar: "الإسماعيلية", shippingFee: 95 },
+  { id: "Suez", en: "Suez", ar: "السويس", shippingFee: 95 },
+  { id: "Fayoum", en: "Fayoum", ar: "الفيوم", shippingFee: 105 },
+  { id: "Beni Suef", en: "Beni Suef", ar: "بني سويف", shippingFee: 105 },
+  { id: "Minia", en: "Minia", ar: "المنيا", shippingFee: 110 },
+  { id: "Assiut", en: "Assiut", ar: "أسيوط", shippingFee: 110 },
+  { id: "Sohag", en: "Sohag", ar: "سوهاج", shippingFee: 110 },
+  { id: "Qena", en: "Qena", ar: "قنا", shippingFee: 115 },
+  { id: "Luxor", en: "Luxor", ar: "الأقصر", shippingFee: 115 },
+  { id: "Aswan", en: "Aswan", ar: "أسوان", shippingFee: 115 },
+  { id: "Red Sea", en: "Red Sea", ar: "البحر الأحمر", shippingFee: 135 },
+  { id: "Matrouh", en: "Matrouh", ar: "مرسى مطروح", shippingFee: 100 },
+  { id: "North Sinai", en: "North Sinai", ar: "شمال سيناء", shippingFee: 100 },
+  { id: "South Sinai", en: "South Sinai", ar: "جنوب سيناء", shippingFee: 135 },
+  { id: "New Valley", en: "New Valley", ar: "الوادي الجديد", shippingFee: 155 }
 ];
 
 function track(event, payload = {}) {
@@ -106,7 +106,7 @@ const labels = {
     genderMap:{ unisex:"Unisex", women:"Women", men:"Men" },
     seasonMap:{ winter:"Cool & Evening", summer:"Warm & Daytime", all:"All Seasons" },
     filterAll:"All", filterUnisex:"Unisex", filterWomen:"Women", filterMen:"Men", filterWinter:"Winter & Warm", filterSummer:"Summer & Fresh",
-    deliveryTitle:"DELIVERY DETAILS", nameField:"Full Name", namePlaceholder:"Your full name", phoneField:"Mobile Number", phonePlaceholder:"01XXXXXXXXX", govField:"Governorate", govPlaceholder:"Select governorate", addressField:"Detailed Address", addressPlaceholder:"Street, building, floor, landmark...", shippingNote:"Shipping cost varies by governorate & will be confirmed on WhatsApp."
+    deliveryTitle:"DELIVERY DETAILS", nameField:"Full Name", namePlaceholder:"Your full name", phoneField:"Mobile Number", phonePlaceholder:"01XXXXXXXXX", govField:"Governorate", govPlaceholder:"Select governorate", addressField:"Detailed Address", addressPlaceholder:"Street, building, floor, landmark...", shippingNote:"Shipping is calculated automatically when you select your governorate.", shipping:"Shipping", totalWithShipping:"Total (incl. shipping)"
   },
   ar: {
     back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"ليه العطر ده مناسب لذوقك؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر تاني ممكن يعجبك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"مؤشر ملاءمة", scoreDisclaimer:"مؤشر مبني على إجاباتك الستة ونقاطها. الترشيح الأول متقدم على البديل المعروض بـ7 نقاط على الأقل؛ ده مش احتمال علمي ولا ضمان لتجربتك.", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"السعر", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"بلاك فرايداي | اشتري ٢ والثالث مجانًا", shopOfferDates:"من ١١ إلى ١٧ نوفمبر ٢٠٢٦", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك كمان", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", compareLongevity:"الثبات", compareInspired:"مستوحى من", bag:"حقيبة التسوق", checkout:"كمّل طلبك على واتساب", checkoutRequired:"أدخل بيانات التوصيل أولًا للمتابعة إلى واتساب.", emptyCart:"حقيبتك فاضية", add:"أضف للحقيبة", addedToBag:"اتضاف لحقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"مش قادرين نجهز بطاقة النتيجة. جرّب تاني.",
@@ -114,7 +114,7 @@ const labels = {
     genderMap:{ unisex:"للجنسين (Unisex)", women:"نسائي", men:"رجالي" },
     seasonMap:{ winter:"شتوي / ليلي دافئ", summer:"صيفي / نهاري منعش", all:"جميع الفصول" },
     filterAll:"الكل", filterUnisex:"Unisex", filterWomen:"نسائي", filterMen:"رجالي", filterWinter:"شتوي / دافئ", filterSummer:"صيفي / منعش",
-    deliveryTitle:"بيانات التوصيل", nameField:"الاسم بالكامل", namePlaceholder:"اكتب اسمك الثلاثي", phoneField:"رقم الموبايل", phonePlaceholder:"01XXXXXXXXX", govField:"المحافظة", govPlaceholder:"اختر المحافظة", addressField:"العنوان بالتفصيل", addressPlaceholder:"الشارع، رقم العقار، الدور، علامة مميزة...", shippingNote:"يتم تحديد وتأكيد تكلفة الشحن عبر واتساب حسب المحافظة."
+    deliveryTitle:"بيانات التوصيل", nameField:"الاسم بالكامل", namePlaceholder:"اكتب اسمك الثلاثي", phoneField:"رقم الموبايل", phonePlaceholder:"01XXXXXXXXX", govField:"المحافظة", govPlaceholder:"اختر المحافظة", addressField:"العنوان بالتفصيل", addressPlaceholder:"الشارع، رقم العقار، الدور، علامة مميزة...", shippingNote:"تُحسب مصاريف الشحن تلقائيًا عند اختيار المحافظة.", shipping:"الشحن", totalWithShipping:"الإجمالي شامل الشحن"
   }
 };
 const OPTION_ORDER_STORAGE = "starry-quiz-option-order";
@@ -257,16 +257,18 @@ function Header({ back, onBack, onGallery, onStartQuiz, onPolicy, onHome, lang =
   units.forEach((u,idx)=>{if(idx>=paidCount){freeByProduct[u.id]=(freeByProduct[u.id]||0)+1;freeDiscount+=u.price;}});
   const items=rawItems.map(({product,quantity})=>{const freeQty=freeByProduct[product.id]||0;const paidQty=quantity-freeQty;const lineSubtotal=product.offerPrice*quantity;const lineTotal=product.offerPrice*paidQty;return{product,quantity,freeQty,paidQty,lineSubtotal,lineTotal};});
   const subtotalBeforeOffer=items.reduce((n,x)=>n+x.lineSubtotal,0);
-  const total=subtotalBeforeOffer-freeDiscount;
+  const merchandiseTotal=subtotalBeforeOffer-freeDiscount;
+  const selectedGov=GOVERNORATES.find((g)=>g.id===customer.governorate);
+  const shippingFee=selectedGov?.shippingFee||0;
+  const total=merchandiseTotal+shippingFee;
   const saved=rawItems.reduce((n,x)=>n+Math.max(0,x.product.listPrice-x.product.offerPrice)*x.quantity,0)+freeDiscount;
   const orderText=items.map(({product,quantity,freeQty,lineTotal})=>{if(freeQty>0&&lineTotal===0)return `• ${quantity} × ${product.name} (${product.size}) — ${lang==="ar"?"مجانًا (عرض التالت هدية)":"FREE (Buy 2 Get 1 Free)"}`;if(freeQty>0)return `• ${quantity} × ${product.name} (${product.size}) — ${lineTotal} ${labels[lang].priceUnit} (${lang==="ar"?`شامل ${freeQty} مجانًا`:`incl. ${freeQty} FREE`})`;return `• ${quantity} × ${product.name} (${product.size}) — ${lineTotal} ${labels[lang].priceUnit}`;}).join("\n");
-  const selectedGov = GOVERNORATES.find((g) => g.id === customer.governorate);
   const govLabel = selectedGov ? (lang === "ar" ? selectedGov.ar : selectedGov.en) : "";
   const offerNoteAr = freeDiscount > 0 ? `\n*خصم العرض (أغلى عطرين مدفوعين والتالت مجانًا):* -${freeDiscount} ج.م` : "";
   const offerNoteEn = freeDiscount > 0 ? `\n*Offer Discount (Buy 2 Get 1 Free):* -${freeDiscount} EGP` : "";
   const deliveryBlock = lang === "ar"
-    ? `${offerNoteAr}\n\n*الإجمالي (قبل الشحن):* ${total} ج.م\n*بيانات التوصيل:*\n• الاسم: ${customer.name.trim() || "—"}\n• رقم الموبايل: ${customer.phone.trim() || "—"}\n• المحافظة: ${govLabel || "—"}\n• العنوان بالتفصيل: ${customer.address.trim() || "—"}\n\nبرجاء تأكيد الطلب وتكلفة الشحن للمحافظة.`
-    : `${offerNoteEn}\n\n*Subtotal (excl. shipping):* ${total} EGP\n*Delivery Details:*\n• Name: ${customer.name.trim() || "—"}\n• Mobile: ${customer.phone.trim() || "—"}\n• Governorate: ${govLabel || "—"}\n• Full Address: ${customer.address.trim() || "—"}\n\nPlease confirm my order and the shipping fee for my governorate.`;
+    ? `${offerNoteAr}\n\n*مصاريف الشحن:* ${shippingFee} ج.م\n*الإجمالي شامل الشحن:* ${total} ج.م\n*بيانات التوصيل:*\n• الاسم: ${customer.name.trim() || "—"}\n• رقم الموبايل: ${customer.phone.trim() || "—"}\n• المحافظة: ${govLabel || "—"}\n• العنوان بالتفصيل: ${customer.address.trim() || "—"}\n\nبرجاء تأكيد الطلب.`
+    : `${offerNoteEn}\n\n*Shipping:* ${shippingFee} EGP\n*Total (incl. shipping):* ${total} EGP\n*Delivery Details:*\n• Name: ${customer.name.trim() || "—"}\n• Mobile: ${customer.phone.trim() || "—"}\n• Governorate: ${govLabel || "—"}\n• Full Address: ${customer.address.trim() || "—"}\n\nPlease confirm my order.`;
   const checkoutUrl=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent((lang==="ar"?`مرحبًا STARRY، أرغب في طلب:\n${orderText}`:`Hello STARRY, I would like to order:\n${orderText}`)+deliveryBlock)}`;
   const customerInfoComplete = Boolean(customer.name.trim() && customer.phone.trim() && GOVERNORATES.some((gov) => gov.id === customer.governorate) && customer.address.trim());
   function handleCheckout(event) {
@@ -303,9 +305,9 @@ function Header({ back, onBack, onGallery, onStartQuiz, onPolicy, onHome, lang =
       <span>{copy.addressField}</span>
       <input type="text" value={customer.address} onChange={(e)=>updateCustomer("address", e.target.value)} placeholder={copy.addressPlaceholder} aria-required="true" />
     </label>
-    <p className="shipping-whatsapp-note">{copy.shippingNote}</p>
+    <p className="shipping-whatsapp-note">{copy.shippingNote}{selectedGov&&<strong> {copy.shipping}: {shippingFee} {copy.priceUnit}</strong>}</p>
   </div>
-  {freeDiscount>0&&<div className="cart-subtotal-before"><span>{lang==="ar"?"المجموع قبل العرض":"Total before offer"}</span><del>{subtotalBeforeOffer} {copy.priceUnit}</del></div>}<div className="cart-total"><span>{lang==="ar"?"الإجمالي (بدون الشحن)":"Subtotal (excl. shipping)"}</span><strong>{total} {copy.priceUnit}</strong></div>{saved>0&&<p className="cart-savings">{lang==="ar"?`وفرت في هذا الطلب: ${saved} ج.م (شامل عرض العطر الثالث مجانًا)`:`You save: ${saved} EGP (3rd fragrance FREE applied)`}</p>}{checkoutError&&<p className="checkout-error" role="alert">{checkoutError}</p>}<a className="cart-checkout" href={customerInfoComplete?checkoutUrl:undefined} onClick={handleCheckout} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.checkout}</a></>:<p>{copy.emptyCart}</p>}<a href="/shop" onClick={(e)=>{e.preventDefault();close();onGallery?.()}}>{copy.shop}<ArrowRight className={lang==="ar"?"rtl-icon":""} size={16}/></a></>}</aside></div>}
+  {freeDiscount>0&&<div className="cart-subtotal-before"><span>{lang==="ar"?"المجموع قبل العرض":"Total before offer"}</span><del>{subtotalBeforeOffer} {copy.priceUnit}</del></div>}<div className="cart-subtotal-before"><span>{copy.shipping}</span><strong>{selectedGov?`${shippingFee} ${copy.priceUnit}`:(lang==="ar"?"اختر المحافظة":"Select governorate")}</strong></div><div className="cart-total"><span>{copy.totalWithShipping}</span><strong>{total} {copy.priceUnit}</strong></div>{saved>0&&<p className="cart-savings">{lang==="ar"?`وفرت في هذا الطلب: ${saved} ج.م (شامل عرض العطر الثالث مجانًا)`:`You save: ${saved} EGP (3rd fragrance FREE applied)`}</p>}{checkoutError&&<p className="checkout-error" role="alert">{checkoutError}</p>}<a className="cart-checkout" href={customerInfoComplete?checkoutUrl:undefined} onClick={handleCheckout} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>{copy.checkout}</a></>:<p>{copy.emptyCart}</p>}<a href="/shop" onClick={(e)=>{e.preventDefault();close();onGallery?.()}}>{copy.shop}<ArrowRight className={lang==="ar"?"rtl-icon":""} size={16}/></a></>}</aside></div>}
   </header>;
 }
 
