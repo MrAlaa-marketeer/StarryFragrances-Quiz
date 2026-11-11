@@ -14,6 +14,16 @@ const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const CART_STORAGE = "starry-cart";
 const RESULT_STORAGE = "starry-quiz-result";
 const CUSTOMER_STORAGE = "starry-customer-info";
+const BLACK_FRIDAY_END = new Date("2026-11-18T00:00:00+02:00").getTime();
+
+function useBlackFridayActive() {
+  const [active, setActive] = useState(() => Date.now() < BLACK_FRIDAY_END);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setActive(false), Math.max(0, BLACK_FRIDAY_END - Date.now()));
+    return () => window.clearTimeout(timer);
+  }, []);
+  return active;
+}
 
 const GOVERNORATES = [
   { id: "Cairo", en: "Cairo", ar: "القاهرة" },
@@ -99,7 +109,7 @@ const labels = {
     deliveryTitle:"DELIVERY DETAILS", nameField:"Full Name", namePlaceholder:"Your full name", phoneField:"Mobile Number", phonePlaceholder:"01XXXXXXXXX", govField:"Governorate", govPlaceholder:"Select governorate", addressField:"Detailed Address", addressPlaceholder:"Street, building, floor, landmark...", shippingNote:"Shipping cost varies by governorate & will be confirmed on WhatsApp."
   },
   ar: {
-    back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"ليه العطر ده مناسب لذوقك؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر تاني ممكن يعجبك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"مؤشر ملاءمة", scoreDisclaimer:"مؤشر مبني على إجاباتك الستة ونقاطها. الترشيح الأول متقدم على البديل المعروض بـ7 نقاط على الأقل؛ ده مش احتمال علمي ولا ضمان لتجربتك.", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"السعر", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"بلاك فرايداي | اشتري ٢ والثالث مجانًا", shopOfferDates:"من ١١ إلى ١٧ نوفمبر", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك كمان", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", compareLongevity:"الثبات", compareInspired:"مستوحى من", bag:"حقيبة التسوق", checkout:"كمّل طلبك على واتساب", checkoutRequired:"أدخل بيانات التوصيل أولًا للمتابعة إلى واتساب.", emptyCart:"حقيبتك فاضية", add:"أضف للحقيبة", addedToBag:"اتضاف لحقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"مش قادرين نجهز بطاقة النتيجة. جرّب تاني.",
+    back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"ليه العطر ده مناسب لذوقك؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر تاني ممكن يعجبك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"مؤشر ملاءمة", scoreDisclaimer:"مؤشر مبني على إجاباتك الستة ونقاطها. الترشيح الأول متقدم على البديل المعروض بـ7 نقاط على الأقل؛ ده مش احتمال علمي ولا ضمان لتجربتك.", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"السعر", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"بلاك فرايداي | اشتري ٢ والثالث مجانًا", shopOfferDates:"من ١١ إلى ١٧ نوفمبر ٢٠٢٦", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك كمان", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", compareLongevity:"الثبات", compareInspired:"مستوحى من", bag:"حقيبة التسوق", checkout:"كمّل طلبك على واتساب", checkoutRequired:"أدخل بيانات التوصيل أولًا للمتابعة إلى واتساب.", emptyCart:"حقيبتك فاضية", add:"أضف للحقيبة", addedToBag:"اتضاف لحقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"مش قادرين نجهز بطاقة النتيجة. جرّب تاني.",
     inspiredBy:"مستوحى من", longevityLabel:"مدة الثبات", sillageLabel:"قوة الفوحان", genderLabel:"مناسب لـ", seasonLabel:"الموسم الأنسب",
     genderMap:{ unisex:"للجنسين (Unisex)", women:"نسائي", men:"رجالي" },
     seasonMap:{ winter:"شتوي / ليلي دافئ", summer:"صيفي / نهاري منعش", all:"جميع الفصول" },
@@ -239,7 +249,8 @@ function Header({ back, onBack, onGallery, onStartQuiz, onPolicy, onHome, lang =
   const units=[];
   rawItems.forEach(({product,quantity},itemIndex)=>{for(let i=0;i<quantity;i+=1)units.push({id:product.id,price:product.offerPrice,itemIndex});});
   units.sort((a,b)=>(b.price-a.price)||(a.itemIndex-b.itemIndex));
-  const freeCount=Math.floor(units.length/3);
+  const offerActive=useBlackFridayActive();
+  const freeCount=offerActive?Math.floor(units.length/3):0;
   const paidCount=units.length-freeCount;
   const freeByProduct={};
   let freeDiscount=0;
@@ -555,7 +566,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
     setCompareIds((current) => current.includes(productId) ? current.filter((id) => id !== productId) : current.length < 2 ? [...current, productId] : current);
     setShowComparison(false);
   }
-  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1><p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p></div>
+  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1>{useBlackFridayActive()&&<p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p>}</div>
     <div className="category-pills" role="tablist" aria-label={lang === "ar" ? "تصنيف العطور" : "Filter fragrances"}>
       {categories.map((cat) => (
         <button
