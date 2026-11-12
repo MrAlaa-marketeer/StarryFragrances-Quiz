@@ -41,6 +41,23 @@ function useBlackFridayCountdown() {
   return countdown;
 }
 
+
+function useBlackFridayActive() {
+  const getActive = () => {
+    const now = Date.now();
+    return now >= BLACK_FRIDAY_START && now < BLACK_FRIDAY_END;
+  };
+  const [active, setActive] = useState(getActive);
+  useEffect(() => {
+    const now = Date.now();
+    const nextTransition = now < BLACK_FRIDAY_START ? BLACK_FRIDAY_START : now < BLACK_FRIDAY_END ? BLACK_FRIDAY_END : null;
+    if (nextTransition === null) return;
+    const timer = window.setTimeout(() => setActive(getActive()), Math.max(0, nextTransition - now + 25));
+    return () => window.clearTimeout(timer);
+  }, [active]);
+  return active;
+}
+
 const GOVERNORATES = [
   { id: "Cairo", en: "Cairo", ar: "القاهرة", shippingFee: 85 },
   { id: "Giza", en: "Giza", ar: "الجيزة", shippingFee: 85 },
