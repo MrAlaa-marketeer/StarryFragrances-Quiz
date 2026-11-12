@@ -191,3 +191,77 @@ html[lang="ar"] .note-entry small { color:#c7b58d; font-size:10px; }
 .detail-art img { object-fit:contain; padding:18px; }
 .detail-art:after { display:none; }
 .similar-art img { width:100%; height:100%; padding:8px; object-fit:contain; }
+
+
+/* Black Friday countdown bar on the shop page */
+.black-friday-bar {
+  width: calc(100% + 2 * clamp(28px, 5vw, 64px));
+  min-height: 46px;
+  margin: 0 calc(-1 * clamp(28px, 5vw, 64px));
+  padding: 7px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #030303;
+  color: #f7f4ed;
+  direction: ltr;
+  text-align: center;
+}
+.black-friday-label {
+  padding: 5px 9px;
+  background: #d5ad53;
+  color: #050505;
+  font: 700 9px/1 Montserrat,Arial,sans-serif;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+}
+.black-friday-message {
+  color: #f3efe7;
+  font: 700 10px/1.3 Montserrat,Arial,sans-serif;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
+}
+.black-friday-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #d5ad53;
+  direction: ltr;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.timer-unit { display:inline-flex; align-items:baseline; gap:2px; }
+.timer-unit strong { font:700 14px/1 Montserrat,Arial,sans-serif; }
+.timer-unit small { color:#d5ad53; font:600 9px/1 Montserrat,Arial,sans-serif; }
+.timer-separator { color:#8c733c; font:600 12px/1 Montserrat,Arial,sans-serif; }
+.black-friday-cta {
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding-bottom:2px;
+  border-bottom:1px solid #d5ad53;
+  color:#e2bd68;
+  font:700 9px/1.2 Montserrat,Arial,sans-serif;
+  letter-spacing:1.1px;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.black-friday-cta:hover { color:#f5d987; }
+.black-friday-cta:focus-visible { outline:2px solid #f0d39a; outline-offset:4px; }
+@media (max-width:599px) {
+  .black-friday-bar {
+    width:calc(100% + 34px);
+    margin-inline:-17px;
+    min-height:58px;
+    padding:7px 8px;
+    gap:5px 9px;
+  }
+  .black-friday-label { padding:4px 7px; font-size:8px; }
+  .black-friday-message { font-size:9px; letter-spacing:.55px; }
+  .black-friday-countdown { gap:3px; }
+  .timer-unit strong { font-size:13px; }
+  .timer-unit small { font-size:8px; }
+  .black-friday-cta { font-size:8px; letter-spacing:.55px; }
+}

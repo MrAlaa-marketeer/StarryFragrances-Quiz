@@ -14,15 +14,31 @@ const asset = (name) => name ? `${ASSET_BASE}${name}` : "";
 const CART_STORAGE = "starry-cart";
 const RESULT_STORAGE = "starry-quiz-result";
 const CUSTOMER_STORAGE = "starry-customer-info";
+const BLACK_FRIDAY_START = new Date("2026-11-11T00:00:00+02:00").getTime();
 const BLACK_FRIDAY_END = new Date("2026-11-18T00:00:00+02:00").getTime();
 
-function useBlackFridayActive() {
-  const [active, setActive] = useState(() => Date.now() < BLACK_FRIDAY_END);
+function useBlackFridayCountdown() {
+  const getCountdown = () => {
+    const now = Date.now();
+    const totalSeconds = Math.max(0, Math.floor((BLACK_FRIDAY_END - now) / 1000));
+    return {
+      active: now >= BLACK_FRIDAY_START && now < BLACK_FRIDAY_END,
+      remaining: {
+        days: Math.floor(totalSeconds / 86400),
+        hours: Math.floor((totalSeconds % 86400) / 3600),
+        minutes: Math.floor((totalSeconds % 3600) / 60),
+        seconds: totalSeconds % 60
+      }
+    };
+  };
+  const [countdown, setCountdown] = useState(getCountdown);
   useEffect(() => {
-    const timer = window.setTimeout(() => setActive(false), Math.max(0, BLACK_FRIDAY_END - Date.now()));
-    return () => window.clearTimeout(timer);
+    const update = () => setCountdown(getCountdown());
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
   }, []);
-  return active;
+  return countdown;
 }
 
 const GOVERNORATES = [
@@ -101,7 +117,7 @@ function readCustomerInfo() {
 
 const labels = {
   en: {
-    back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"PREFERENCE FIT", scoreDisclaimer:"A preference-fit index from your six weighted answers. The top pick leads the alternative by at least 7 points; it isn't a probability or guarantee.", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"PRICE", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy", shop:"SHOP FRAGRANCES", quiz:"TAKE THE SCENT QUIZ", shopTitle:"THE FRAGRANCE COLLECTION", shopIntro:"BLACK FRIDAY | BUY 2, GET THE 3RD FREE", shopOfferDates:"November 11–17", sort:"SORT BY", featured:"Featured", priceLow:"Price: Low to high", priceHigh:"Price: High to low", nameSort:"Name: A to Z", notSure:"NOT SURE WHICH SCENT IS YOURS?", findScent:"FIND YOUR SCENT", description:"THE STORY", mayLike:"YOU MAY ALSO LIKE", viewDetails:"VIEW DETAILS", continueShopping:"Continue shopping", compare:"COMPARE", added:"ADDED", compareOneMore:"Choose one more scent to compare", compareNow:"COMPARE TWO SCENTS", compareTitle:"Compare fragrances", close:"Close", compareSize:"SIZE", comparePrice:"PRICE", compareScent:"SCENT PROFILE", compareNotes:"MAIN ACCORDS", compareLongevity:"LONGEVITY", compareInspired:"INSPIRED BY", bag:"Your bag", checkout:"Checkout on WhatsApp", checkoutRequired:"Enter your delivery details first to continue to WhatsApp.", emptyCart:"Your bag is empty", add:"Add to bag", addedToBag:"Added to your bag", bundle:"Discover the collection", bundleCopy:"Ask us about a discovery set", shareSuccess:"Your result is ready to share", shareError:"Could not prepare your result card. Please try again.",
+    back:"Back", next:"Next", reveal:"Reveal My Scent", analyzing:"YOUR STARRY PROFILE IS READY", reading:"Reading your scent profile...", finding:"Finding the fragrance that feels like you.", match:"YOUR STARRY SIGNATURE", discover:"DISCOVER YOUR SCENT", why:"WHY THIS IS YOUR MATCH", profile:"YOUR SCENT PROFILE", bestFor:"BEST FOR", second:"ALSO IN YOUR ORBIT", share:"SHARE MY RESULT", retake:"TAKE THE QUIZ AGAIN", copied:"Result card downloaded", matchLabel:"PREFERENCE FIT", scoreDisclaimer:"A preference-fit index from your six weighted answers. The top pick leads the alternative by at least 7 points; it isn't a probability or guarantee.", order:"ORDER ON WHATSAPP", orderInstagram:"ORDER ON INSTAGRAM", size:"50ml", offer:"PRICE", priceUnit:"EGP", explore:"EXPLORE THE FRAGRANCE", question:"QUESTION", of:"OF", language:"Choose language", policyLink:"Return & Exchange Policy", shop:"SHOP FRAGRANCES", quiz:"TAKE THE SCENT QUIZ", shopTitle:"THE FRAGRANCE COLLECTION", shopIntro:"BLACK FRIDAY | BUY 2, GET THE 3RD FREE", shopOfferDates:"November 11–17", shopPromoEndsIn:"ENDS IN", shopNow:"SHOP NOW", timerDays:"D", timerHours:"H", timerMinutes:"M", timerSeconds:"S", sort:"SORT BY", featured:"Featured", priceLow:"Price: Low to high", priceHigh:"Price: High to low", nameSort:"Name: A to Z", notSure:"NOT SURE WHICH SCENT IS YOURS?", findScent:"FIND YOUR SCENT", description:"THE STORY", mayLike:"YOU MAY ALSO LIKE", viewDetails:"VIEW DETAILS", continueShopping:"Continue shopping", compare:"COMPARE", added:"ADDED", compareOneMore:"Choose one more scent to compare", compareNow:"COMPARE TWO SCENTS", compareTitle:"Compare fragrances", close:"Close", compareSize:"SIZE", comparePrice:"PRICE", compareScent:"SCENT PROFILE", compareNotes:"MAIN ACCORDS", compareLongevity:"LONGEVITY", compareInspired:"INSPIRED BY", bag:"Your bag", checkout:"Checkout on WhatsApp", checkoutRequired:"Enter your delivery details first to continue to WhatsApp.", emptyCart:"Your bag is empty", add:"Add to bag", addedToBag:"Added to your bag", bundle:"Discover the collection", bundleCopy:"Ask us about a discovery set", shareSuccess:"Your result is ready to share", shareError:"Could not prepare your result card. Please try again.",
     inspiredBy:"Inspired by", longevityLabel:"LONGEVITY", sillageLabel:"PROJECTION", genderLabel:"FOR", seasonLabel:"SEASON",
     genderMap:{ unisex:"Unisex", women:"Women", men:"Men" },
     seasonMap:{ winter:"Cool & Evening", summer:"Warm & Daytime", all:"All Seasons" },
@@ -109,7 +125,7 @@ const labels = {
     deliveryTitle:"DELIVERY DETAILS", nameField:"Full Name", namePlaceholder:"Your full name", phoneField:"Mobile Number", phonePlaceholder:"01XXXXXXXXX", govField:"Governorate", govPlaceholder:"Select governorate", addressField:"Detailed Address", addressPlaceholder:"Street, building, floor, landmark...", shippingNote:"Shipping is calculated automatically when you select your governorate.", shipping:"Shipping", totalWithShipping:"Total (incl. shipping)"
   },
   ar: {
-    back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"ليه العطر ده مناسب لذوقك؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر تاني ممكن يعجبك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"مؤشر ملاءمة", scoreDisclaimer:"مؤشر مبني على إجاباتك الستة ونقاطها. الترشيح الأول متقدم على البديل المعروض بـ7 نقاط على الأقل؛ ده مش احتمال علمي ولا ضمان لتجربتك.", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"السعر", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"بلاك فرايداي | اشتري ٢ والثالث مجانًا", shopOfferDates:"من ١١ إلى ١٧ نوفمبر ٢٠٢٦", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك كمان", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", compareLongevity:"الثبات", compareInspired:"مستوحى من", bag:"حقيبة التسوق", checkout:"كمّل طلبك على واتساب", checkoutRequired:"أدخل بيانات التوصيل أولًا للمتابعة إلى واتساب.", emptyCart:"حقيبتك فاضية", add:"أضف للحقيبة", addedToBag:"اتضاف لحقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"مش قادرين نجهز بطاقة النتيجة. جرّب تاني.",
+    back:"السابق", next:"التالي", reveal:"اكتشف عطرك", analyzing:"ملفك العطري من STARRY جاهز", reading:"نقرأ ذوقك في العطور...", finding:"نبحث عن العطر الأقرب لشخصيتك.", match:"توقيعك العطري من STARRY", discover:"اكتشف عطرك", why:"ليه العطر ده مناسب لذوقك؟", profile:"ملفك العطري", bestFor:"الأنسب لـ", second:"عطر تاني ممكن يعجبك", share:"شارك نتيجتي", retake:"أعد الاختبار", copied:"تم تنزيل بطاقة النتيجة", matchLabel:"مؤشر ملاءمة", scoreDisclaimer:"مؤشر مبني على إجاباتك الستة ونقاطها. الترشيح الأول متقدم على البديل المعروض بـ7 نقاط على الأقل؛ ده مش احتمال علمي ولا ضمان لتجربتك.", order:"اطلب عبر واتساب", orderInstagram:"اطلب عبر إنستجرام", size:"50ml", offer:"السعر", priceUnit:"ج.م", explore:"اكتشف تفاصيل العطر", question:"السؤال", of:"من", language:"اختر اللغة", policyLink:"سياسة الاستبدال والاسترجاع", shop:"تسوق العطور", quiz:"اكتشف عطرك بالاختبار", shopTitle:"مجموعة العطور", shopIntro:"بلاك فرايداي | اشتري ٢ والثالث مجانًا", shopOfferDates:"من ١١ إلى ١٧ نوفمبر ٢٠٢٦", shopPromoEndsIn:"ينتهي خلال", shopNow:"تسوق الآن", timerDays:"يوم", timerHours:"س", timerMinutes:"د", timerSeconds:"ث", sort:"ترتيب حسب", featured:"الأكثر تميزًا", priceLow:"السعر: من الأقل للأعلى", priceHigh:"السعر: من الأعلى للأقل", nameSort:"الاسم: أ إلى ي", notSure:"مش عارف أنهي عطر يناسبك؟", findScent:"اكتشف عطرك", description:"حكاية العطر", mayLike:"قد يعجبك كمان", viewDetails:"اكتشف التفاصيل", continueShopping:"تابع التسوق", compare:"قارن", added:"تمت الإضافة", compareOneMore:"اختار عطر كمان للمقارنة", compareNow:"قارن بين العطرين", compareTitle:"مقارنة العطور", close:"إغلاق", compareSize:"الحجم", comparePrice:"السعر", compareScent:"طابع العطر", compareNotes:"أبرز الروائح", compareLongevity:"الثبات", compareInspired:"مستوحى من", bag:"حقيبة التسوق", checkout:"كمّل طلبك على واتساب", checkoutRequired:"أدخل بيانات التوصيل أولًا للمتابعة إلى واتساب.", emptyCart:"حقيبتك فاضية", add:"أضف للحقيبة", addedToBag:"اتضاف لحقيبتك", bundle:"اكتشف المجموعة", bundleCopy:"اسألنا عن مجموعة اكتشاف العطور", shareSuccess:"نتيجتك جاهزة للمشاركة", shareError:"مش قادرين نجهز بطاقة النتيجة. جرّب تاني.",
     inspiredBy:"مستوحى من", longevityLabel:"مدة الثبات", sillageLabel:"قوة الفوحان", genderLabel:"مناسب لـ", seasonLabel:"الموسم الأنسب",
     genderMap:{ unisex:"للجنسين (Unisex)", women:"نسائي", men:"رجالي" },
     seasonMap:{ winter:"شتوي / ليلي دافئ", summer:"صيفي / نهاري منعش", all:"جميع الفصول" },
@@ -536,6 +552,24 @@ function Details({ product, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
   </main>;
 }
 
+function BlackFridayBanner({ countdown, copy }) {
+  const units = [
+    { value: countdown.days, label: copy.timerDays },
+    { value: countdown.hours, label: copy.timerHours },
+    { value: countdown.minutes, label: copy.timerMinutes },
+    { value: countdown.seconds, label: copy.timerSeconds }
+  ];
+  const offer = copy.shopIntro.split("|").pop().trim();
+  return <div className="black-friday-bar" role="region" aria-label={copy.shopIntro}>
+    <span className="black-friday-label">BLACK FRIDAY</span>
+    <span className="black-friday-message">{offer} {copy.shopPromoEndsIn}</span>
+    <span className="black-friday-countdown" aria-label={units.map((unit) => `${unit.value} ${unit.label}`).join(" ")}>
+      {units.map((unit, index) => <React.Fragment key={unit.label}>{index > 0 && <span className="timer-separator">:</span>}<span className="timer-unit"><strong>{String(unit.value).padStart(2, "0")}</strong><small>{unit.label}</small></span></React.Fragment>)}
+    </span>
+    <a className="black-friday-cta" href="#shop-products">{copy.shopNow}<ArrowRight size={13}/></a>
+  </div>;
+}
+
 function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, onOpen, lang, setLang }) {
   const [sort, setSort] = useState("featured");
   const [category, setCategory] = useState("all");
@@ -543,7 +577,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
   const [showComparison, setShowComparison] = useState(false);
   const compareRef = React.useRef(null);
   const copy = labels[lang];
-  const offerActive = useBlackFridayActive();
+  const { active: offerActive, remaining: offerCountdown } = useBlackFridayCountdown();
 
   const categories = [
     { id: "all", label: copy.filterAll },
@@ -569,7 +603,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
     setCompareIds((current) => current.includes(productId) ? current.filter((id) => id !== productId) : current.length < 2 ? [...current, productId] : current);
     setShowComparison(false);
   }
-  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}><Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1>{offerActive&&<p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p>}</div>
+  return <main className={`screen gallery${compareIds.length ? " has-compare" : ""}`} dir={lang === "ar" ? "rtl" : "ltr"} lang={lang}>{offerActive && <BlackFridayBanner countdown={offerCountdown} copy={copy}/>}<Header back onBack={onBack} onGallery={onGallery} onStartQuiz={onStartQuiz} onPolicy={onPolicy} onHome={onHome} lang={lang} setLang={setLang}/><div className="shop-heading"><span className="shop-kicker">✦ STARRY FRAGRANCE HOUSE ✦</span><h1>{copy.shopTitle}</h1>{offerActive&&<p className="shop-offer">{copy.shopIntro}<small>{copy.shopOfferDates}</small></p>}</div>
     <div className="category-pills" role="tablist" aria-label={lang === "ar" ? "تصنيف العطور" : "Filter fragrances"}>
       {categories.map((cat) => (
         <button
@@ -585,7 +619,7 @@ function Gallery({ onAgain, onBack, onGallery, onStartQuiz, onPolicy, onHome, on
       ))}
     </div>
     <label className="sort-control"><span><SlidersHorizontal size={15}/>{copy.sort}</span><select value={sort} onChange={(event) => setSort(event.target.value)} aria-label={copy.sort}><option value="featured">{copy.featured}</option><option value="price-low">{copy.priceLow}</option><option value="price-high">{copy.priceHigh}</option><option value="name">{copy.nameSort}</option></select></label>
-    <div className="product-grid">{sortedProducts.map((product) => { const isCompared = compareIds.includes(product.id); return <article key={product.id} className={`mini-product${isCompared ? " is-compared" : ""}`}><button type="button" className="mini-product-open" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${copy.priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.image} alt="" sizes="(max-width: 600px) 44vw, 260px"/><span className="card-longevity-pill"><Clock size={10}/>{product.longevity[lang]}</span></span><span className="mini-name" dir="ltr">{product.name}</span>{product.inspiredBy ? <span className="card-inspired" dir="ltr">{product.inspiredBy}</span> : <span className="card-inspired">{copy.genderMap[product.gender]}</span>}<Price product={product} lang={lang} compact/><span className="card-detail-link">{copy.viewDetails} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={12}/></span></button><div className="product-card-actions"><AddToCartButton product={product} lang={lang}/><button type="button" className="compare-pick" aria-pressed={isCompared} disabled={compareIds.length === 2 && !isCompared} onClick={() => toggleCompare(product.id)}>{isCompared ? copy.added : copy.compare}</button></div></article>; })}</div>
+    <div className="product-grid" id="shop-products">{sortedProducts.map((product) => { const isCompared = compareIds.includes(product.id); return <article key={product.id} className={`mini-product${isCompared ? " is-compared" : ""}`}><button type="button" className="mini-product-open" onClick={() => onOpen(product)} aria-label={`${product.name}, ${product.size}, ${product.offerPrice} ${copy.priceUnit}`}><span className="mini-bottle"><ResponsiveImage name={product.image} alt="" sizes="(max-width: 600px) 44vw, 260px"/><span className="card-longevity-pill"><Clock size={10}/>{product.longevity[lang]}</span></span><span className="mini-name" dir="ltr">{product.name}</span>{product.inspiredBy ? <span className="card-inspired" dir="ltr">{product.inspiredBy}</span> : <span className="card-inspired">{copy.genderMap[product.gender]}</span>}<Price product={product} lang={lang} compact/><span className="card-detail-link">{copy.viewDetails} <ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={12}/></span></button><div className="product-card-actions"><AddToCartButton product={product} lang={lang}/><button type="button" className="compare-pick" aria-pressed={isCompared} disabled={compareIds.length === 2 && !isCompared} onClick={() => toggleCompare(product.id)}>{isCompared ? copy.added : copy.compare}</button></div></article>; })}</div>
     <section className="discovery-set"><span className="drawer-kicker">STARRY DISCOVERY</span><h2>{copy.bundle}</h2><p>{copy.bundleCopy}</p><a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lang === "ar" ? "مرحبًا، أود الاستفسار عن مجموعة اكتشاف عطور STARRY." : "Hello, I would like to ask about a STARRY fragrance discovery set.")}`} onClick={() => track("discovery_set_inquiry")} target="_blank" rel="noopener noreferrer"><MessageCircle size={16}/>{lang === "ar" ? "استفسر عبر واتساب" : "Ask on WhatsApp"}</a></section>
     {compareIds.length > 0 && !showComparison && <div className="compare-dock"><span>{compareIds.length === 1 ? copy.compareOneMore : copy.compareNow}</span><button type="button" disabled={compareIds.length < 2} onClick={() => setShowComparison(true)}>{compareIds.length === 1 ? `${compareIds.length}/2` : copy.compareNow}</button></div>}
     {showComparison && compareProducts.length === 2 && <section className="compare-panel" ref={compareRef} aria-labelledby="compare-title"><header className="compare-header"><h2 id="compare-title">{copy.compareTitle}</h2><button type="button" onClick={() => setShowComparison(false)}>{copy.close}</button></header><div className="compare-heads"><span aria-hidden="true"/>{compareProducts.map((product) => <div className="compare-product-head" key={product.id}><ResponsiveImage name={product.image} alt="" sizes="(max-width: 600px) 30vw, 180px"/><strong dir="ltr">{product.name}</strong></div>)}</div><div className="compare-row"><span>{copy.compareSize}</span>{compareProducts.map((product) => <b key={product.id}>{product.size}</b>)}</div><div className="compare-row"><span>{copy.comparePrice}</span>{compareProducts.map((product) => <b className="compare-price" key={product.id}>{product.offerPrice} <small>{copy.priceUnit}</small>{product.listPrice > product.offerPrice && <del>{product.listPrice} {copy.priceUnit}</del>}</b>)}</div><div className="compare-row"><span>{copy.compareLongevity}</span>{compareProducts.map((product) => <b key={product.id}>{product.longevity[lang]}</b>)}</div><div className="compare-row"><span>{copy.compareScent}</span>{compareProducts.map((product) => <b key={product.id}>{(lang === "ar" ? productCopy[product.id]?.positioning : product.positioning) || product.positioning}</b>)}</div><div className="compare-row"><span>{copy.compareNotes}</span>{compareProducts.map((product) => <b key={product.id}>{product.accords.slice(0,3).map((accord) => lang === "ar" ? (accordArabic[accord.name] || accord.name) : accord.name).join(" · ")}</b>)}</div><div className="compare-actions">{compareProducts.map((product) => <button type="button" key={product.id} onClick={() => onOpen(product)}>{copy.viewDetails}<ArrowRight className={lang === "ar" ? "rtl-icon" : ""} size={13}/></button>)}</div></section>}
