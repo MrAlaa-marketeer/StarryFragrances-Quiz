@@ -559,9 +559,10 @@ function BlackFridayBanner({ countdown, copy }) {
     { value: countdown.minutes, label: copy.timerMinutes },
     { value: countdown.seconds, label: copy.timerSeconds }
   ];
+  const offer = copy.shopIntro.split("|").pop().trim();
   return <div className="black-friday-bar" role="region" aria-label={copy.shopIntro}>
     <span className="black-friday-label">BLACK FRIDAY</span>
-    <span className="black-friday-message">{copy.shopIntro} {copy.shopPromoEndsIn}</span>
+    <span className="black-friday-message">{offer} {copy.shopPromoEndsIn}</span>
     <span className="black-friday-countdown" aria-label={units.map((unit) => `${unit.value} ${unit.label}`).join(" ")}>
       {units.map((unit, index) => <React.Fragment key={unit.label}>{index > 0 && <span className="timer-separator">:</span>}<span className="timer-unit"><strong>{String(unit.value).padStart(2, "0")}</strong><small>{unit.label}</small></span></React.Fragment>)}
     </span>
