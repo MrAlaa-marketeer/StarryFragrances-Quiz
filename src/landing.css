@@ -204,7 +204,9 @@ html[lang="ar"] .note-entry small { color:#c7b58d; font-size:10px; }
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-  background: #030303;
+  background: #0b1b2d;
+  border: 1px solid rgba(213, 173, 83, .72);
+  border-radius: 3px;
   color: #f7f4ed;
   direction: ltr;
   text-align: center;
